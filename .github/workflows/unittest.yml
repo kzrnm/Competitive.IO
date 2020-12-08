@@ -20,7 +20,7 @@ env:
   DOTNET_NOLOGO: true
   NUGET_XMLDOC_MODE: skip
   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
-  WORKFLOW_BUILD_SLN: Competitive.IO/Competitive.IO.csproj
+  WORKFLOW_BUILD_SLN: Competitive.IO.sln
 
 jobs:
   format:
