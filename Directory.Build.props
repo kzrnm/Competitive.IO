@@ -1,0 +1,21 @@
+<Project>
+
+  <PropertyGroup>
+    <Authors>naminodarie</Authors>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/naminodarie/Competitive.IO</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/naminodarie/Competitive.IO</RepositoryUrl>
+
+    <Version>0.0.1-beta.1</Version>
+    <AssemblyVersion>0.0.1.1</AssemblyVersion>
+    <RepositoryCommit Condition="'$(GIT_COMMIT)' != ''">$(GIT_COMMIT)</RepositoryCommit>
+
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)key.snk</AssemblyOriginatorKeyFile>
+
+    <PackageOutputPath>$(MSBuildThisFileDirectory)bin\Packages\$(Configuration)\</PackageOutputPath>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+</Project>
