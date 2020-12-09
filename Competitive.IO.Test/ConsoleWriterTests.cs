@@ -1,8 +1,8 @@
-using FluentAssertions;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using FluentAssertions;
 using Xunit;
 
 namespace Kzrnm.Competitive.IO
