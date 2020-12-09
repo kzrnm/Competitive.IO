@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.3;netstandard2.1</TargetFrameworks>
-    <LangVersion>7.2</LangVersion>
-    
+    <TargetFrameworks>netstandard2.1;netstandard1.3</TargetFrameworks>
+    <LangVersion>6</LangVersion>
+    <RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
+
     <PackageTags>AtCoder;Competitive Programing</PackageTags>
     <PackageId>Competitive.IO</PackageId>
     <Description>IO library for competitive programming</Description>
@@ -11,10 +12,80 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="PropertyRepeatReader.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="SourceExpander.Embedder" Version="2.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    <Compile Update="ConsoleReader.RepeatReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConsoleReader.RepeatReader.tt</DependentUpon>
+    </Compile>
+    <Compile Update="RepeatReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RepeatReader.tt</DependentUpon>
+    </Compile>
+    <Compile Update="ConsoleReader.SplitReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConsoleReader.SplitReader.tt</DependentUpon>
+    </Compile>
+    <None Update="ConsoleReader.RepeatReader.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ConsoleReader.RepeatReader.cs</LastGenOutput>
+    </None>
+    <None Update="ConsoleReader.RepeatReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConsoleReader.RepeatReader.tt</DependentUpon>
+    </None>
+    <None Update="ConsoleReader.SplitReader.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ConsoleReader.SplitReader.cs</LastGenOutput>
+    </None>
+    <None Update="ConsoleReader.SplitReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConsoleReader.SplitReader.tt</DependentUpon>
+    </None>
+    
+    <Compile Update="PropertyRepeatReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PropertyRepeatReader.tt</DependentUpon>
+    </Compile>
+    <Compile Update="PropertySplitReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PropertySplitReader.tt</DependentUpon>
+    </Compile>
+    <None Update="PropertyRepeatReader.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PropertyRepeatReader.cs</LastGenOutput>
+    </None>
+    <None Update="PropertyRepeatReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PropertyRepeatReader.tt</DependentUpon>
+    </None>
+    <None Update="PropertySplitReader.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PropertySplitReader.cs</LastGenOutput>
+    </None>
+    <None Update="PropertySplitReader.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PropertySplitReader.tt</DependentUpon>
+    </None>
   </ItemGroup>
 
 </Project>

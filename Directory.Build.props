@@ -6,8 +6,8 @@
     <PackageProjectUrl>https://github.com/naminodarie/Competitive.IO</PackageProjectUrl>
     <RepositoryUrl>https://github.com/naminodarie/Competitive.IO</RepositoryUrl>
 
-    <Version>0.0.1-beta.1</Version>
-    <AssemblyVersion>0.0.1.1</AssemblyVersion>
+    <Version>0.0.1</Version>
+    <AssemblyVersion>0.0.1.101</AssemblyVersion>
     <RepositoryCommit Condition="'$(GIT_COMMIT)' != ''">$(GIT_COMMIT)</RepositoryCommit>
 
     <SignAssembly>True</SignAssembly>

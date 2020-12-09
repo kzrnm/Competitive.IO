@@ -21,4 +21,5 @@ Install-Package Competitive.IO
 ### classes
 
 - `Kzrnm.Competitive.IO.ConsoleWriter`
+- `Kzrnm.Competitive.IO.ConsoleReader`
 - `Kzrnm.Competitive.IO.PropertyConsoleReader`
