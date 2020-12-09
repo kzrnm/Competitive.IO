@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
+    using static MethodImplOptions;
     public class ConsoleReader
     {
         private const int BufSize = 1 << 12;
@@ -19,9 +20,10 @@ namespace Kzrnm.Competitive.IO
             this.input = input; this.encoding = encoding;
         }
         public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(AggressiveInlining)]
         protected internal void MoveNext() { if (++pos >= len) { len = input.Read(buffer, 0, buffer.Length); if (len == 0) { buffer[0] = 10; } pos = 0; } }
 
+        [MethodImpl(AggressiveInlining)]
         public int Int()
         {
             int res = 0;
@@ -36,7 +38,9 @@ namespace Kzrnm.Competitive.IO
             } while (48 <= buffer[pos]);
             return neg ? -res : res;
         }
+        [MethodImpl(AggressiveInlining)]
         public int Int0() => Int() - 1;
+        [MethodImpl(AggressiveInlining)]
         public long Long()
         {
             long res = 0;
@@ -45,7 +49,9 @@ namespace Kzrnm.Competitive.IO
             do { res = res * 10 + (buffer[pos] ^ 48U); MoveNext(); } while (48 <= buffer[pos]);
             return neg ? -res : res;
         }
+        [MethodImpl(AggressiveInlining)]
         public long Long0() => Long() - 1;
+        [MethodImpl(AggressiveInlining)]
         public ulong ULong()
         {
             ulong res = 0;
@@ -53,7 +59,9 @@ namespace Kzrnm.Competitive.IO
             do { res = res * 10 + (buffer[pos] ^ 48U); MoveNext(); } while (48 <= buffer[pos]);
             return res;
         }
+        [MethodImpl(AggressiveInlining)]
         public ulong ULong0() => ULong() - 1;
+        [MethodImpl(AggressiveInlining)]
         public string String()
         {
             var sb = new List<byte>();
@@ -61,6 +69,7 @@ namespace Kzrnm.Competitive.IO
             do { sb.Add(buffer[pos]); MoveNext(); } while (32 < buffer[pos]);
             return encoding.GetString(sb.ToArray());
         }
+        [MethodImpl(AggressiveInlining)]
         public string Ascii()
         {
             var sb = new StringBuilder();
@@ -68,6 +77,7 @@ namespace Kzrnm.Competitive.IO
             do { sb.Append((char)buffer[pos]); MoveNext(); } while (32 < buffer[pos]);
             return sb.ToString();
         }
+        [MethodImpl(AggressiveInlining)]
         public string Line()
         {
             var sb = new List<byte>();
@@ -75,6 +85,7 @@ namespace Kzrnm.Competitive.IO
             do { sb.Add(buffer[pos]); MoveNext(); } while (buffer[pos] != 10 && buffer[pos] != 13);
             return encoding.GetString(sb.ToArray());
         }
+        [MethodImpl(AggressiveInlining)]
         public char Char()
         {
             while (buffer[pos] <= 32) MoveNext();
@@ -82,6 +93,7 @@ namespace Kzrnm.Competitive.IO
             MoveNext();
             return res;
         }
+        [MethodImpl(AggressiveInlining)]
         public double Double() => double.Parse(Ascii());
 
         public RepeatReader Repeat(int count) => new RepeatReader(this, count);

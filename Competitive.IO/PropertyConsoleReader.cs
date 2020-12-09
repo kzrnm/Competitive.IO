@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
+    using static MethodImplOptions;
     public class PropertyConsoleReader
     {
         private const int BufSize = 1 << 12;
@@ -19,12 +20,12 @@ namespace Kzrnm.Competitive.IO
             this.input = input; this.encoding = encoding;
         }
         public PropertyConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(AggressiveInlining)]
         protected internal void MoveNext() { if (++pos >= len) { len = input.Read(buffer, 0, buffer.Length); if (len == 0) { buffer[0] = 10; } pos = 0; } }
 
         public int Int
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(AggressiveInlining)]
             get
             {
                 int res = 0;
@@ -37,7 +38,7 @@ namespace Kzrnm.Competitive.IO
         public int Int0 => Int - 1;
         public long Long
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(AggressiveInlining)]
             get
             {
                 long res = 0;
@@ -50,7 +51,7 @@ namespace Kzrnm.Competitive.IO
         public long Long0 => Long - 1;
         public ulong ULong
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(AggressiveInlining)]
             get
             {
                 ulong res = 0;
@@ -62,7 +63,7 @@ namespace Kzrnm.Competitive.IO
         public ulong ULong0 => ULong - 1;
         public string String
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(AggressiveInlining)]
             get
             {
                 var sb = new List<byte>();
@@ -73,7 +74,7 @@ namespace Kzrnm.Competitive.IO
         }
         public string Ascii
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(AggressiveInlining)]
             get
             {
                 var sb = new StringBuilder();
@@ -84,7 +85,7 @@ namespace Kzrnm.Competitive.IO
         }
         public string Line
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(AggressiveInlining)]
             get
             {
                 var sb = new List<byte>();
@@ -95,7 +96,7 @@ namespace Kzrnm.Competitive.IO
         }
         public char Char
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(AggressiveInlining)]
             get
             {
                 while (buffer[pos] <= 32) MoveNext();
