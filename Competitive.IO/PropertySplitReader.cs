@@ -99,6 +99,36 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        public ulong[] ULong
+        {
+            get
+            {
+                while (cr.buffer[cr.pos] <= 32)
+                    cr.MoveNext();
+                var l = new List<ulong>();
+                do
+                {
+                    if (cr.buffer[cr.pos] < 32) cr.MoveNext();
+                    else l.Add(cr.ULong);
+                } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
+                return l.ToArray();
+            }
+        }
+        public ulong[] ULong0
+        {
+            get
+            {
+                while (cr.buffer[cr.pos] <= 32)
+                    cr.MoveNext();
+                var l = new List<ulong>();
+                do
+                {
+                    if (cr.buffer[cr.pos] < 32) cr.MoveNext();
+                    else l.Add(cr.ULong0);
+                } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
+                return l.ToArray();
+            }
+        }
         public double[] Double
         {
             get
@@ -118,6 +148,7 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator string[](PropertySplitReader sr) => sr.Ascii;
         public static implicit operator int[](PropertySplitReader sr) => sr.Int;
         public static implicit operator long[](PropertySplitReader sr) => sr.Long;
+        public static implicit operator ulong[](PropertySplitReader sr) => sr.ULong;
         public static implicit operator double[](PropertySplitReader sr) => sr.Double;
     }
 }

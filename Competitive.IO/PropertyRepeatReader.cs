@@ -97,6 +97,26 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        public ulong[] ULong
+        {
+            get
+            {
+                var arr = new ulong[count];
+                for (var i = 0; i < count; i++)
+                    arr[i] = cr.ULong;
+                return arr;
+            }
+        }
+        public ulong[] ULong0
+        {
+            get
+            {
+                var arr = new ulong[count];
+                for (var i = 0; i < count; i++)
+                    arr[i] = cr.ULong0;
+                return arr;
+            }
+        }
         public double[] Double
         {
             get
@@ -111,6 +131,7 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator string[](PropertyRepeatReader rr) => rr.Ascii;
         public static implicit operator int[](PropertyRepeatReader rr) => rr.Int;
         public static implicit operator long[](PropertyRepeatReader rr) => rr.Long;
+        public static implicit operator ulong[](PropertyRepeatReader rr) => rr.ULong;
         public static implicit operator double[](PropertyRepeatReader rr) => rr.Double;
     }
 }

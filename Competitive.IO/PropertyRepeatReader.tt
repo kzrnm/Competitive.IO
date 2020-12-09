@@ -13,12 +13,15 @@ var defined = new (string Type, string Name)[]{
     ("int", "Int0"),
     ("long", "Long"),
     ("long", "Long0"),
+    ("ulong", "ULong"),
+    ("ulong", "ULong0"),
     ("double", "Double"),
 };
 var implicits = new (string Type, string Name)[]{
     ("string", "Ascii"),
     ("int", "Int"),
     ("long", "Long"),
+    ("ulong", "ULong"),
     ("double", "Double"),
 };
 #>

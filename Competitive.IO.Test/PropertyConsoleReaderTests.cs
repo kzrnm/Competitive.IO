@@ -130,6 +130,54 @@ def
         });
 
         [Fact(Timeout = 1000)]
+        public async Task ULong() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615
+");
+            cr.ULong.Should().Be(123);
+            cr.ULong.Should().Be(14421);
+            cr.ULong.Should().Be(9223372036854775808);
+            cr.ULong.Should().Be(18446744073709551615);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task ULongImplicit() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615
+");
+            ulong r;
+            r = cr;
+            r.Should().Be(123);
+            r = cr;
+            r.Should().Be(14421);
+            r = cr;
+            r.Should().Be(9223372036854775808);
+            r = cr;
+            r.Should().Be(18446744073709551615);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task ULong0() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615
+");
+            cr.ULong.Should().Be(123);
+            cr.ULong.Should().Be(14421);
+            cr.ULong.Should().Be(9223372036854775808);
+            cr.ULong.Should().Be(18446744073709551615);
+        });
+
+
+        [Fact(Timeout = 1000)]
         public async Task Double() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"

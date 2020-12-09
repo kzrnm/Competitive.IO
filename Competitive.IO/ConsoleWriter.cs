@@ -9,7 +9,6 @@ namespace Kzrnm.Competitive.IO
     /// <summary>
     /// Output Writer
     /// </summary>
-    [SuppressMessage("Competitive programming", "CA1063:Implement IDisposable Correctly")]
     public partial class ConsoleWriter : IDisposable
     {
 
@@ -114,9 +113,6 @@ namespace Kzrnm.Competitive.IO
             return this;
         }
 
-        public void Dispose()
-        {
-            Flush();
-        }
+        public void Dispose() => Flush();
     }
 }

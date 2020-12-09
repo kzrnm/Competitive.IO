@@ -85,6 +85,40 @@ namespace Kzrnm.Competitive.IO
         });
 
         [Fact(Timeout = 1000)]
+        public async Task ULong() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615 456789
+");
+            cr.Repeat(4).ULong().Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task ULongImplicit() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615 456789
+");
+            ulong[] r = cr.Repeat(4);
+            r.Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task ULong0() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615 456789
+");
+            cr.Repeat(4).ULong0().Should().Equal(122, 14420, 9223372036854775807, 18446744073709551614);
+        });
+
+        [Fact(Timeout = 1000)]
         public async Task Double() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"

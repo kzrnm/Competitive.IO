@@ -5,6 +5,8 @@
     <LangVersion>6</LangVersion>
     <RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
 
+    <NoWarn>$(NoWarn);CA1063</NoWarn>
+
     <PackageTags>AtCoder;Competitive Programing</PackageTags>
     <PackageId>Competitive.IO</PackageId>
     <Description>IO library for competitive programming</Description>

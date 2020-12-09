@@ -70,6 +70,39 @@ namespace Kzrnm.Competitive.IO
             cr.Split.Long0.Should().Equal(122L, -14422L, 9223372036854775807L, 9223372036854775806L);
         });
 
+
+
+        [Fact(Timeout = 1000)]
+        public async Task ULong() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 14421 9223372036854775808 18446744073709551615
+");
+            cr.Split.ULong.Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task ULongImplicit() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 14421 9223372036854775808 18446744073709551615
+");
+            ulong[] r = cr.Split;
+            r.Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task ULong0() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 14421 9223372036854775808 18446744073709551615
+");
+            cr.Split.ULong0.Should().Equal(122, 14420, 9223372036854775807, 18446744073709551614);
+        });
+
         [Fact(Timeout = 1000)]
         public async Task Double() => await Task.Run(() =>
         {
