@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Competitive.IO](#competitiveio)
+  - [Status](#status)
+  - [Getting started](#getting-started)
+    - [Installation](#installation)
+    - [classes](#classes)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Competitive.IO
 
 IO library for competitive programming.
