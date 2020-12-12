@@ -5,6 +5,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/naminodarie/Competitive.IO</PackageProjectUrl>
     <RepositoryUrl>https://github.com/naminodarie/Competitive.IO</RepositoryUrl>
+    <PackageReleaseNotes>https://github.com/naminodarie/Competitive.IO/blob/master/CHANGELOG.md</PackageReleaseNotes>
 
     <Version>0.0.5</Version>
     <AssemblyVersion>0.0.5.101</AssemblyVersion>
