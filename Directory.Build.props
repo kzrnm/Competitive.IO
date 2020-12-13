@@ -7,8 +7,8 @@
     <RepositoryUrl>https://github.com/naminodarie/Competitive.IO</RepositoryUrl>
     <PackageReleaseNotes>https://github.com/naminodarie/Competitive.IO/blob/master/CHANGELOG.md</PackageReleaseNotes>
 
-    <Version>0.0.6-beta.1</Version>
-    <AssemblyVersion>0.0.6.1</AssemblyVersion>
+    <Version>0.0.6-beta.2</Version>
+    <AssemblyVersion>0.0.6.2</AssemblyVersion>
     <RepositoryCommit Condition="'$(GIT_COMMIT)' != ''">$(GIT_COMMIT)</RepositoryCommit>
 
     <SignAssembly>True</SignAssembly>
