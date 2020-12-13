@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - SourceLink
 
+### Changed
+
+- Update SourceExpander
+
 ## [0.0.5] - 2020-12-09
 ### Added
 
