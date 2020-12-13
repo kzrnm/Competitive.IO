@@ -36,6 +36,9 @@ namespace Kzrnm.Competitive.IO
         readonly PropertyConsoleReader cr;
         internal PropertySplitReader(PropertyConsoleReader cr) { this.cr = cr; }
 <# foreach(var p in defined) { #>
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.<#= p.Name #>"/> array
+        /// </summary>
         public <#= p.Type #>[] <#= p.Name #>
         {
             get

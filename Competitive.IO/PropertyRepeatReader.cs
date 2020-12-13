@@ -13,6 +13,9 @@ namespace Kzrnm.Competitive.IO
         {
             this.cr = cr; this.count = count;
         }
+        /// <summary>
+        /// Repeat <paramref name="factory"/>()
+        /// </summary>
         public T[] Select<T>(Func<PropertyConsoleReader, T> factory)
         {
             var arr = new T[count];
@@ -20,6 +23,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = factory(cr);
             return arr;
         }
+        /// <summary>
+        /// Repeat <paramref name="factory"/>()
+        /// </summary>
         public T[] Select<T>(Func<PropertyConsoleReader, int, T> factory)
         {
             var arr = new T[count];
@@ -27,6 +33,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = factory(cr, i);
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.Line"/> array
+        /// </summary>
         public string[] Line
         {
             get
@@ -37,6 +46,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.String"/> array
+        /// </summary>
         public string[] String
         {
             get
@@ -47,6 +59,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.Ascii"/> array
+        /// </summary>
         public string[] Ascii
         {
             get
@@ -57,6 +72,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.Int"/> array
+        /// </summary>
         public int[] Int
         {
             get
@@ -67,6 +85,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.Int0"/> array
+        /// </summary>
         public int[] Int0
         {
             get
@@ -77,6 +98,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.Long"/> array
+        /// </summary>
         public long[] Long
         {
             get
@@ -87,6 +111,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.Long0"/> array
+        /// </summary>
         public long[] Long0
         {
             get
@@ -97,6 +124,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.ULong"/> array
+        /// </summary>
         public ulong[] ULong
         {
             get
@@ -107,6 +137,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.ULong0"/> array
+        /// </summary>
         public ulong[] ULong0
         {
             get
@@ -117,6 +150,9 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.Double"/> array
+        /// </summary>
         public double[] Double
         {
             get

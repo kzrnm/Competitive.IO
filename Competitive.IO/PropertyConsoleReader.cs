@@ -7,6 +7,9 @@ using System.Text;
 namespace Kzrnm.Competitive.IO
 {
     using static MethodImplOptions;
+    /// <summary>
+    /// Input Reader
+    /// </summary>
     public class PropertyConsoleReader
     {
         private const int BufSize = 1 << 12;
@@ -15,11 +18,23 @@ namespace Kzrnm.Competitive.IO
         internal readonly byte[] buffer = new byte[BufSize];
         internal int pos = 0;
         internal int len = 0;
+
+        /// <summary>
+        /// <para>Wrapper of stdin</para>
+        /// <para>Input stream: <see cref="Console.OpenStandardInput"/></para>
+        /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
+        /// </summary>
+        public PropertyConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
+
+        /// <summary>
+        /// <para>Wrapper of stdin</para>
+        /// </summary>
+        /// <param name="output">Input stream</param>
+        /// <param name="encoding">Input encoding</param>
         public PropertyConsoleReader(Stream input, Encoding encoding)
         {
             this.input = input; this.encoding = encoding;
         }
-        public PropertyConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
         [MethodImpl(AggressiveInlining)]
         protected internal void MoveNext()
         {
@@ -34,6 +49,9 @@ namespace Kzrnm.Competitive.IO
             }
         }
 
+        /// <summary>
+        /// Parse <see cref="int"/> from stdin
+        /// </summary>
         public int Int
         {
             [MethodImpl(AggressiveInlining)]
@@ -46,7 +64,16 @@ namespace Kzrnm.Competitive.IO
                 return neg ? -res : res;
             }
         }
+
+        /// <summary>
+        /// Parse <see cref="int"/> from stdin and decrement
+        /// </summary>
         public int Int0 => Int - 1;
+
+
+        /// <summary>
+        /// Parse <see cref="long"/> from stdin
+        /// </summary>
         public long Long
         {
             [MethodImpl(AggressiveInlining)]
@@ -59,7 +86,15 @@ namespace Kzrnm.Competitive.IO
                 return neg ? -res : res;
             }
         }
+
+        /// <summary>
+        /// Parse <see cref="long"/> from stdin and decrement
+        /// </summary>
         public long Long0 => Long - 1;
+
+        /// <summary>
+        /// Parse <see cref="ulong"/> from stdin
+        /// </summary>
         public ulong ULong
         {
             [MethodImpl(AggressiveInlining)]
@@ -71,7 +106,15 @@ namespace Kzrnm.Competitive.IO
                 return res;
             }
         }
+
+        /// <summary>
+        /// Parse <see cref="ulong"/> from stdin and decrement
+        /// </summary>
         public ulong ULong0 => ULong - 1;
+
+        /// <summary>
+        /// Read <see cref="string"/> from stdin with encoding
+        /// </summary>
         public string String
         {
             [MethodImpl(AggressiveInlining)]
@@ -83,6 +126,10 @@ namespace Kzrnm.Competitive.IO
                 return encoding.GetString(sb.ToArray());
             }
         }
+
+        /// <summary>
+        /// Read <see cref="string"/> from stdin as ascii
+        /// </summary>
         public string Ascii
         {
             [MethodImpl(AggressiveInlining)]
@@ -94,6 +141,10 @@ namespace Kzrnm.Competitive.IO
                 return sb.ToString();
             }
         }
+
+        /// <summary>
+        /// Read line from stdin
+        /// </summary>
         public string Line
         {
             [MethodImpl(AggressiveInlining)]
@@ -105,6 +156,10 @@ namespace Kzrnm.Competitive.IO
                 return encoding.GetString(sb.ToArray());
             }
         }
+
+        /// <summary>
+        /// Read a <see cref="char"/> from stdin
+        /// </summary>
         public char Char
         {
             [MethodImpl(AggressiveInlining)]
@@ -116,9 +171,19 @@ namespace Kzrnm.Competitive.IO
                 return res;
             }
         }
+
+        /// <summary>
+        /// Read a <see cref="char"/> from stdin
+        /// </summary>
         public double Double => double.Parse(Ascii);
 
+        /// <summary>
+        /// Get <see cref="PropertyRepeatReader"/>
+        /// </summary>
         public PropertyRepeatReader Repeat(int count) => new PropertyRepeatReader(this, count);
+        /// <summary>
+        /// Get <see cref="PropertySplitReader"/>
+        /// </summary>
         public PropertySplitReader Split => new PropertySplitReader(this);
         public static implicit operator int(PropertyConsoleReader cr) => cr.Int;
         public static implicit operator long(PropertyConsoleReader cr) => cr.Long;

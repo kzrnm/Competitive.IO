@@ -9,6 +9,9 @@ namespace Kzrnm.Competitive.IO
     {
         readonly PropertyConsoleReader cr;
         internal PropertySplitReader(PropertyConsoleReader cr) { this.cr = cr; }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.String"/> array
+        /// </summary>
         public string[] String
         {
             get
@@ -24,6 +27,9 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.Ascii"/> array
+        /// </summary>
         public string[] Ascii
         {
             get
@@ -39,6 +45,9 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.Int"/> array
+        /// </summary>
         public int[] Int
         {
             get
@@ -54,6 +63,9 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.Int0"/> array
+        /// </summary>
         public int[] Int0
         {
             get
@@ -69,6 +81,9 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.Long"/> array
+        /// </summary>
         public long[] Long
         {
             get
@@ -84,6 +99,9 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.Long0"/> array
+        /// </summary>
         public long[] Long0
         {
             get
@@ -99,6 +117,9 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.ULong"/> array
+        /// </summary>
         public ulong[] ULong
         {
             get
@@ -114,6 +135,9 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.ULong0"/> array
+        /// </summary>
         public ulong[] ULong0
         {
             get
@@ -129,6 +153,9 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.Double"/> array
+        /// </summary>
         public double[] Double
         {
             get

@@ -13,6 +13,9 @@ namespace Kzrnm.Competitive.IO
         {
             this.cr = cr; this.count = count;
         }
+        /// <summary>
+        /// Repeat <paramref name="factory"/>()
+        /// </summary>
         public T[] Select<T>(Func<ConsoleReader, T> factory)
         {
             var arr = new T[count];
@@ -20,6 +23,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = factory(cr);
             return arr;
         }
+        /// <summary>
+        /// Repeat <paramref name="factory"/>()
+        /// </summary>
         public T[] Select<T>(Func<ConsoleReader, int, T> factory)
         {
             var arr = new T[count];
@@ -27,6 +33,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = factory(cr, i);
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Line"/> array
+        /// </summary>
         public string[] Line()
         {
             var arr = new string[count];
@@ -34,6 +43,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.Line();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.String"/> array
+        /// </summary>
         public string[] String()
         {
             var arr = new string[count];
@@ -41,6 +53,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.String();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Ascii"/> array
+        /// </summary>
         public string[] Ascii()
         {
             var arr = new string[count];
@@ -48,6 +63,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.Ascii();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Int"/> array
+        /// </summary>
         public int[] Int()
         {
             var arr = new int[count];
@@ -55,6 +73,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.Int();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Int0"/> array
+        /// </summary>
         public int[] Int0()
         {
             var arr = new int[count];
@@ -62,6 +83,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.Int0();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Long"/> array
+        /// </summary>
         public long[] Long()
         {
             var arr = new long[count];
@@ -69,6 +93,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.Long();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Long0"/> array
+        /// </summary>
         public long[] Long0()
         {
             var arr = new long[count];
@@ -76,6 +103,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.Long0();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.ULong"/> array
+        /// </summary>
         public ulong[] ULong()
         {
             var arr = new ulong[count];
@@ -83,6 +113,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.ULong();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.ULong0"/> array
+        /// </summary>
         public ulong[] ULong0()
         {
             var arr = new ulong[count];
@@ -90,6 +123,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.ULong0();
             return arr;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Double"/> array
+        /// </summary>
         public double[] Double()
         {
             var arr = new double[count];

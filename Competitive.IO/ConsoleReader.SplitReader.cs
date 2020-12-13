@@ -9,6 +9,9 @@ namespace Kzrnm.Competitive.IO
     {
         readonly ConsoleReader cr;
         internal SplitReader(ConsoleReader cr) { this.cr = cr; }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.String"/> array
+        /// </summary>
         public string[] String()
         {
             while (cr.buffer[cr.pos] <= 32)
@@ -21,6 +24,9 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.Ascii"/> array
+        /// </summary>
         public string[] Ascii()
         {
             while (cr.buffer[cr.pos] <= 32)
@@ -33,6 +39,9 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.Int"/> array
+        /// </summary>
         public int[] Int()
         {
             while (cr.buffer[cr.pos] <= 32)
@@ -45,6 +54,9 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.Int0"/> array
+        /// </summary>
         public int[] Int0()
         {
             while (cr.buffer[cr.pos] <= 32)
@@ -57,6 +69,9 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.Long"/> array
+        /// </summary>
         public long[] Long()
         {
             while (cr.buffer[cr.pos] <= 32)
@@ -69,6 +84,9 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.Long0"/> array
+        /// </summary>
         public long[] Long0()
         {
             while (cr.buffer[cr.pos] <= 32)
@@ -81,6 +99,9 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.ULong"/> array
+        /// </summary>
         public ulong[] ULong()
         {
             while (cr.buffer[cr.pos] <= 32)
@@ -93,6 +114,9 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.ULong0"/> array
+        /// </summary>
         public ulong[] ULong0()
         {
             while (cr.buffer[cr.pos] <= 32)
@@ -105,6 +129,9 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.Double"/> array
+        /// </summary>
         public double[] Double()
         {
             while (cr.buffer[cr.pos] <= 32)

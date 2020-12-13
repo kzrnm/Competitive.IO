@@ -13,12 +13,13 @@ namespace Kzrnm.Competitive.IO
 
         public StreamWriter StreamWriter { get; }
         /// <summary>
+        /// <para>Wrapper of stdout</para>
         /// <para>Output stream: <see cref="Console.OpenStandardOutput"/></para>
         /// <para>Output encoding: <see cref="Console.OutputEncoding"/></para>
         /// </summary>
         public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding) { }
         /// <summary>
-        /// 
+        /// <para>Wrapper of stdout</para>
         /// </summary>
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>

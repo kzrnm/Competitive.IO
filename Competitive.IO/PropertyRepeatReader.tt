@@ -40,6 +40,9 @@ namespace Kzrnm.Competitive.IO
         {
             this.cr = cr; this.count = count;
         }
+        /// <summary>
+        /// Repeat <paramref name="factory"/>()
+        /// </summary>
         public T[] Select<T>(Func<PropertyConsoleReader, T> factory)
         {
             var arr = new T[count];
@@ -47,6 +50,9 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = factory(cr);
             return arr;
         }
+        /// <summary>
+        /// Repeat <paramref name="factory"/>()
+        /// </summary>
         public T[] Select<T>(Func<PropertyConsoleReader, int, T> factory)
         {
             var arr = new T[count];
@@ -55,6 +61,9 @@ namespace Kzrnm.Competitive.IO
             return arr;
         }
 <# foreach(var p in defined) { #>
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.<#= p.Name #>"/> array
+        /// </summary>
         public <#= p.Type #>[] <#= p.Name #>
         {
             get
