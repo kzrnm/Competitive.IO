@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -52,6 +53,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public int Int
         {
             [MethodImpl(AggressiveInlining)]
@@ -68,12 +70,14 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public int Int0 => Int - 1;
 
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public long Long
         {
             [MethodImpl(AggressiveInlining)]
@@ -90,11 +94,13 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="long"/> from stdin and decrement
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public long Long0 => Long - 1;
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public ulong ULong
         {
             [MethodImpl(AggressiveInlining)]
@@ -110,11 +116,13 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public ulong ULong0 => ULong - 1;
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public string String
         {
             [MethodImpl(AggressiveInlining)]
@@ -130,6 +138,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public string Ascii
         {
             [MethodImpl(AggressiveInlining)]
@@ -145,6 +154,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read line from stdin
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public string Line
         {
             [MethodImpl(AggressiveInlining)]
@@ -160,6 +170,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public char Char
         {
             [MethodImpl(AggressiveInlining)]
@@ -175,6 +186,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public double Double => double.Parse(Ascii);
 
         /// <summary>
@@ -184,6 +196,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="PropertySplitReader"/>
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public PropertySplitReader Split => new PropertySplitReader(this);
         public static implicit operator int(PropertyConsoleReader cr) => cr.Int;
         public static implicit operator long(PropertyConsoleReader cr) => cr.Long;
