@@ -20,8 +20,7 @@ namespace Kzrnm.Competitive.IO
             cw = new ConsoleWriter(stream, new UTF8Encoding(false));
             newLine = cw.StreamWriter.NewLine;
         }
-
-        private static byte[] ToBytes(ReadOnlySpan<char> str)
+        private static byte[] ToBytes(string str)
         {
             var res = new byte[str.Length];
             for (int i = 0; i < res.Length; i++) res[i] = (byte)str[i];
@@ -35,15 +34,6 @@ namespace Kzrnm.Competitive.IO
             buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes("-123456" + newLine));
-        }
-
-        [Fact]
-        public void WriteLineSpan()
-        {
-            cw.WriteLine("foobar".AsSpan());
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
-            cw.Flush();
-            buffer.Should().StartWith(ToBytes("foobar" + newLine));
         }
 
         [Fact]
@@ -101,30 +91,31 @@ namespace Kzrnm.Competitive.IO
         }
 
         [Fact]
-        public void WriteLineJoinSpan()
-        {
-            cw.WriteLineJoin((Span<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
-            cw.Flush();
-            buffer.Should().StartWith(ToBytes($"1 2 3 4 5{newLine}"));
-        }
-
-        [Fact]
-        public void WriteLineJoinReadOnlySpan()
-        {
-            cw.WriteLineJoin((ReadOnlySpan<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
-            cw.Flush();
-            buffer.Should().StartWith(ToBytes($"1 2 3 4 5{newLine}"));
-        }
-
-        [Fact]
         public void WriteLinesIEnumerable()
         {
             cw.WriteLines(Enumerable.Range(1, 5));
             buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1\n2\n3\n4\n5{newLine}"));
+        }
+
+#if !NETFRAMEWORK
+        [Fact]
+        public void WriteLineSpan()
+        {
+            cw.WriteLine("foobar".AsSpan());
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes("foobar" + newLine));
+        }
+
+        [Fact]
+        public void WriteLineJoinSpan()
+        {
+            cw.WriteLineJoin((Span<int>)Enumerable.Range(1, 5).ToArray());
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes($"1 2 3 4 5{newLine}"));
         }
 
         [Fact]
@@ -137,6 +128,15 @@ namespace Kzrnm.Competitive.IO
         }
 
         [Fact]
+        public void WriteLineJoinReadOnlySpan()
+        {
+            cw.WriteLineJoin((ReadOnlySpan<int>)Enumerable.Range(1, 5).ToArray());
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes($"1 2 3 4 5{newLine}"));
+        }
+
+        [Fact]
         public void WriteLinesReadOnlySpan()
         {
             cw.WriteLines((ReadOnlySpan<int>)Enumerable.Range(1, 5).ToArray());
@@ -144,5 +144,6 @@ namespace Kzrnm.Competitive.IO
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
+#endif
     }
 }
