@@ -21,7 +21,18 @@ namespace Kzrnm.Competitive.IO
         }
         public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
         [MethodImpl(AggressiveInlining)]
-        protected internal void MoveNext() { if (++pos >= len) { len = input.Read(buffer, 0, buffer.Length); if (len == 0) { buffer[0] = 10; } pos = 0; } }
+        protected internal void MoveNext()
+        {
+            if (++pos >= len)
+            {
+                len = input.Read(buffer, 0, buffer.Length);
+                if (len == 0)
+                {
+                    buffer[0] = 10;
+                }
+                pos = 0;
+            }
+        }
 
         [MethodImpl(AggressiveInlining)]
         public int Int()
