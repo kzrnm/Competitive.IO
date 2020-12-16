@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using System.Reflection;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 
@@ -8,15 +8,24 @@ namespace Kzrnm.Competitive.IO
     public class SourceExpanderTest
     {
         [Fact]
-        public void Embedded()
+        public async Task Embedded()
         {
-            var metadataDic = typeof(ConsoleReader).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
-                .ToDictionary(attr => attr.Key, attr => attr.Value);
+            var embedded = await SourceExpander.EmbeddedData.LoadFromAssembly(typeof(ConsoleReader));
+            embedded.AssemblyMetadatas.Should().NotContainKey("SourceExpander.EmbeddedAllowUnsafe");
+            embedded.AssemblyMetadatas.Should().ContainKey("SourceExpander.EmbedderVersion");
+            embedded.AssemblyMetadatas.Keys.Should().ContainSingle(key => key.StartsWith("SourceExpander.EmbeddedSourceCode"));
 
-            metadataDic.Should().NotContainKey("SourceExpander.EmbeddedAllowUnsafe");
-            metadataDic.Should().ContainKey("SourceExpander.EmbedderVersion");
-            metadataDic.Keys.Should().ContainSingle(key => key.StartsWith("SourceExpander.EmbeddedSourceCode"));
-
+            embedded.SourceFiles.SelectMany(s => s.TypeNames)
+                .Should().Contain(
+                    "Kzrnm.Competitive.IO.ConsoleReader",
+                    "Kzrnm.Competitive.IO.RepeatReader",
+                    "Kzrnm.Competitive.IO.SplitReader",
+                    "Kzrnm.Competitive.IO.ConsoleWriter",
+                    "Kzrnm.Competitive.IO.ConsoleWriter",
+                    "Kzrnm.Competitive.IO.PropertyConsoleReader",
+                    "Kzrnm.Competitive.IO.PropertyRepeatReader",
+                    "Kzrnm.Competitive.IO.PropertySplitReader"
+                );
         }
     }
 }
