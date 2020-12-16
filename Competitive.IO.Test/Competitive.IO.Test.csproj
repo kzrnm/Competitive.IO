@@ -4,8 +4,8 @@
     <TargetFrameworks>net5.0;net472</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
-
     <RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
+    <NoWarn>$(NoWarn);IDE0005</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
