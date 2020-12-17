@@ -7,8 +7,8 @@ using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
-    using static MethodImplOptions;
     using static DebuggerBrowsableState;
+    using static MethodImplOptions;
     /// <summary>
     /// Input Reader
     /// </summary>
