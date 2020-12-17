@@ -20,7 +20,7 @@ Do not use this library in a production feature.
 ## Status
 
 [![NuGet version (Competitive.IO)](https://img.shields.io/nuget/v/Competitive.IO.svg?style=flat-square)](https://www.nuget.org/packages/Competitive.IO/)
-![test](https://github.com/naminodarie/Competitive.IO/workflows/test/badge.svg?branch=master)
+![build](https://github.com/naminodarie/Competitive.IO/workflows/Build-Release-Publish/badge.svg?branch=master)
 
 ## Getting started
 
