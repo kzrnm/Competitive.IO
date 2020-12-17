@@ -1,5 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/naminodarie/SourceExpander/master/schema/embedder.schema.json",
+  "enable-minify": true,
+  "embedding-source-class": {
+    "enabled": false
+  },
   "exclude-attributes": [
     "System.Diagnostics.DebuggerBrowsableAttribute",
     "System.Diagnostics.DebuggerDisplayAttribute",
