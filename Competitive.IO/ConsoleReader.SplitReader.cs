@@ -151,4 +151,11 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator ulong[](SplitReader sr) => sr.ULong();
         public static implicit operator double[](SplitReader sr) => sr.Double();
     }
+    public static class SplitEx
+    {
+        /// <summary>
+        /// Get <see cref="SplitReader"/>
+        /// </summary>
+        public static SplitReader Split(this ConsoleReader cr) => new SplitReader(cr);
+    }
 }

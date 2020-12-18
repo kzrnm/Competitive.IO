@@ -166,19 +166,10 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [MethodImpl(AggressiveInlining)]
         public double Double() => double.Parse(Ascii());
-        /// <summary>
-        /// Get <see cref="RepeatReader"/>
-        /// </summary>
-        public RepeatReader Repeat(int count) => new RepeatReader(this, count);
-        /// <summary>
-        /// Get <see cref="SplitReader"/>
-        /// </summary>
-        public SplitReader Split() => new SplitReader(this);
         public static implicit operator int(ConsoleReader cr) => cr.Int();
         public static implicit operator long(ConsoleReader cr) => cr.Long();
         public static implicit operator ulong(ConsoleReader cr) => cr.ULong();
         public static implicit operator double(ConsoleReader cr) => cr.Double();
         public static implicit operator string(ConsoleReader cr) => cr.Ascii();
     }
-
 }

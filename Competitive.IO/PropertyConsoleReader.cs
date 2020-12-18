@@ -189,21 +189,10 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [DebuggerBrowsable(Never)]
         public double Double => double.Parse(Ascii);
-
-        /// <summary>
-        /// Get <see cref="PropertyRepeatReader"/>
-        /// </summary>
-        public PropertyRepeatReader Repeat(int count) => new PropertyRepeatReader(this, count);
-        /// <summary>
-        /// Get <see cref="PropertySplitReader"/>
-        /// </summary>
-        [DebuggerBrowsable(Never)]
-        public PropertySplitReader Split => new PropertySplitReader(this);
         public static implicit operator int(PropertyConsoleReader cr) => cr.Int;
         public static implicit operator long(PropertyConsoleReader cr) => cr.Long;
         public static implicit operator ulong(PropertyConsoleReader cr) => cr.ULong;
         public static implicit operator double(PropertyConsoleReader cr) => cr.Double;
         public static implicit operator string(PropertyConsoleReader cr) => cr.Ascii;
     }
-
 }
