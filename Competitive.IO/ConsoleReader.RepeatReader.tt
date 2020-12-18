@@ -77,4 +77,11 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator <#= p.Type #>[](RepeatReader rr) => rr.<#= p.Name #>();
 <# } #>
     }
+    public static class RepeatEx
+    {
+        /// <summary>
+        /// Get <see cref="RepeatReader"/>
+        /// </summary>
+        public static RepeatReader Repeat(this ConsoleReader cr, int count) => new RepeatReader(cr, count);
+    }
 }

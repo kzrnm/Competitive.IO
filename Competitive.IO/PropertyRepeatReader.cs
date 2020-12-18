@@ -181,4 +181,11 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator ulong[](PropertyRepeatReader rr) => rr.ULong;
         public static implicit operator double[](PropertyRepeatReader rr) => rr.Double;
     }
+    public static class PRepeatEx
+    {
+        /// <summary>
+        /// Get <see cref="PropertyRepeatReader"/>
+        /// </summary>
+        public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
+    }
 }

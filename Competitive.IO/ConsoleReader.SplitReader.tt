@@ -57,4 +57,11 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator <#= p.Type #>[](SplitReader sr) => sr.<#= p.Name #>();
 <# } #>
     }
+    public static class SplitEx
+    {
+        /// <summary>
+        /// Get <see cref="SplitReader"/>
+        /// </summary>
+        public static SplitReader Split(this ConsoleReader cr) => new SplitReader(cr);
+    }
 }

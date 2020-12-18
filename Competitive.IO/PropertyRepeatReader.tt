@@ -82,4 +82,11 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator <#= p.Type #>[](PropertyRepeatReader rr) => rr.<#= p.Name #>;
 <# } #>
     }
+    public static class PRepeatEx
+    {
+        /// <summary>
+        /// Get <see cref="PropertyRepeatReader"/>
+        /// </summary>
+        public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
+    }
 }

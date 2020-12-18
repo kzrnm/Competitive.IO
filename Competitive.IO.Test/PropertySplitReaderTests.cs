@@ -15,7 +15,7 @@ namespace Kzrnm.Competitive.IO
 
 123 -14421 -2147483647 2147483647
 ");
-            cr.Split.Int.Should().Equal(123, -14421, -2147483647, 2147483647);
+            cr.Split().Int.Should().Equal(123, -14421, -2147483647, 2147483647);
         });
 
         [Fact(Timeout = 1000)]
@@ -25,7 +25,7 @@ namespace Kzrnm.Competitive.IO
 
 123 -14421 -2147483647 2147483647
 ");
-            int[] r = cr.Split;
+            int[] r = cr.Split();
             r.Should().Equal(123, -14421, -2147483647, 2147483647);
         });
 
@@ -36,7 +36,7 @@ namespace Kzrnm.Competitive.IO
 
 123 -14421 -2147483647 2147483647
 ");
-            cr.Split.Int0.Should().Equal(122, -14422, -2147483648, 2147483646);
+            cr.Split().Int0.Should().Equal(122, -14422, -2147483648, 2147483646);
         });
 
         [Fact(Timeout = 1000)]
@@ -46,7 +46,7 @@ namespace Kzrnm.Competitive.IO
 
 123 -14421 -9223372036854775808 9223372036854775807
 ");
-            cr.Split.Long.Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
+            cr.Split().Long.Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
         });
 
         [Fact(Timeout = 1000)]
@@ -56,7 +56,7 @@ namespace Kzrnm.Competitive.IO
 
 123 -14421 -9223372036854775808 9223372036854775807
 ");
-            long[] r = cr.Split;
+            long[] r = cr.Split();
             r.Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
         });
 
@@ -67,7 +67,7 @@ namespace Kzrnm.Competitive.IO
 
 123 -14421 -9223372036854775808 9223372036854775807
 ");
-            cr.Split.Long0.Should().Equal(122L, -14422L, 9223372036854775807L, 9223372036854775806L);
+            cr.Split().Long0.Should().Equal(122L, -14422L, 9223372036854775807L, 9223372036854775806L);
         });
 
 
@@ -79,7 +79,7 @@ namespace Kzrnm.Competitive.IO
 
 123 14421 9223372036854775808 18446744073709551615
 ");
-            cr.Split.ULong.Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
+            cr.Split().ULong.Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
         });
 
         [Fact(Timeout = 1000)]
@@ -89,7 +89,7 @@ namespace Kzrnm.Competitive.IO
 
 123 14421 9223372036854775808 18446744073709551615
 ");
-            ulong[] r = cr.Split;
+            ulong[] r = cr.Split();
             r.Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
         });
 
@@ -100,7 +100,7 @@ namespace Kzrnm.Competitive.IO
 
 123 14421 9223372036854775808 18446744073709551615
 ");
-            cr.Split.ULong0.Should().Equal(122, 14420, 9223372036854775807, 18446744073709551614);
+            cr.Split().ULong0.Should().Equal(122, 14420, 9223372036854775807, 18446744073709551614);
         });
 
         [Fact(Timeout = 1000)]
@@ -111,7 +111,7 @@ namespace Kzrnm.Competitive.IO
 123 -14421 -123456789123456789123456789 123456789123456789123456789 -0.000123456 -.000123456 0.000123456 .000123456
 
 ");
-            cr.Split.Double.Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
+            cr.Split().Double.Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
         });
 
         [Fact(Timeout = 1000)]
@@ -122,7 +122,7 @@ namespace Kzrnm.Competitive.IO
 123 -14421 -123456789123456789123456789 123456789123456789123456789 -0.000123456 -.000123456 0.000123456 .000123456
 
 ");
-            double[] r = cr.Split;
+            double[] r = cr.Split();
             r.Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
         });
 
@@ -134,7 +134,7 @@ namespace Kzrnm.Competitive.IO
 abcdefg hijklmnop 123 qrstuv wxyz
 
 ");
-            cr.Split.Ascii.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+            cr.Split().Ascii.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
         });
 
         [Fact(Timeout = 1000)]
@@ -145,7 +145,7 @@ abcdefg hijklmnop 123 qrstuv wxyz
 abcdefg hijklmnop 123 qrstuv wxyz
 
 ");
-            string[] r = cr.Split;
+            string[] r = cr.Split();
             r.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
         });
 
@@ -157,7 +157,7 @@ abcdefg hijklmnop 123 qrstuv wxyz
 abcdefg hijklmnop 123 qrstuv wxyz コンピュータ 电脑😀 컴퓨터
 
 ");
-            cr.Split.String.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터");
+            cr.Split().String.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터");
         });
 
     }

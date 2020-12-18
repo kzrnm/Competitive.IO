@@ -140,4 +140,11 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator ulong[](RepeatReader rr) => rr.ULong();
         public static implicit operator double[](RepeatReader rr) => rr.Double();
     }
+    public static class RepeatEx
+    {
+        /// <summary>
+        /// Get <see cref="RepeatReader"/>
+        /// </summary>
+        public static RepeatReader Repeat(this ConsoleReader cr, int count) => new RepeatReader(cr, count);
+    }
 }

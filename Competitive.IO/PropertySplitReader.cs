@@ -188,4 +188,11 @@ namespace Kzrnm.Competitive.IO
         public static implicit operator ulong[](PropertySplitReader sr) => sr.ULong;
         public static implicit operator double[](PropertySplitReader sr) => sr.Double;
     }
+    public static class PSplitEx
+    {
+        /// <summary>
+        /// Get <see cref="PropertySplitReader"/>
+        /// </summary>
+        public static PropertySplitReader Split(this PropertyConsoleReader cr) => new PropertySplitReader(cr);
+    }
 }
