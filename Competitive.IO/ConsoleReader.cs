@@ -12,10 +12,10 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public class ConsoleReader
     {
-        private const int BufSize = 1 << 12;
+        private const int DefaultBufferSize = 1 << 12;
         private readonly Stream input;
         private readonly Encoding encoding;
-        internal readonly byte[] buffer = new byte[BufSize];
+        internal readonly byte[] buffer;
         internal int pos = 0;
         internal int len = 0;
 
@@ -25,16 +25,26 @@ namespace Kzrnm.Competitive.IO
         /// <para>Input stream: <see cref="Console.OpenStandardInput()"/></para>
         /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
         /// </summary>
-        public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
+        public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
         /// </summary>
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
-        public ConsoleReader(Stream input, Encoding encoding)
+        public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, DefaultBufferSize) { }
+
+        /// <summary>
+        /// <para>Wrapper of stdin</para>
+        /// </summary>
+        /// <param name="input">Input stream</param>
+        /// <param name="encoding">Input encoding</param>
+        /// <param name="bufferSize">Input buffer size</param>
+        public ConsoleReader(Stream input, Encoding encoding, int bufferSize)
         {
-            this.input = input; this.encoding = encoding;
+            this.input = input;
+            this.encoding = encoding;
+            buffer = new byte[bufferSize];
         }
 
         /// <summary>

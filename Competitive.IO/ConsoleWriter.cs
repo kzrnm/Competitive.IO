@@ -10,6 +10,7 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public partial class ConsoleWriter : IDisposable
     {
+        private const int DefaultBufferSize = 1 << 12;
         /// <summary>
         /// Implements writer
         /// </summary>
@@ -19,15 +20,24 @@ namespace Kzrnm.Competitive.IO
         /// <para>Output stream: <see cref="Console.OpenStandardOutput()"/></para>
         /// <para>Output encoding: <see cref="Console.OutputEncoding"/></para>
         /// </summary>
-        public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding) { }
+        public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding, DefaultBufferSize) { }
+
         /// <summary>
         /// <para>Wrapper of stdout</para>
         /// </summary>
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>
-        public ConsoleWriter(Stream output, Encoding encoding)
+        public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, DefaultBufferSize) { }
+
+        /// <summary>
+        /// <para>Wrapper of stdout</para>
+        /// </summary>
+        /// <param name="output">Output stream</param>
+        /// <param name="encoding">Output encoding</param>
+        /// <param name="bufferSize">Output buffer size</param>
+        public ConsoleWriter(Stream output, Encoding encoding, int bufferSize)
         {
-            StreamWriter = new StreamWriter(output, encoding);
+            StreamWriter = new StreamWriter(output, encoding, bufferSize);
         }
 
         /// <summary>

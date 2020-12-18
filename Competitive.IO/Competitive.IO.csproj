@@ -10,6 +10,7 @@
     <PackageTags>AtCoder;Competitive Programing</PackageTags>
     <PackageId>Competitive.IO</PackageId>
     <Description>IO library for competitive programming</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
   </PropertyGroup>
 
