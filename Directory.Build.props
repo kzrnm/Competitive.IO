@@ -7,8 +7,8 @@
     <RepositoryUrl>https://github.com/naminodarie/Competitive.IO</RepositoryUrl>
     <PackageReleaseNotes>https://github.com/naminodarie/Competitive.IO/blob/master/CHANGELOG.md</PackageReleaseNotes>
 
-    <Version>0.1.1</Version>
-    <AssemblyVersion>0.1.1.100</AssemblyVersion>
+    <Version>0.1.2</Version>
+    <AssemblyVersion>0.1.2.100</AssemblyVersion>
 
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)key.snk</AssemblyOriginatorKeyFile>
