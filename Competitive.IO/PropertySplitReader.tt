@@ -32,6 +32,7 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    using static DebuggerBrowsableState;
     /// <summary>
     /// Repeat calling <see cref="PropertyConsoleReader"/> for line break
     /// </summary>
@@ -43,7 +44,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read splited line that maps <see cref="PropertyConsoleReader.<#= p.Name #>"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public <#= p.Type #>[] <#= p.Name #>
         {
             get

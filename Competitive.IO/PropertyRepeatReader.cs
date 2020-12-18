@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    using static DebuggerBrowsableState;
     /// <summary>
     /// Calls <see cref="PropertyConsoleReader"/> several times
     /// </summary>
@@ -40,7 +41,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.Line"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public string[] Line
         {
             get
@@ -54,7 +55,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.String"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public string[] String
         {
             get
@@ -68,7 +69,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.Ascii"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public string[] Ascii
         {
             get
@@ -82,7 +83,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.Int"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public int[] Int
         {
             get
@@ -96,7 +97,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.Int0"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public int[] Int0
         {
             get
@@ -110,7 +111,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.Long"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public long[] Long
         {
             get
@@ -124,7 +125,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.Long0"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public long[] Long0
         {
             get
@@ -138,7 +139,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.ULong"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public ulong[] ULong
         {
             get
@@ -152,7 +153,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.ULong0"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public ulong[] ULong0
         {
             get
@@ -166,7 +167,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.Double"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public double[] Double
         {
             get

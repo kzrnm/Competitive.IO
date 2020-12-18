@@ -33,6 +33,7 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    using static DebuggerBrowsableState;
     /// <summary>
     /// Calls <see cref="PropertyConsoleReader"/> several times
     /// </summary>
@@ -68,7 +69,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.<#= p.Name #>"/> array
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [DebuggerBrowsable(Never)]
         public <#= p.Type #>[] <#= p.Name #>
         {
             get
