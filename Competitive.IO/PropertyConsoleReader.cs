@@ -23,7 +23,7 @@ namespace Kzrnm.Competitive.IO
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
-        /// <para>Input stream: <see cref="Console.OpenStandardInput"/></para>
+        /// <para>Input stream: <see cref="Console.OpenStandardInput()"/></para>
         /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
         /// </summary>
         public PropertyConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
@@ -31,12 +31,16 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// <para>Wrapper of stdin</para>
         /// </summary>
-        /// <param name="output">Input stream</param>
+        /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
         public PropertyConsoleReader(Stream input, Encoding encoding)
         {
             this.input = input; this.encoding = encoding;
         }
+
+        /// <summary>
+        /// Move to next positon
+        /// </summary>
         [MethodImpl(AggressiveInlining)]
         protected internal void MoveNext()
         {
@@ -189,10 +193,30 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [DebuggerBrowsable(Never)]
         public double Double => double.Parse(Ascii);
+
+        /// <summary>
+        /// implicit call <see cref="Int"/>
+        /// </summary>
         public static implicit operator int(PropertyConsoleReader cr) => cr.Int;
+
+        /// <summary>
+        /// implicit call <see cref="Long"/>
+        /// </summary>
         public static implicit operator long(PropertyConsoleReader cr) => cr.Long;
+
+        /// <summary>
+        /// implicit call <see cref="ULong"/>
+        /// </summary>
         public static implicit operator ulong(PropertyConsoleReader cr) => cr.ULong;
+
+        /// <summary>
+        /// implicit call <see cref="Double"/>
+        /// </summary>
         public static implicit operator double(PropertyConsoleReader cr) => cr.Double;
+
+        /// <summary>
+        /// implicit call <see cref="Ascii"/>
+        /// </summary>
         public static implicit operator string(PropertyConsoleReader cr) => cr.Ascii;
     }
 }

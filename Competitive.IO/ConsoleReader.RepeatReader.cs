@@ -5,6 +5,9 @@ using System;
 
 namespace Kzrnm.Competitive.IO
 {
+    /// <summary>
+    /// Calls <see cref="ConsoleReader"/> several times
+    /// </summary>
     public struct RepeatReader
     {
         readonly ConsoleReader cr;
@@ -134,12 +137,30 @@ namespace Kzrnm.Competitive.IO
             return arr;
         }
 
+        /// <summary>
+        /// implicit call <see cref="RepeatReader.Ascii()"/>
+        /// </summary>
         public static implicit operator string[](RepeatReader rr) => rr.Ascii();
+        /// <summary>
+        /// implicit call <see cref="RepeatReader.Int()"/>
+        /// </summary>
         public static implicit operator int[](RepeatReader rr) => rr.Int();
+        /// <summary>
+        /// implicit call <see cref="RepeatReader.Long()"/>
+        /// </summary>
         public static implicit operator long[](RepeatReader rr) => rr.Long();
+        /// <summary>
+        /// implicit call <see cref="RepeatReader.ULong()"/>
+        /// </summary>
         public static implicit operator ulong[](RepeatReader rr) => rr.ULong();
+        /// <summary>
+        /// implicit call <see cref="RepeatReader.Double()"/>
+        /// </summary>
         public static implicit operator double[](RepeatReader rr) => rr.Double();
     }
+    /// <summary>
+    /// Defines extension
+    /// </summary>
     public static class RepeatEx
     {
         /// <summary>

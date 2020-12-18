@@ -33,6 +33,9 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    /// <summary>
+    /// Calls <see cref="PropertyConsoleReader"/> several times
+    /// </summary>
     public struct PropertyRepeatReader
     {
         readonly PropertyConsoleReader cr;
@@ -79,9 +82,15 @@ namespace Kzrnm.Competitive.IO
 <# } #>
 
 <# foreach(var p in implicits) { #>
+        /// <summary>
+        /// implicit call <see cref="PropertyRepeatReader.<#= p.Name #>"/>
+        /// </summary>
         public static implicit operator <#= p.Type #>[](PropertyRepeatReader rr) => rr.<#= p.Name #>;
 <# } #>
     }
+    /// <summary>
+    /// Defines extension
+    /// </summary>
     public static class PRepeatEx
     {
         /// <summary>

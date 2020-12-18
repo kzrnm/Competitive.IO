@@ -32,6 +32,9 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    /// <summary>
+    /// Repeat calling <see cref="PropertyConsoleReader"/> for line break
+    /// </summary>
     public struct PropertySplitReader
     {
         readonly PropertyConsoleReader cr;
@@ -59,9 +62,15 @@ namespace Kzrnm.Competitive.IO
 <# } #>
 
 <# foreach(var p in implicits) { #>
+        /// <summary>
+        /// implicit call <see cref="PropertySplitReader.<#= p.Name #>"/>
+        /// </summary>
         public static implicit operator <#= p.Type #>[](PropertySplitReader sr) => sr.<#= p.Name #>;
 <# } #>
     }
+    /// <summary>
+    /// Defines extension
+    /// </summary>
     public static class PSplitEx
     {
         /// <summary>

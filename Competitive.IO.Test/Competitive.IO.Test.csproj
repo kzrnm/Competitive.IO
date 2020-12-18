@@ -6,6 +6,7 @@
     <IsPackable>false</IsPackable>
     <RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
     <NoWarn>$(NoWarn);IDE0005</NoWarn>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

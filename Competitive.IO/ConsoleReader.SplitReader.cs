@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Kzrnm.Competitive.IO
 {
+    /// <summary>
+    /// Repeat calling <see cref="ConsoleReader"/> for line break
+    /// </summary>
     public struct SplitReader
     {
         readonly ConsoleReader cr;
@@ -145,12 +148,30 @@ namespace Kzrnm.Competitive.IO
             return l.ToArray();
         }
 
+        /// <summary>
+        /// implicit call <see cref="SplitReader.Ascii()"/>
+        /// </summary>
         public static implicit operator string[](SplitReader sr) => sr.Ascii();
+        /// <summary>
+        /// implicit call <see cref="SplitReader.Int()"/>
+        /// </summary>
         public static implicit operator int[](SplitReader sr) => sr.Int();
+        /// <summary>
+        /// implicit call <see cref="SplitReader.Long()"/>
+        /// </summary>
         public static implicit operator long[](SplitReader sr) => sr.Long();
+        /// <summary>
+        /// implicit call <see cref="SplitReader.ULong()"/>
+        /// </summary>
         public static implicit operator ulong[](SplitReader sr) => sr.ULong();
+        /// <summary>
+        /// implicit call <see cref="SplitReader.Double()"/>
+        /// </summary>
         public static implicit operator double[](SplitReader sr) => sr.Double();
     }
+    /// <summary>
+    /// Defines extension
+    /// </summary>
     public static class SplitEx
     {
         /// <summary>

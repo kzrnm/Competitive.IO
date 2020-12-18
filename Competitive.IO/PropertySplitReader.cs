@@ -6,6 +6,9 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    /// <summary>
+    /// Repeat calling <see cref="PropertyConsoleReader"/> for line break
+    /// </summary>
     public struct PropertySplitReader
     {
         readonly PropertyConsoleReader cr;
@@ -182,12 +185,30 @@ namespace Kzrnm.Competitive.IO
             }
         }
 
+        /// <summary>
+        /// implicit call <see cref="PropertySplitReader.Ascii"/>
+        /// </summary>
         public static implicit operator string[](PropertySplitReader sr) => sr.Ascii;
+        /// <summary>
+        /// implicit call <see cref="PropertySplitReader.Int"/>
+        /// </summary>
         public static implicit operator int[](PropertySplitReader sr) => sr.Int;
+        /// <summary>
+        /// implicit call <see cref="PropertySplitReader.Long"/>
+        /// </summary>
         public static implicit operator long[](PropertySplitReader sr) => sr.Long;
+        /// <summary>
+        /// implicit call <see cref="PropertySplitReader.ULong"/>
+        /// </summary>
         public static implicit operator ulong[](PropertySplitReader sr) => sr.ULong;
+        /// <summary>
+        /// implicit call <see cref="PropertySplitReader.Double"/>
+        /// </summary>
         public static implicit operator double[](PropertySplitReader sr) => sr.Double;
     }
+    /// <summary>
+    /// Defines extension
+    /// </summary>
     public static class PSplitEx
     {
         /// <summary>

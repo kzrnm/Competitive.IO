@@ -6,6 +6,9 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    /// <summary>
+    /// Calls <see cref="PropertyConsoleReader"/> several times
+    /// </summary>
     public struct PropertyRepeatReader
     {
         readonly PropertyConsoleReader cr;
@@ -175,12 +178,30 @@ namespace Kzrnm.Competitive.IO
             }
         }
 
+        /// <summary>
+        /// implicit call <see cref="PropertyRepeatReader.Ascii"/>
+        /// </summary>
         public static implicit operator string[](PropertyRepeatReader rr) => rr.Ascii;
+        /// <summary>
+        /// implicit call <see cref="PropertyRepeatReader.Int"/>
+        /// </summary>
         public static implicit operator int[](PropertyRepeatReader rr) => rr.Int;
+        /// <summary>
+        /// implicit call <see cref="PropertyRepeatReader.Long"/>
+        /// </summary>
         public static implicit operator long[](PropertyRepeatReader rr) => rr.Long;
+        /// <summary>
+        /// implicit call <see cref="PropertyRepeatReader.ULong"/>
+        /// </summary>
         public static implicit operator ulong[](PropertyRepeatReader rr) => rr.ULong;
+        /// <summary>
+        /// implicit call <see cref="PropertyRepeatReader.Double"/>
+        /// </summary>
         public static implicit operator double[](PropertyRepeatReader rr) => rr.Double;
     }
+    /// <summary>
+    /// Defines extension
+    /// </summary>
     public static class PRepeatEx
     {
         /// <summary>

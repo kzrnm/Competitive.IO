@@ -32,6 +32,9 @@ using System;
 
 namespace Kzrnm.Competitive.IO
 {
+    /// <summary>
+    /// Calls <see cref="ConsoleReader"/> several times
+    /// </summary>
     public struct RepeatReader
     {
         readonly ConsoleReader cr;
@@ -74,9 +77,15 @@ namespace Kzrnm.Competitive.IO
 <# } #>
 
 <# foreach(var p in implicits) { #>
+        /// <summary>
+        /// implicit call <see cref="RepeatReader.<#= p.Name #>()"/>
+        /// </summary>
         public static implicit operator <#= p.Type #>[](RepeatReader rr) => rr.<#= p.Name #>();
 <# } #>
     }
+    /// <summary>
+    /// Defines extension
+    /// </summary>
     public static class RepeatEx
     {
         /// <summary>

@@ -31,6 +31,9 @@ using System.Collections.Generic;
 
 namespace Kzrnm.Competitive.IO
 {
+    /// <summary>
+    /// Repeat calling <see cref="ConsoleReader"/> for line break
+    /// </summary>
     public struct SplitReader
     {
         readonly ConsoleReader cr;
@@ -54,9 +57,15 @@ namespace Kzrnm.Competitive.IO
 <# } #>
 
 <# foreach(var p in implicits) { #>
+        /// <summary>
+        /// implicit call <see cref="SplitReader.<#= p.Name #>()"/>
+        /// </summary>
         public static implicit operator <#= p.Type #>[](SplitReader sr) => sr.<#= p.Name #>();
 <# } #>
     }
+    /// <summary>
+    /// Defines extension
+    /// </summary>
     public static class SplitEx
     {
         /// <summary>
