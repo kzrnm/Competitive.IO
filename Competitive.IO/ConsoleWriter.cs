@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Kzrnm.Competitive.IO
@@ -64,6 +65,34 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <returns>this instance.</returns>
         public ConsoleWriter WriteLineJoin<T>(params T[] col) => WriteMany(' ', col);
+#if !NETSTANDARD1_3
+        /// <summary>
+        /// Write joined <paramref name="tuple"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        public ConsoleWriter WriteLineJoin<T1, T2>(ValueTuple<T1, T2> tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
+        /// <summary>
+        /// Write joined <paramref name="tuple"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        public ConsoleWriter WriteLineJoin<T1, T2, T3>(ValueTuple<T1, T2, T3> tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
+        /// <summary>
+        /// Write joined <paramref name="tuple"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>(ValueTuple<T1, T2, T3, T4> tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+        /// <summary>
+        /// Write joined <paramref name="tuple"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        public ConsoleWriter WriteLineJoin<TTuple>(TTuple tuple) where TTuple : ITuple
+        {
+            var col = new object[tuple.Length];
+            for (int i = 0; i < col.Length; i++)
+                col[i] = tuple[i];
+            return WriteLineJoin(col);
+        }
+#endif
         /// <summary>
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>

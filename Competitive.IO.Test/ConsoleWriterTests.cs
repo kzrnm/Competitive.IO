@@ -144,6 +144,51 @@ namespace Kzrnm.Competitive.IO
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
+
+        [Fact]
+        public void WriteLineJoinTuple2()
+        {
+            cw.WriteLineJoin((1, 2));
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes($"1 2{newLine}"));
+        }
+
+        [Fact]
+        public void WriteLineJoinTuple3()
+        {
+            cw.WriteLineJoin((1, 2, 'a'));
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes($"1 2 a{newLine}"));
+        }
+
+        [Fact]
+        public void WriteLineJoinTuple4()
+        {
+            cw.WriteLineJoin((1, 2, 'a', 4));
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes($"1 2 a 4{newLine}"));
+        }
+
+        [Fact]
+        public void WriteLineJoinTuple5()
+        {
+            cw.WriteLineJoin((1, 2, 'a', 4, 5));
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes($"1 2 a 4 5{newLine}"));
+        }
+
+        [Fact]
+        public void WriteLineJoinTupleClass()
+        {
+            cw.WriteLineJoin(Tuple.Create(1, 2, 'a', 4));
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes($"1 2 a 4{newLine}"));
+        }
 #endif
     }
 }
