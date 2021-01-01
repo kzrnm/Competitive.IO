@@ -60,11 +60,6 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <returns>this instance.</returns>
         public ConsoleWriter WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        public ConsoleWriter WriteLineJoin<T>(params T[] col) => WriteMany(' ', col);
 #if !NETSTANDARD1_3
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
