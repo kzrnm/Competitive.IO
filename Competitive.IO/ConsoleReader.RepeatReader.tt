@@ -37,59 +37,11 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public struct RepeatReader
     {
-        readonly ConsoleReader cr;
-        readonly int count;
+        internal readonly ConsoleReader cr;
+        internal readonly int count;
         internal RepeatReader(ConsoleReader cr, int count)
         {
             this.cr = cr; this.count = count;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>()
-        /// </summary>
-        public T[] Select<T>(Func<ConsoleReader, T> factory)
-        {
-            var arr = new T[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = factory(cr);
-            return arr;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>()
-        /// </summary>
-        public T[] Select<T>(Func<ConsoleReader, int, T> factory)
-        {
-            var arr = new T[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = factory(cr, i);
-            return arr;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>() <paramref name="width"/> times per line
-        /// </summary>
-        public T[][] Grid<T>(int width, Func<ConsoleReader, T> factory)
-        {
-            var arr = new T[count][];
-            for (var i = 0; i < count; i++)
-            {
-                arr[i] = new T[width];
-                for (var j = 0; j < width; j++)
-                    arr[i][j] = factory(cr);
-            }
-            return arr;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>() <paramref name="width"/> times per line
-        /// </summary>
-        public T[][] Grid<T>(int width, Func<ConsoleReader, int, int, T> factory)
-        {
-            var arr = new T[count][];
-            for (var i = 0; i < count; i++)
-            {
-                arr[i] = new T[width];
-                for (var j = 0; j < width; j++)
-                    arr[i][j] = factory(cr, i, j);
-            }
-            return arr;
         }
 <# foreach(var p in defined) { #>
         /// <summary>

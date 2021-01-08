@@ -12,59 +12,11 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public struct PropertyRepeatReader
     {
-        readonly PropertyConsoleReader cr;
-        readonly int count;
+        internal readonly PropertyConsoleReader cr;
+        internal readonly int count;
         internal PropertyRepeatReader(PropertyConsoleReader cr, int count)
         {
             this.cr = cr; this.count = count;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>()
-        /// </summary>
-        public T[] Select<T>(Func<PropertyConsoleReader, T> factory)
-        {
-            var arr = new T[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = factory(cr);
-            return arr;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>()
-        /// </summary>
-        public T[] Select<T>(Func<PropertyConsoleReader, int, T> factory)
-        {
-            var arr = new T[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = factory(cr, i);
-            return arr;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>() <paramref name="width"/> times per line
-        /// </summary>
-        public T[][] Grid<T>(int width, Func<PropertyConsoleReader, T> factory)
-        {
-            var arr = new T[count][];
-            for (var i = 0; i < count; i++)
-            {
-                arr[i] = new T[width];
-                for (var j = 0; j < width; j++)
-                    arr[i][j] = factory(cr);
-            }
-            return arr;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>() <paramref name="width"/> times per line
-        /// </summary>
-        public T[][] Grid<T>(int width, Func<PropertyConsoleReader, int, int, T> factory)
-        {
-            var arr = new T[count][];
-            for (var i = 0; i < count; i++)
-            {
-                arr[i] = new T[width];
-                for (var j = 0; j < width; j++)
-                    arr[i][j] = factory(cr, i, j);
-            }
-            return arr;
         }
         /// <summary>
         /// Read <see cref="PropertyConsoleReader.Line"/> array
