@@ -64,6 +64,48 @@ namespace Kzrnm.Competitive.IO
         });
 
         [Fact(Timeout = 1000)]
+        public async Task SelectArray2() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+-1 1
+-2 2
+-3 3
+");
+            var (a, b) = cr.Repeat(3).SelectArray(c => (c.Int, c.Int));
+            a.Should().Equal(-1, -2, -3);
+            b.Should().Equal(1, 2, 3);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task SelectArray3() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+-1 1 a
+-2 2 b
+-3 3 c
+");
+            var (a, b, c) = cr.Repeat(3).SelectArray(cc => (cc.Int, cc.Int, cr.Char));
+            a.Should().Equal(-1, -2, -3);
+            b.Should().Equal(1, 2, 3);
+            c.Should().Equal('a', 'b', 'c');
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task SelectArray4() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+-1 1 a 0.5
+-2 2 b 1.5
+-3 3 c 1e8
+");
+            var (a, b, c, d) = cr.Repeat(3).SelectArray(cc => (cc.Int, cc.Int, cr.Char, cr.Double));
+            a.Should().Equal(-1, -2, -3);
+            b.Should().Equal(1, 2, 3);
+            c.Should().Equal('a', 'b', 'c');
+            d.Should().Equal(0.5, 1.5, 1e8);
+        });
+
+        [Fact(Timeout = 1000)]
         public async Task Int() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
