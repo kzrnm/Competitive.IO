@@ -37,6 +37,34 @@ namespace Kzrnm.Competitive.IO
             return arr;
         }
         /// <summary>
+        /// Repeat <paramref name="factory"/>() <paramref name="width"/> times per line
+        /// </summary>
+        public T[][] Grid<T>(int width, Func<ConsoleReader, T> factory)
+        {
+            var arr = new T[count][];
+            for (var i = 0; i < count; i++)
+            {
+                arr[i] = new T[width];
+                for (var j = 0; j < width; j++)
+                    arr[i][j] = factory(cr);
+            }
+            return arr;
+        }
+        /// <summary>
+        /// Repeat <paramref name="factory"/>() <paramref name="width"/> times per line
+        /// </summary>
+        public T[][] Grid<T>(int width, Func<ConsoleReader, int, int, T> factory)
+        {
+            var arr = new T[count][];
+            for (var i = 0; i < count; i++)
+            {
+                arr[i] = new T[width];
+                for (var j = 0; j < width; j++)
+                    arr[i][j] = factory(cr, i, j);
+            }
+            return arr;
+        }
+        /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
         public string[] Line()

@@ -8,6 +8,62 @@ namespace Kzrnm.Competitive.IO
     public class PropertyRepeatReaderTests
     {
         [Fact(Timeout = 1000)]
+        public async Task Select() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+1 2
+");
+            cr.Repeat(3).Select<(int, int)>(c => (c, c))
+            .Should().Equal((123, -14421), (-2147483647, 2147483647), (1, 2));
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task SelectWithIndex() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+1 2
+");
+            cr.Repeat(3).Select<(int, int, int)>((c, i) => (i, c, c))
+            .Should().Equal((0, 123, -14421), (1, -2147483647, 2147483647), (2, 1, 2));
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task Grid() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+1 2
+");
+            var grid = cr.Repeat(3).Grid(2, c => c.Int);
+            grid[0].Should().Equal(123, -14421);
+            grid[1].Should().Equal(-2147483647, 2147483647);
+            grid[2].Should().Equal(1, 2);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task GridWithIndex() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+1 2
+");
+            var grid = cr.Repeat(3).Grid(2, (c, i, j) => (i, j, c.Int));
+            grid[0].Should().Equal((0, 0, 123), (0, 1, -14421));
+            grid[1].Should().Equal((1, 0, -2147483647), (1, 1, 2147483647));
+            grid[2].Should().Equal((2, 0, 1), (2, 1, 2));
+        });
+
+        [Fact(Timeout = 1000)]
         public async Task Int() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
