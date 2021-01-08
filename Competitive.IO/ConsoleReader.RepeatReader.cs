@@ -10,31 +10,11 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public struct RepeatReader
     {
-        readonly ConsoleReader cr;
-        readonly int count;
+        internal readonly ConsoleReader cr;
+        internal readonly int count;
         internal RepeatReader(ConsoleReader cr, int count)
         {
             this.cr = cr; this.count = count;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>()
-        /// </summary>
-        public T[] Select<T>(Func<ConsoleReader, T> factory)
-        {
-            var arr = new T[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = factory(cr);
-            return arr;
-        }
-        /// <summary>
-        /// Repeat <paramref name="factory"/>()
-        /// </summary>
-        public T[] Select<T>(Func<ConsoleReader, int, T> factory)
-        {
-            var arr = new T[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = factory(cr, i);
-            return arr;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array

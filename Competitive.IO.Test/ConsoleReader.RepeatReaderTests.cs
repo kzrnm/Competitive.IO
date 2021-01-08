@@ -8,6 +8,104 @@ namespace Kzrnm.Competitive.IO
     public class RepeatReaderTests
     {
         [Fact(Timeout = 1000)]
+        public async Task Select() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+1 2
+");
+            cr.Repeat(3).Select<(int, int)>(c => (c, c))
+            .Should().Equal((123, -14421), (-2147483647, 2147483647), (1, 2));
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task SelectWithIndex() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+1 2
+");
+            cr.Repeat(3).Select<(int, int, int)>((c, i) => (i, c, c))
+            .Should().Equal((0, 123, -14421), (1, -2147483647, 2147483647), (2, 1, 2));
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task Grid() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+1 2
+");
+            var grid = cr.Repeat(3).Grid(2, c => c.Int());
+            grid[0].Should().Equal(123, -14421);
+            grid[1].Should().Equal(-2147483647, 2147483647);
+            grid[2].Should().Equal(1, 2);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task GridWithIndex() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+1 2
+");
+            var grid = cr.Repeat(3).Grid(2, (c, i, j) => (i, j, c.Int()));
+            grid[0].Should().Equal((0, 0, 123), (0, 1, -14421));
+            grid[1].Should().Equal((1, 0, -2147483647), (1, 1, 2147483647));
+            grid[2].Should().Equal((2, 0, 1), (2, 1, 2));
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task SelectArray2() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+-1 1
+-2 2
+-3 3
+");
+            var (a, b) = cr.Repeat(3).SelectArray(c => (c.Int(), c.Int()));
+            a.Should().Equal(-1, -2, -3);
+            b.Should().Equal(1, 2, 3);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task SelectArray3() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+-1 1 a
+-2 2 b
+-3 3 c
+");
+            var (a, b, c) = cr.Repeat(3).SelectArray(cc => (cc.Int(), cc.Int(), cr.Char()));
+            a.Should().Equal(-1, -2, -3);
+            b.Should().Equal(1, 2, 3);
+            c.Should().Equal('a', 'b', 'c');
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task SelectArray4() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+-1 1 a 0.5
+-2 2 b 1.5
+-3 3 c 1e8
+");
+            var (a, b, c, d) = cr.Repeat(3).SelectArray(cc => (cc.Int(), cc.Int(), cr.Char(), cr.Double()));
+            a.Should().Equal(-1, -2, -3);
+            b.Should().Equal(1, 2, 3);
+            c.Should().Equal('a', 'b', 'c');
+            d.Should().Equal(0.5, 1.5, 1e8);
+        });
+
+        [Fact(Timeout = 1000)]
         public async Task Int() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
