@@ -65,17 +65,18 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        public ConsoleWriter WriteLineJoin<T1, T2>(ValueTuple<T1, T2> tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
+        public ConsoleWriter WriteLineJoin<T1, T2>((T1, T2) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        public ConsoleWriter WriteLineJoin<T1, T2, T3>(ValueTuple<T1, T2, T3> tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
+        public ConsoleWriter WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>(ValueTuple<T1, T2, T3, T4> tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+        public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+#if NETSTANDARD2_1
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
@@ -87,6 +88,7 @@ namespace Kzrnm.Competitive.IO
                 col[i] = tuple[i];
             return WriteLineJoin(col);
         }
+#endif
 #endif
         /// <summary>
         /// Write joined <paramref name="col"/> to output stream.

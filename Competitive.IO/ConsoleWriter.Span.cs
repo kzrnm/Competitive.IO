@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD1_3
+﻿#if NETSTANDARD2_1
 using System;
 
 namespace Kzrnm.Competitive.IO
