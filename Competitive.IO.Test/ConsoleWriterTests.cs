@@ -28,12 +28,30 @@ namespace Kzrnm.Competitive.IO
         }
 
         [Fact]
+        public void WriteLineEmpty()
+        {
+            cw.WriteLine();
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes(newLine));
+        }
+
+        [Fact]
         public void WriteLine()
         {
             cw.WriteLine(-123456);
             buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes("-123456" + newLine));
+        }
+
+        [Fact]
+        public void WriteLineJoinEmpty()
+        {
+            cw.WriteLineJoin();
+            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            cw.Flush();
+            buffer.Should().StartWith(ToBytes(newLine));
         }
 
         [Fact]

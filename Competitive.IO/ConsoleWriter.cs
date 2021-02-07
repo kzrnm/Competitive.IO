@@ -47,6 +47,16 @@ namespace Kzrnm.Competitive.IO
         public void Flush() => StreamWriter.Flush();
 
         /// <summary>
+        /// Write empty line to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        public ConsoleWriter WriteLine()
+        {
+            StreamWriter.WriteLine();
+            return this;
+        }
+
+        /// <summary>
         /// Write <paramref name="obj"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
@@ -150,14 +160,14 @@ namespace Kzrnm.Competitive.IO
         {
             var en = col.GetEnumerator();
             if (!en.MoveNext())
-                return this;
+                goto End;
             StreamWriter.Write(en.Current.ToString());
             while (en.MoveNext())
             {
                 StreamWriter.Write(sep);
                 StreamWriter.Write(en.Current.ToString());
             }
-            StreamWriter.WriteLine();
+        End: StreamWriter.WriteLine();
             return this;
         }
 
