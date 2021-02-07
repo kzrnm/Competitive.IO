@@ -227,6 +227,55 @@ def
         });
 
         [Fact(Timeout = 1000)]
+        public async Task Decimal() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 -14421
+-123456789123456789123456789 123456789123456789123456789
+-0.000123456 -.000123456
+0.000123456 .000123456
+");
+            cr.Decimal.Should().Be(123.0m);
+            cr.Decimal.Should().Be(-14421.0m);
+            cr.Decimal.Should().Be(-123456789123456789123456789.0m);
+            cr.Decimal.Should().Be(123456789123456789123456789.0m);
+            cr.Decimal.Should().Be(-0.000123456m);
+            cr.Decimal.Should().Be(-.000123456m);
+            cr.Decimal.Should().Be(0.000123456m);
+            cr.Decimal.Should().Be(.000123456m);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task DecimalImplicit() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 -14421
+-123456789123456789123456789 123456789123456789123456789
+-0.000123456 -.000123456
+0.000123456 .000123456
+");
+            decimal r;
+            r = cr;
+            r.Should().Be(123.0m);
+            r = cr;
+            r.Should().Be(-14421.0m);
+            r = cr;
+            r.Should().Be(-123456789123456789123456789.0m);
+            r = cr;
+            r.Should().Be(123456789123456789123456789.0m);
+            r = cr;
+            r.Should().Be(-0.000123456m);
+            r = cr;
+            r.Should().Be(-.000123456m);
+            r = cr;
+            r.Should().Be(0.000123456m);
+            r = cr;
+            r.Should().Be(.000123456m);
+        });
+
+        [Fact(Timeout = 1000)]
         public async Task Ascii() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"

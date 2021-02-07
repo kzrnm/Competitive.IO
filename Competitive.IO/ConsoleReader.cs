@@ -175,33 +175,51 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// <see cref="Ascii"/> and <see cref="double.Parse(string)"/>
+        /// Read a <see cref="double"/> from stdin
         /// </summary>
         [MethodImpl(AggressiveInlining)]
         public double Double() => double.Parse(Ascii());
 
         /// <summary>
+        /// Read a <see cref="decimal"/> from stdin
+        /// </summary>
+        [MethodImpl(AggressiveInlining)]
+        public decimal Decimal() => decimal.Parse(Ascii());
+
+        /// <summary>
         /// implicit call <see cref="Int()"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator int(ConsoleReader cr) => cr.Int();
 
         /// <summary>
         /// implicit call <see cref="Long()"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator long(ConsoleReader cr) => cr.Long();
 
         /// <summary>
         /// implicit call <see cref="ULong()"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator ulong(ConsoleReader cr) => cr.ULong();
 
         /// <summary>
         /// implicit call <see cref="Double()"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator double(ConsoleReader cr) => cr.Double();
+
+        /// <summary>
+        /// implicit call <see cref="Decimal"/>
+        /// </summary>
+        [MethodImpl(AggressiveInlining)]
+        public static implicit operator decimal(ConsoleReader cr) => cr.Decimal();
+
         /// <summary>
         /// implicit call <see cref="Ascii()"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator string(ConsoleReader cr) => cr.Ascii();
     }
 }

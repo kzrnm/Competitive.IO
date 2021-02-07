@@ -158,6 +158,20 @@ namespace Kzrnm.Competitive.IO
                 return arr;
             }
         }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.Decimal"/> array
+        /// </summary>
+        [DebuggerBrowsable(Never)]
+        public decimal[] Decimal
+        {
+            get
+            {
+                var arr = new decimal[count];
+                for (var i = 0; i < count; i++)
+                    arr[i] = cr.Decimal;
+                return arr;
+            }
+        }
 
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.Ascii"/>
@@ -179,6 +193,10 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="PropertyRepeatReader.Double"/>
         /// </summary>
         public static implicit operator double[](PropertyRepeatReader rr) => rr.Double;
+        /// <summary>
+        /// implicit call <see cref="PropertyRepeatReader.Decimal"/>
+        /// </summary>
+        public static implicit operator decimal[](PropertyRepeatReader rr) => rr.Decimal;
     }
     /// <summary>
     /// Defines extension

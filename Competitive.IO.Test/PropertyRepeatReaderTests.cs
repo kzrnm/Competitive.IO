@@ -242,6 +242,31 @@ namespace Kzrnm.Competitive.IO
         });
 
         [Fact(Timeout = 1000)]
+        public async Task Decimal() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 -14421 -123456789123456789123456789 123456789123456789123456789
+-0.000123456 -.000123456 0.000123456 .000123456
+1.0
+");
+            cr.Repeat(8).Decimal.Should().Equal(123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task DecimalImplicit() => await Task.Run(() =>
+        {
+            var cr = GetPropertyConsoleReader(@"
+
+123 -14421 -123456789123456789123456789 123456789123456789123456789
+-0.000123456 -.000123456 0.000123456 .000123456
+1.0
+");
+            decimal[] r = cr.Repeat(8);
+            r.Should().Equal(123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m);
+        });
+
+        [Fact(Timeout = 1000)]
         public async Task Ascii() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"

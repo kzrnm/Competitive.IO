@@ -185,6 +185,25 @@ namespace Kzrnm.Competitive.IO
                 return l.ToArray();
             }
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="PropertyConsoleReader.Decimal"/> array
+        /// </summary>
+        [DebuggerBrowsable(Never)]
+        public decimal[] Decimal
+        {
+            get
+            {
+                while (cr.buffer[cr.pos] <= 32)
+                    cr.MoveNext();
+                var l = new List<decimal>();
+                do
+                {
+                    if (cr.buffer[cr.pos] < 32) cr.MoveNext();
+                    else l.Add(cr.Decimal);
+                } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
+                return l.ToArray();
+            }
+        }
 
         /// <summary>
         /// implicit call <see cref="PropertySplitReader.Ascii"/>
@@ -206,6 +225,10 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="PropertySplitReader.Double"/>
         /// </summary>
         public static implicit operator double[](PropertySplitReader sr) => sr.Double;
+        /// <summary>
+        /// implicit call <see cref="PropertySplitReader.Decimal"/>
+        /// </summary>
+        public static implicit operator decimal[](PropertySplitReader sr) => sr.Decimal;
     }
     /// <summary>
     /// Defines extension

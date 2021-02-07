@@ -147,6 +147,21 @@ namespace Kzrnm.Competitive.IO
             } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
             return l.ToArray();
         }
+        /// <summary>
+        /// Read splited line that maps <see cref="ConsoleReader.Decimal"/> array
+        /// </summary>
+        public decimal[] Decimal()
+        {
+            while (cr.buffer[cr.pos] <= 32)
+                cr.MoveNext();
+            var l = new List<decimal>();
+            do
+            {
+                if (cr.buffer[cr.pos] < 32) cr.MoveNext();
+                else l.Add(cr.Decimal());
+            } while (cr.buffer[cr.pos] != 10 && cr.buffer[cr.pos] != 13);
+            return l.ToArray();
+        }
 
         /// <summary>
         /// implicit call <see cref="SplitReader.Ascii()"/>
@@ -168,6 +183,10 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="SplitReader.Double()"/>
         /// </summary>
         public static implicit operator double[](SplitReader sr) => sr.Double();
+        /// <summary>
+        /// implicit call <see cref="SplitReader.Decimal()"/>
+        /// </summary>
+        public static implicit operator decimal[](SplitReader sr) => sr.Decimal();
     }
     /// <summary>
     /// Defines extension

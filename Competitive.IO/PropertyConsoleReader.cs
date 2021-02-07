@@ -189,34 +189,59 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// Read a <see cref="char"/> from stdin
+        /// Read a <see cref="double"/> from stdin
         /// </summary>
         [DebuggerBrowsable(Never)]
-        public double Double => double.Parse(Ascii);
+        public double Double
+        {
+            [MethodImpl(AggressiveInlining)]
+            get { return double.Parse(Ascii); }
+        }
+
+        /// <summary>
+        /// Read a <see cref="decimal"/> from stdin
+        /// </summary>
+        [DebuggerBrowsable(Never)]
+        public decimal Decimal
+        {
+            [MethodImpl(AggressiveInlining)]
+            get { return decimal.Parse(Ascii); }
+        }
 
         /// <summary>
         /// implicit call <see cref="Int"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator int(PropertyConsoleReader cr) => cr.Int;
 
         /// <summary>
         /// implicit call <see cref="Long"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator long(PropertyConsoleReader cr) => cr.Long;
 
         /// <summary>
         /// implicit call <see cref="ULong"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator ulong(PropertyConsoleReader cr) => cr.ULong;
 
         /// <summary>
         /// implicit call <see cref="Double"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator double(PropertyConsoleReader cr) => cr.Double;
+
+        /// <summary>
+        /// implicit call <see cref="Decimal"/>
+        /// </summary>
+        [MethodImpl(AggressiveInlining)]
+        public static implicit operator decimal(PropertyConsoleReader cr) => cr.Decimal;
 
         /// <summary>
         /// implicit call <see cref="Ascii"/>
         /// </summary>
+        [MethodImpl(AggressiveInlining)]
         public static implicit operator string(PropertyConsoleReader cr) => cr.Ascii;
     }
 }
