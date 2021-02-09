@@ -51,17 +51,17 @@ namespace Kzrnm.Competitive.IO
         /// Move to next positon
         /// </summary>
         [MethodImpl(AggressiveInlining)]
-        protected internal void MoveNext()
+        protected internal byte Read()
         {
             if (++pos >= len)
             {
-                len = input.Read(buffer, 0, buffer.Length);
-                if (len == 0)
+                if ((len = input.Read(buffer, 0, buffer.Length)) <= 0)
                 {
                     buffer[0] = 10;
                 }
                 pos = 0;
             }
+            return buffer[pos];
         }
 
         /// <summary>
@@ -72,14 +72,19 @@ namespace Kzrnm.Competitive.IO
         {
             int res = 0;
             bool neg = false;
-            while (buffer[pos] < 48)
-            {
-                neg = buffer[pos] == 45; MoveNext();
-            }
+            byte b;
             do
             {
-                res = checked(res * 10 + (buffer[pos] ^ 48)); MoveNext();
-            } while (48 <= buffer[pos]);
+                b = Read();
+                if (b == '-')
+                    neg = true;
+            }
+            while (b < '0');
+            do
+            {
+                res = res * 10 + (b ^ '0');
+                b = Read();
+            } while ('0' <= b);
             return neg ? -res : res;
         }
 
@@ -97,8 +102,19 @@ namespace Kzrnm.Competitive.IO
         {
             long res = 0;
             bool neg = false;
-            while (buffer[pos] < 48) { neg = buffer[pos] == 45; MoveNext(); }
-            do { res = res * 10 + (buffer[pos] ^ 48U); MoveNext(); } while (48 <= buffer[pos]);
+            byte b;
+            do
+            {
+                b = Read();
+                if (b == '-')
+                    neg = true;
+            }
+            while (b < '0');
+            do
+            {
+                res = res * 10 + (b ^ '0');
+                b = Read();
+            } while ('0' <= b);
             return neg ? -res : res;
         }
 
@@ -115,8 +131,14 @@ namespace Kzrnm.Competitive.IO
         public ulong ULong()
         {
             ulong res = 0;
-            while (buffer[pos] < 48) MoveNext();
-            do { res = res * 10 + (buffer[pos] ^ 48U); MoveNext(); } while (48 <= buffer[pos]);
+            byte b;
+            do b = Read();
+            while (b < '0');
+            do
+            {
+                res = res * 10 + (b ^ (ulong)'0');
+                b = Read();
+            } while ('0' <= b);
             return res;
         }
 
@@ -132,9 +154,15 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(AggressiveInlining)]
         public string String()
         {
-            var sb = new List<byte>();
-            while (buffer[pos] <= 32) MoveNext();
-            do { sb.Add(buffer[pos]); MoveNext(); } while (32 < buffer[pos]);
+            var sb = new List<byte>(); ;
+            byte b;
+            do b = Read();
+            while (b <= ' ');
+            do
+            {
+                sb.Add(b);
+                b = Read();
+            } while (' ' < b);
             return encoding.GetString(sb.ToArray());
         }
 
@@ -145,8 +173,14 @@ namespace Kzrnm.Competitive.IO
         public string Ascii()
         {
             var sb = new StringBuilder();
-            while (buffer[pos] <= 32) MoveNext();
-            do { sb.Append((char)buffer[pos]); MoveNext(); } while (32 < buffer[pos]);
+            byte b;
+            do b = Read();
+            while (b <= ' ');
+            do
+            {
+                sb.Append((char)b);
+                b = Read();
+            } while (' ' < b);
             return sb.ToString();
         }
 
@@ -157,8 +191,15 @@ namespace Kzrnm.Competitive.IO
         public string Line()
         {
             var sb = new List<byte>();
-            while (buffer[pos] <= 32) MoveNext();
-            do { sb.Add(buffer[pos]); MoveNext(); } while (buffer[pos] != 10 && buffer[pos] != 13);
+            byte b;
+            do b = Read();
+            while (b <= ' ');
+
+            do
+            {
+                sb.Add(b);
+                b = Read();
+            } while (b != '\n' && b != '\r');
             return encoding.GetString(sb.ToArray());
         }
 
@@ -168,10 +209,10 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(AggressiveInlining)]
         public char Char()
         {
-            while (buffer[pos] <= 32) MoveNext();
-            char res = (char)buffer[pos];
-            MoveNext();
-            return res;
+            byte b;
+            do b = Read();
+            while (b <= ' ');
+            return (char)b;
         }
 
         /// <summary>

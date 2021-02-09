@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net5.0;netcoreapp3.1;net472</TargetFrameworks>
+    <LangVersion>9</LangVersion>
+    <NoWarn>$(NoWarn);CA1050</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Ascii.txt" />
+    <None Remove="Double.txt" />
+    <None Remove="Int.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Int.txt" />
+    <EmbeddedResource Include="Ascii.txt" />
+    <EmbeddedResource Include="Double.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Competitive.IO\Competitive.IO.csproj" />
+  </ItemGroup>
+
+</Project>
