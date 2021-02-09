@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Competitive.IO.Benchmark", "Competitive.IO.Benchmark.csproj", "{FD476587-C92D-428B-B8F9-62E4E04A5BE0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Competitive.IO", "..\Competitive.IO\Competitive.IO.csproj", "{ABA68ABB-F27C-4612-8267-80B1003C5176}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD476587-C92D-428B-B8F9-62E4E04A5BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD476587-C92D-428B-B8F9-62E4E04A5BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD476587-C92D-428B-B8F9-62E4E04A5BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD476587-C92D-428B-B8F9-62E4E04A5BE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABA68ABB-F27C-4612-8267-80B1003C5176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABA68ABB-F27C-4612-8267-80B1003C5176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABA68ABB-F27C-4612-8267-80B1003C5176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABA68ABB-F27C-4612-8267-80B1003C5176}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA9854D7-82E5-4F56-8F6C-B601E4A84737}
+	EndGlobalSection
+EndGlobal
