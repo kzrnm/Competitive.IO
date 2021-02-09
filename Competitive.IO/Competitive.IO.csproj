@@ -43,11 +43,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RepeatReader.tt</DependentUpon>
     </Compile>
-    <Compile Update="ConsoleReader.SplitReader.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ConsoleReader.SplitReader.tt</DependentUpon>
-    </Compile>
     <None Update="ConsoleReader.RepeatReader.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ConsoleReader.RepeatReader.cs</LastGenOutput>
@@ -56,10 +51,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ConsoleReader.RepeatReader.tt</DependentUpon>
-    </None>
-    <None Update="ConsoleReader.SplitReader.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ConsoleReader.SplitReader.cs</LastGenOutput>
     </None>
     <None Update="ConsoleReader.SplitReader.cs">
       <DesignTime>True</DesignTime>
@@ -72,11 +63,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PropertyRepeatReader.tt</DependentUpon>
     </Compile>
-    <Compile Update="PropertySplitReader.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PropertySplitReader.tt</DependentUpon>
-    </Compile>
     <None Update="PropertyRepeatReader.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PropertyRepeatReader.cs</LastGenOutput>
@@ -85,10 +71,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PropertyRepeatReader.tt</DependentUpon>
-    </None>
-    <None Update="PropertySplitReader.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PropertySplitReader.cs</LastGenOutput>
     </None>
     <None Update="PropertySplitReader.cs">
       <DesignTime>True</DesignTime>

@@ -10,7 +10,7 @@ namespace Kzrnm.Competitive.IO
     /// <summary>
     /// Input Reader
     /// </summary>
-    public class ConsoleReader
+    public class NewConsoleReader
     {
         private const int DefaultBufferSize = 1 << 12;
         private readonly Stream input;
@@ -25,14 +25,14 @@ namespace Kzrnm.Competitive.IO
         /// <para>Input stream: <see cref="Console.OpenStandardInput()"/></para>
         /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
         /// </summary>
-        public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, DefaultBufferSize) { }
+        public NewConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
         /// </summary>
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
-        public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, DefaultBufferSize) { }
+        public NewConsoleReader(Stream input, Encoding encoding) : this(input, encoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
@@ -40,7 +40,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
         /// <param name="bufferSize">Input buffer size</param>
-        public ConsoleReader(Stream input, Encoding encoding, int bufferSize)
+        public NewConsoleReader(Stream input, Encoding encoding, int bufferSize)
         {
             this.input = input;
             this.encoding = encoding;
@@ -231,36 +231,36 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="Int()"/>
         /// </summary>
         [MethodImpl(AggressiveInlining)]
-        public static implicit operator int(ConsoleReader cr) => cr.Int();
+        public static implicit operator int(NewConsoleReader cr) => cr.Int();
 
         /// <summary>
         /// implicit call <see cref="Long()"/>
         /// </summary>
         [MethodImpl(AggressiveInlining)]
-        public static implicit operator long(ConsoleReader cr) => cr.Long();
+        public static implicit operator long(NewConsoleReader cr) => cr.Long();
 
         /// <summary>
         /// implicit call <see cref="ULong()"/>
         /// </summary>
         [MethodImpl(AggressiveInlining)]
-        public static implicit operator ulong(ConsoleReader cr) => cr.ULong();
+        public static implicit operator ulong(NewConsoleReader cr) => cr.ULong();
 
         /// <summary>
         /// implicit call <see cref="Double()"/>
         /// </summary>
         [MethodImpl(AggressiveInlining)]
-        public static implicit operator double(ConsoleReader cr) => cr.Double();
+        public static implicit operator double(NewConsoleReader cr) => cr.Double();
 
         /// <summary>
         /// implicit call <see cref="Decimal"/>
         /// </summary>
         [MethodImpl(AggressiveInlining)]
-        public static implicit operator decimal(ConsoleReader cr) => cr.Decimal();
+        public static implicit operator decimal(NewConsoleReader cr) => cr.Decimal();
 
         /// <summary>
         /// implicit call <see cref="Ascii()"/>
         /// </summary>
         [MethodImpl(AggressiveInlining)]
-        public static implicit operator string(ConsoleReader cr) => cr.Ascii();
+        public static implicit operator string(NewConsoleReader cr) => cr.Ascii();
     }
 }

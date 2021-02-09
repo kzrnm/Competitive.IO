@@ -351,7 +351,7 @@ abc def
             cr.Char().Should().Be('5');
             cr.Double().Should().Be(6);
             cr.Line().Should().Be("| a | b | b |");
-            cr.Split().Int().Should().Equal(7, 8, 9);
+            cr.Line().Should().Be("7 8 9");
             cr.Repeat(3).Long().Should().Equal(-10, -11, -12);
             cr.Ascii().Should().Be("abc");
             cr.String().Should().Be("def");

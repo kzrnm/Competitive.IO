@@ -13,6 +13,7 @@ using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
 using Kzrnm.Competitive.IO;
 
+#pragma warning disable CS0436 // 型がインポートされた型と競合しています
 #if DEBUG
 BenchmarkSwitcher.FromAssembly(typeof(BenchmarkConfig).Assembly).Run(args, new DebugInProcessConfig());
 #else
@@ -41,12 +42,9 @@ public class Benchmark
     private Stream IntStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Int.txt");
     private Stream DoubleStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Double.txt");
 
-    public Benchmark()
-    {
-    }
 
     [Benchmark]
-    [BenchmarkCategory("Current", "Single")]
+    [BenchmarkCategory("Current")]
     public long ReadInt()
     {
         var cr = new ConsoleReader(IntStream(), new UTF8Encoding(false));
@@ -61,7 +59,7 @@ public class Benchmark
         return sum;
     }
     [Benchmark]
-    [BenchmarkCategory("Current", "Single")]
+    [BenchmarkCategory("Current")]
     public double ReadDouble()
     {
         var cr = new ConsoleReader(DoubleStream(), new UTF8Encoding(false));
@@ -76,7 +74,7 @@ public class Benchmark
         return sum;
     }
     [Benchmark]
-    [BenchmarkCategory("Current", "Single")]
+    [BenchmarkCategory("Current")]
     public double ReadAscii()
     {
         var cr = new ConsoleReader(AsciiStream(), new UTF8Encoding(false));
@@ -93,7 +91,66 @@ public class Benchmark
 
 
     [Benchmark]
-    [BenchmarkCategory("Current", "Repeat")]
+    [BenchmarkCategory("New")]
+    public long NewReadInt()
+    {
+        var cr = new NewConsoleReader(IntStream(), new UTF8Encoding(false));
+        long sum = 0;
+        int N = cr.Int();
+        for (int i = 0; i < N; i++)
+        {
+            sum += cr.Int();
+            sum += cr.Int();
+            sum += cr.Int();
+        }
+        return sum;
+    }
+    [Benchmark]
+    [BenchmarkCategory("New")]
+    public double NewReadDouble()
+    {
+        var cr = new NewConsoleReader(DoubleStream(), new UTF8Encoding(false));
+        double sum = 0;
+        int N = cr.Int();
+        for (int i = 0; i < N; i++)
+        {
+            sum += cr.Double();
+            sum += cr.Double();
+            sum += cr.Double();
+        }
+        return sum;
+    }
+    [Benchmark]
+    [BenchmarkCategory("New")]
+    public double NewReadAscii()
+    {
+        var cr = new NewConsoleReader(AsciiStream(), new UTF8Encoding(false));
+        int hash = 0;
+        int N = cr.Int();
+        for (int i = 0; i < N; i++)
+        {
+            hash ^= cr.Ascii().GetHashCode();
+            hash ^= cr.Ascii().GetHashCode();
+            hash ^= cr.Ascii().GetHashCode();
+        }
+        return hash;
+    }
+}
+
+
+
+//[Config(typeof(BenchmarkConfig))]
+[GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
+public class BenchmarkRepeat
+{
+    readonly Assembly assembly = Assembly.GetExecutingAssembly();
+
+    private Stream AsciiStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Ascii.txt");
+    private Stream IntStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Int.txt");
+    private Stream DoubleStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Double.txt");
+
+    [Benchmark]
+    [BenchmarkCategory("Current")]
     public long RepeatInt()
     {
         var cr = new ConsoleReader(IntStream(), new UTF8Encoding(false));
@@ -106,7 +163,7 @@ public class Benchmark
         return sum;
     }
     [Benchmark]
-    [BenchmarkCategory("Current", "Repeat")]
+    [BenchmarkCategory("Current")]
     public double RepeatDouble()
     {
         var cr = new ConsoleReader(DoubleStream(), new UTF8Encoding(false));
@@ -119,7 +176,7 @@ public class Benchmark
         return sum;
     }
     [Benchmark]
-    [BenchmarkCategory("Current", "Repeat")]
+    [BenchmarkCategory("Current")]
     public int RepeatAscii()
     {
         var cr = new ConsoleReader(AsciiStream(), new UTF8Encoding(false));
