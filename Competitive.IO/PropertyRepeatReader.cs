@@ -89,6 +89,34 @@ namespace Kzrnm.Competitive.IO
             }
         }
         /// <summary>
+        /// Read <see cref="PropertyConsoleReader.UInt"/> array
+        /// </summary>
+        [DebuggerBrowsable(Never)]
+        public uint[] UInt
+        {
+            get
+            {
+                var arr = new uint[count];
+                for (var i = 0; i < count; i++)
+                    arr[i] = cr.UInt;
+                return arr;
+            }
+        }
+        /// <summary>
+        /// Read <see cref="PropertyConsoleReader.UInt0"/> array
+        /// </summary>
+        [DebuggerBrowsable(Never)]
+        public uint[] UInt0
+        {
+            get
+            {
+                var arr = new uint[count];
+                for (var i = 0; i < count; i++)
+                    arr[i] = cr.UInt0;
+                return arr;
+            }
+        }
+        /// <summary>
         /// Read <see cref="PropertyConsoleReader.Long"/> array
         /// </summary>
         [DebuggerBrowsable(Never)]
@@ -181,6 +209,10 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="PropertyRepeatReader.Int"/>
         /// </summary>
         public static implicit operator int[](PropertyRepeatReader rr) => rr.Int;
+        /// <summary>
+        /// implicit call <see cref="PropertyRepeatReader.UInt"/>
+        /// </summary>
+        public static implicit operator uint[](PropertyRepeatReader rr) => rr.UInt;
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.Long"/>
         /// </summary>

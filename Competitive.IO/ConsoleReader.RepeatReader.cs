@@ -67,6 +67,26 @@ namespace Kzrnm.Competitive.IO
             return arr;
         }
         /// <summary>
+        /// Read <see cref="ConsoleReader.UInt"/> array
+        /// </summary>
+        public uint[] UInt()
+        {
+            var arr = new uint[count];
+            for (var i = 0; i < count; i++)
+                arr[i] = cr.UInt();
+            return arr;
+        }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.UInt0"/> array
+        /// </summary>
+        public uint[] UInt0()
+        {
+            var arr = new uint[count];
+            for (var i = 0; i < count; i++)
+                arr[i] = cr.UInt0();
+            return arr;
+        }
+        /// <summary>
         /// Read <see cref="ConsoleReader.Long"/> array
         /// </summary>
         public long[] Long()
@@ -135,6 +155,10 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="RepeatReader.Int()"/>
         /// </summary>
         public static implicit operator int[](RepeatReader rr) => rr.Int();
+        /// <summary>
+        /// implicit call <see cref="RepeatReader.UInt()"/>
+        /// </summary>
+        public static implicit operator uint[](RepeatReader rr) => rr.UInt();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Long()"/>
         /// </summary>

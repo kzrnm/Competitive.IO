@@ -82,6 +82,46 @@ def
             cr.Int0().Should().Be(2147483646);
         });
 
+
+        [Fact(Timeout = 1000)]
+        public async Task UInt() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615
+");
+            cr.UInt().Should().Be(123U);
+            cr.UInt().Should().Be(14421U);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task UIntImplicit() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615
+");
+            uint r;
+            r = cr;
+            r.Should().Be(123U);
+            r = cr;
+            r.Should().Be(14421U);
+        });
+
+        [Fact(Timeout = 1000)]
+        public async Task UInt0() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615
+");
+            cr.UInt().Should().Be(123U);
+            cr.UInt().Should().Be(14421U);
+        });
+
         [Fact(Timeout = 1000)]
         public async Task Long() => await Task.Run(() =>
         {

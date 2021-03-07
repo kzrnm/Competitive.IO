@@ -95,6 +95,18 @@ namespace Kzrnm.Competitive.IO
         public int Int0() => Int() - 1;
 
         /// <summary>
+        /// Parse <see cref="uint"/> from stdin
+        /// </summary>
+        [MethodImpl(AggressiveInlining)]
+        public uint UInt() => (uint)ULong();
+
+        /// <summary>
+        /// Parse <see cref="uint"/> from stdin and decrement
+        /// </summary>
+        [MethodImpl(AggressiveInlining)]
+        public uint UInt0() => UInt() - 1;
+
+        /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
         [MethodImpl(AggressiveInlining)]
@@ -232,6 +244,12 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [MethodImpl(AggressiveInlining)]
         public static implicit operator int(ConsoleReader cr) => cr.Int();
+
+        /// <summary>
+        /// implicit call <see cref="UInt()"/>
+        /// </summary>
+        [MethodImpl(AggressiveInlining)]
+        public static implicit operator uint(ConsoleReader cr) => cr.UInt();
 
         /// <summary>
         /// implicit call <see cref="Long()"/>

@@ -97,6 +97,37 @@ namespace Kzrnm.Competitive.IO
 #endif
         }
 
+        /// <summary>
+        /// Parse <see cref="uint"/> from stdin
+        /// </summary>
+        /// 
+        /// <summary>
+        /// Parse <see cref="uint"/> from stdin and decrement
+        /// </summary>
+        [DebuggerBrowsable(Never)]
+        public uint UInt
+        {
+            [MethodImpl(AggressiveInlining)]
+#if NETSTANDARD1_3
+            get { return (uint)ULong; }
+#else
+            get => (uint)ULong;
+#endif
+        }
+
+        /// <summary>
+        /// Parse <see cref="uint"/> from stdin and decrement
+        /// </summary>
+        [DebuggerBrowsable(Never)]
+        public uint UInt0
+        {
+            [MethodImpl(AggressiveInlining)]
+#if NETSTANDARD1_3
+            get { return UInt - 1; }
+#else
+            get => UInt - 1;
+#endif
+        }
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin
@@ -284,6 +315,12 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [MethodImpl(AggressiveInlining)]
         public static implicit operator int(PropertyConsoleReader cr) => cr.Int;
+
+        /// <summary>
+        /// implicit call <see cref="UInt"/>
+        /// </summary>
+        [MethodImpl(AggressiveInlining)]
+        public static implicit operator uint(PropertyConsoleReader cr) => cr.UInt;
 
         /// <summary>
         /// implicit call <see cref="Long"/>
