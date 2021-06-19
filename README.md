@@ -44,4 +44,4 @@ I recommend [SourceExpander](https://github.com/naminodarie/SourceExpander).
 
 ## License
 
-This library is under the MIT License. However, when you use this library in submits of competitive programing, you can use the library under [the CC0 Lisence](https://creativecommons.org/publicdomain/zero/1.0/).
+This library is under the MIT License. However, when you use this library in submissions of competitive programing, you can use the library under [the CC0 Lisence](https://creativecommons.org/publicdomain/zero/1.0/).
