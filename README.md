@@ -35,3 +35,7 @@ Install-Package Competitive.IO
 - `Kzrnm.Competitive.IO.ConsoleWriter`
 - `Kzrnm.Competitive.IO.ConsoleReader`
 - `Kzrnm.Competitive.IO.PropertyConsoleReader`
+
+## License
+
+This library is under the MIT License. However, when you use this library in submits of competitive programing, you can use the library under [the CC0 Lisence](https://creativecommons.org/publicdomain/zero/1.0/).
