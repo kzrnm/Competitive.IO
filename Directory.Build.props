@@ -3,12 +3,12 @@
   <PropertyGroup>
     <Authors>naminodarie</Authors>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/naminodarie/Competitive.IO</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/naminodarie/Competitive.IO</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/naminodarie/Competitive.IO/blob/master/CHANGELOG.md</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/kzrnm/Competitive.IO</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kzrnm/Competitive.IO</RepositoryUrl>
+    <PackageReleaseNotes>https://github.com/kzrnm/Competitive.IO/blob/master/CHANGELOG.md</PackageReleaseNotes>
 
-    <Version>0.5.1</Version>
-    <AssemblyVersion>0.5.1.100</AssemblyVersion>
+    <Version>0.5.2</Version>
+    <AssemblyVersion>0.5.2.100</AssemblyVersion>
 
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)key.snk</AssemblyOriginatorKeyFile>
