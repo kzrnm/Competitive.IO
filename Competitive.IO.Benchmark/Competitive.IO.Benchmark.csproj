@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net5.0;netcoreapp3.1;net472</TargetFrameworks>
+    <TargetFrameworks>net6.0;netcoreapp3.1;net472</TargetFrameworks>
     <LangVersion>9</LangVersion>
     <NoWarn>$(NoWarn);CA1050</NoWarn>
   </PropertyGroup>
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,7 +17,8 @@ using Kzrnm.Competitive.IO;
 #if DEBUG
 BenchmarkSwitcher.FromAssembly(typeof(BenchmarkConfig).Assembly).Run(args, new DebugInProcessConfig());
 #else
-_ = BenchmarkRunner.Run(typeof(Benchmark).Assembly);
+_ = BenchmarkRunner.Run(typeof(Benchmark));
+//_ = BenchmarkRunner.Run(typeof(Benchmark).Assembly);
 #endif
 
 public class BenchmarkConfig : ManualConfig
@@ -26,7 +27,7 @@ public class BenchmarkConfig : ManualConfig
     {
         //AddDiagnoser(MemoryDiagnoser.Default);
         AddExporter(BenchmarkDotNet.Exporters.MarkdownExporter.GitHub);
-        //AddJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp50));
+        //AddJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp60));
         AddJob(Job.ShortRun.WithToolchain(CsProjCoreToolchain.NetCoreApp31));
         //AddJob(Job.ShortRun.WithToolchain(CsProjClassicNetToolchain.Net472));
     }
@@ -139,7 +140,7 @@ public class Benchmark
 
 
 
-//[Config(typeof(BenchmarkConfig))]
+[Config(typeof(BenchmarkConfig))]
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 public class BenchmarkRepeat
 {
