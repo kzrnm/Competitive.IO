@@ -297,7 +297,11 @@ namespace Kzrnm.Competitive.IO
         public double Double
         {
             [MethodImpl(AggressiveInlining)]
+#if NETSTANDARD1_3
             get { return double.Parse(Ascii); }
+#else
+            get => double.Parse(Ascii);
+#endif
         }
 
         /// <summary>
@@ -307,7 +311,11 @@ namespace Kzrnm.Competitive.IO
         public decimal Decimal
         {
             [MethodImpl(AggressiveInlining)]
+#if NETSTANDARD1_3
             get { return decimal.Parse(Ascii); }
+#else
+            get => decimal.Parse(Ascii);
+#endif
         }
 
         /// <summary>
