@@ -18,8 +18,8 @@ namespace Kzrnm.Competitive.IO
         private readonly Stream input;
         private readonly Encoding encoding;
         internal readonly byte[] buffer = new byte[BufSize];
-        internal int pos = 0;
-        internal int len = 0;
+        internal int pos;
+        internal int len;
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
