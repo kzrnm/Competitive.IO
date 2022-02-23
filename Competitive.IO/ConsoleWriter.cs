@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Kzrnm.Competitive.IO
@@ -91,7 +90,7 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        public ConsoleWriter WriteLineJoin<TTuple>(TTuple tuple) where TTuple : ITuple
+        public ConsoleWriter WriteLineJoin<TTuple>(TTuple tuple) where TTuple : System.Runtime.CompilerServices.ITuple
         {
             var col = new object[tuple.Length];
             for (int i = 0; i < col.Length; i++)
@@ -136,7 +135,7 @@ namespace Kzrnm.Competitive.IO
             StreamWriter.WriteLine(v4.ToString()); return this;
         }
         /// <summary>
-        /// Write line each item of<paramref name="col"/>
+        /// Write line each item of <paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
         public ConsoleWriter WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
@@ -150,6 +149,18 @@ namespace Kzrnm.Competitive.IO
                 WriteLineJoin(col);
             return this;
         }
+#if NETSTANDARD2_1
+        /// <summary>
+        /// Write line each item of <paramref name="tuples"/>
+        /// </summary>
+        /// <returns>this instance.</returns>
+        public ConsoleWriter WriteLineGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : System.Runtime.CompilerServices.ITuple
+        {
+            foreach (var tup in tuples)
+                WriteLineJoin(tup);
+            return this;
+        }
+#endif
         /// <summary>
         /// Write items separated by <paramref name="sep"/>
         /// </summary>
