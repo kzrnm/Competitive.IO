@@ -31,7 +31,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineEmpty()
         {
             cw.WriteLine();
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes(newLine));
         }
@@ -40,7 +40,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLine()
         {
             cw.WriteLine(-123456);
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes("-123456" + newLine));
         }
@@ -49,7 +49,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinEmpty()
         {
             cw.WriteLineJoin();
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes(newLine));
         }
@@ -58,7 +58,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoin2()
         {
             cw.WriteLineJoin("foo", 1);
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"foo 1{newLine}"));
         }
@@ -67,7 +67,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoin3()
         {
             cw.WriteLineJoin("foo", 1, -2L);
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"foo 1 -2{newLine}"));
         }
@@ -76,7 +76,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoin4()
         {
             cw.WriteLineJoin("foo", 1, -2L, 'x');
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"foo 1 -2 x{newLine}"));
         }
@@ -85,7 +85,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinMany()
         {
             cw.WriteLineJoin("foo", 1, -2L, 'x', "bar");
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"foo 1 -2 x bar{newLine}"));
         }
@@ -94,7 +94,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinManySameType()
         {
             cw.WriteLineJoin(1, 2, 3, 4, 5);
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2 3 4 5{newLine}"));
         }
@@ -103,7 +103,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinIEnumerable()
         {
             cw.WriteLineJoin(Enumerable.Range(1, 5));
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2 3 4 5{newLine}"));
         }
@@ -112,7 +112,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLinesIEnumerable()
         {
             cw.WriteLines(Enumerable.Range(1, 5));
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
@@ -122,7 +122,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineSpan()
         {
             cw.WriteLine("foobar".AsSpan());
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes("foobar" + newLine));
         }
@@ -131,7 +131,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinSpan()
         {
             cw.WriteLineJoin((Span<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2 3 4 5{newLine}"));
         }
@@ -140,7 +140,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLinesSpan()
         {
             cw.WriteLines((Span<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
@@ -149,7 +149,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinReadOnlySpan()
         {
             cw.WriteLineJoin((ReadOnlySpan<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2 3 4 5{newLine}"));
         }
@@ -158,7 +158,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLinesReadOnlySpan()
         {
             cw.WriteLines((ReadOnlySpan<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
@@ -167,7 +167,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinTuple2()
         {
             cw.WriteLineJoin((1, 2));
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2{newLine}"));
         }
@@ -176,7 +176,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinTuple3()
         {
             cw.WriteLineJoin((1, 2, 'a'));
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2 a{newLine}"));
         }
@@ -185,7 +185,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinTuple4()
         {
             cw.WriteLineJoin((1, 2, 'a', 4));
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2 a 4{newLine}"));
         }
@@ -194,7 +194,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinTuple5()
         {
             cw.WriteLineJoin((1, 2, 'a', 4, 5));
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2 a 4 5{newLine}"));
         }
@@ -203,7 +203,7 @@ namespace Kzrnm.Competitive.IO
         public void WriteLineJoinTupleClass()
         {
             cw.WriteLineJoin(Tuple.Create(1, 2, 'a', 4));
-            buffer.Should().Equal(Enumerable.Repeat(0, BufSize));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().StartWith(ToBytes($"1 2 a 4{newLine}"));
         }

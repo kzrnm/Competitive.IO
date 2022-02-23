@@ -21,11 +21,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SourceExpander.Embedder" Version="2.5.0">
+		<PackageReference Include="SourceExpander.Embedder" Version="4.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="SourceExpander.Embedder.Analyzer" Version="2.5.0">
+		<PackageReference Include="SourceExpander.Embedder.Analyzer" Version="2.6.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
