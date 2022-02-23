@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/naminodarie/SourceExpander/master/schema/embedder.schema.json",
-  "enable-minify": true,
+  "minify-level": "full",
   "embedding-source-class": {
     "enabled": false
   },
