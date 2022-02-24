@@ -2,6 +2,7 @@
 
 namespace Kzrnm.Competitive.IO
 {
+    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// <see cref="PropertyRepeatReader"/>
     /// </summary>
@@ -10,6 +11,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static T[] Select<T>(this PropertyRepeatReader r, Func<PropertyConsoleReader, T> factory)
         {
             var arr = new T[r.count];
@@ -20,6 +22,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static T[] Select<T>(this PropertyRepeatReader r, Func<PropertyConsoleReader, int, T> factory)
         {
             var arr = new T[r.count];

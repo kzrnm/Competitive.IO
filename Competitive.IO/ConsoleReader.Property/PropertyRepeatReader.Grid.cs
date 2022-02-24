@@ -2,6 +2,7 @@
 
 namespace Kzrnm.Competitive.IO
 {
+    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// <see cref="PropertyRepeatReader"/>
     /// </summary>
@@ -10,6 +11,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>() <paramref name="width"/> times per line
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static T[][] Grid<T>(this PropertyRepeatReader r, int width, Func<PropertyConsoleReader, T> factory)
         {
             var arr = new T[r.count][];
@@ -24,6 +26,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>() <paramref name="width"/> times per line
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static T[][] Grid<T>(this PropertyRepeatReader r, int width, Func<PropertyConsoleReader, int, int, T> factory)
         {
             var arr = new T[r.count][];

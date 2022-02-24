@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
-    using static DebuggerBrowsableState;
-    using static MethodImplOptions;
+    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Input Reader
     /// </summary>
@@ -26,13 +24,14 @@ namespace Kzrnm.Competitive.IO
         /// <para>Input stream: <see cref="Console.OpenStandardInput()"/></para>
         /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
         /// </summary>
-        public PropertyConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public PropertyConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
         /// </summary>
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public PropertyConsoleReader(Stream input, Encoding encoding)
         {
             this.input = input; this.encoding = encoding;
@@ -41,7 +40,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Move to next positon
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         protected internal byte Read()
         {
             if (++pos >= len)
@@ -58,10 +57,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public int Int
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             get
             {
                 int res = 0;
@@ -86,10 +85,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public int Int0
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 #if NETSTANDARD1_3
             get { return Int - 1; }
 #else
@@ -104,10 +103,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public uint UInt
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 #if NETSTANDARD1_3
             get { return (uint)ULong; }
 #else
@@ -118,10 +117,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public uint UInt0
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 #if NETSTANDARD1_3
             get { return UInt - 1; }
 #else
@@ -132,10 +131,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public long Long
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             get
             {
                 long res = 0;
@@ -160,10 +159,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="long"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public long Long0
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 #if NETSTANDARD1_3
             get { return Long - 1; }
 #else
@@ -174,10 +173,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public ulong ULong
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             get
             {
                 ulong res = 0;
@@ -196,10 +195,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public ulong ULong0
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 #if NETSTANDARD1_3
             get { return ULong - 1; }
 #else
@@ -210,10 +209,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public string String
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             get
             {
                 var sb = new List<byte>(); ;
@@ -232,10 +231,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public string Ascii
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             get
             {
                 var sb = new StringBuilder();
@@ -254,10 +253,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public string Line
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             get
             {
                 var sb = new List<byte>();
@@ -277,10 +276,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public char Char
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
             get
             {
                 byte b;
@@ -293,10 +292,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="double"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public double Double
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 #if NETSTANDARD1_3
             get { return double.Parse(Ascii); }
 #else
@@ -307,10 +306,10 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="decimal"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(Never)]
+        [DebuggerBrowsable(0)]
         public decimal Decimal
         {
-            [MethodImpl(AggressiveInlining)]
+            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 #if NETSTANDARD1_3
             get { return decimal.Parse(Ascii); }
 #else
@@ -321,43 +320,43 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="Int"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static implicit operator int(PropertyConsoleReader cr) => cr.Int;
 
         /// <summary>
         /// implicit call <see cref="UInt"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static implicit operator uint(PropertyConsoleReader cr) => cr.UInt;
 
         /// <summary>
         /// implicit call <see cref="Long"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static implicit operator long(PropertyConsoleReader cr) => cr.Long;
 
         /// <summary>
         /// implicit call <see cref="ULong"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static implicit operator ulong(PropertyConsoleReader cr) => cr.ULong;
 
         /// <summary>
         /// implicit call <see cref="Double"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static implicit operator double(PropertyConsoleReader cr) => cr.Double;
 
         /// <summary>
         /// implicit call <see cref="Decimal"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static implicit operator decimal(PropertyConsoleReader cr) => cr.Decimal;
 
         /// <summary>
         /// implicit call <see cref="Ascii"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static implicit operator string(PropertyConsoleReader cr) => cr.Ascii;
     }
 }

@@ -5,6 +5,7 @@ using System;
 
 namespace Kzrnm.Competitive.IO
 {
+    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Calls <see cref="ConsoleReader"/> several times
     /// </summary>
@@ -12,6 +13,7 @@ namespace Kzrnm.Competitive.IO
     {
         internal readonly ConsoleReader cr;
         internal readonly int count;
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         internal RepeatReader(ConsoleReader cr, int count)
         {
             this.cr = cr; this.count = count;
@@ -19,6 +21,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public string[] Line()
         {
             var arr = new string[count];
@@ -29,6 +32,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.String"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public string[] String()
         {
             var arr = new string[count];
@@ -39,6 +43,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Ascii"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public string[] Ascii()
         {
             var arr = new string[count];
@@ -49,6 +54,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Int"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public int[] Int()
         {
             var arr = new int[count];
@@ -59,6 +65,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Int0"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public int[] Int0()
         {
             var arr = new int[count];
@@ -69,6 +76,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public uint[] UInt()
         {
             var arr = new uint[count];
@@ -79,6 +87,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt0"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public uint[] UInt0()
         {
             var arr = new uint[count];
@@ -89,6 +98,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Long"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public long[] Long()
         {
             var arr = new long[count];
@@ -99,6 +109,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Long0"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public long[] Long0()
         {
             var arr = new long[count];
@@ -109,6 +120,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public ulong[] ULong()
         {
             var arr = new ulong[count];
@@ -119,6 +131,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong0"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public ulong[] ULong0()
         {
             var arr = new ulong[count];
@@ -129,6 +142,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Double"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public double[] Double()
         {
             var arr = new double[count];
@@ -139,6 +153,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Decimal"/> array
         /// </summary>
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public decimal[] Decimal()
         {
             var arr = new decimal[count];
@@ -150,31 +165,31 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="RepeatReader.Ascii()"/>
         /// </summary>
-        public static implicit operator string[](RepeatReader rr) => rr.Ascii();
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator string[](RepeatReader rr) => rr.Ascii();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Int()"/>
         /// </summary>
-        public static implicit operator int[](RepeatReader rr) => rr.Int();
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator int[](RepeatReader rr) => rr.Int();
         /// <summary>
         /// implicit call <see cref="RepeatReader.UInt()"/>
         /// </summary>
-        public static implicit operator uint[](RepeatReader rr) => rr.UInt();
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator uint[](RepeatReader rr) => rr.UInt();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Long()"/>
         /// </summary>
-        public static implicit operator long[](RepeatReader rr) => rr.Long();
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator long[](RepeatReader rr) => rr.Long();
         /// <summary>
         /// implicit call <see cref="RepeatReader.ULong()"/>
         /// </summary>
-        public static implicit operator ulong[](RepeatReader rr) => rr.ULong();
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator ulong[](RepeatReader rr) => rr.ULong();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Double()"/>
         /// </summary>
-        public static implicit operator double[](RepeatReader rr) => rr.Double();
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator double[](RepeatReader rr) => rr.Double();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Decimal()"/>
         /// </summary>
-        public static implicit operator decimal[](RepeatReader rr) => rr.Decimal();
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator decimal[](RepeatReader rr) => rr.Decimal();
     }
     /// <summary>
     /// Defines extension
@@ -184,6 +199,6 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="RepeatReader"/>
         /// </summary>
-        public static RepeatReader Repeat(this ConsoleReader cr, int count) => new RepeatReader(cr, count);
+        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static RepeatReader Repeat(this ConsoleReader cr, int count) => new RepeatReader(cr, count);
     }
 }
