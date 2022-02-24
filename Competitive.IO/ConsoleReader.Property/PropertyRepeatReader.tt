@@ -46,7 +46,7 @@ namespace Kzrnm.Competitive.IO
     {
         internal readonly PropertyConsoleReader cr;
         internal readonly int count;
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         internal PropertyRepeatReader(PropertyConsoleReader cr, int count)
         {
             this.cr = cr; this.count = count;
@@ -58,7 +58,7 @@ namespace Kzrnm.Competitive.IO
         [DebuggerBrowsable(0)]
         public <#= p.Type #>[] <#= p.Name #>
         {
-            [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+            [MI(256)]
             get
             {
                 var arr = new <#= p.Type #>[count];
@@ -73,7 +73,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.<#= p.Name #>"/>
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator <#= p.Type #>[](PropertyRepeatReader rr) => rr.<#= p.Name #>;
+        [MI(256)] public static implicit operator <#= p.Type #>[](PropertyRepeatReader rr) => rr.<#= p.Name #>;
 <# } #>
     }
     /// <summary>
@@ -84,6 +84,6 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="PropertyRepeatReader"/>
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
+        [MI(256)] public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
     }
 }

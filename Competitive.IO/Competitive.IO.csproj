@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.1;netstandard2.0;netstandard1.3</TargetFrameworks>
-		<LangVersion Condition="'$(TargetFramework)' == 'netstandard1.3'">6</LangVersion>
-		<LangVersion Condition="'$(TargetFramework)' != 'netstandard1.3'">7</LangVersion>
+		<TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+		<LangVersion>7</LangVersion>
 
 		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
 
@@ -22,10 +21,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="SourceExpander.Embedder" Version="4.0.2">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="SourceExpander.Embedder.Analyzer" Version="2.6.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

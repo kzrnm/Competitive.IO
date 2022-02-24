@@ -1,5 +1,4 @@
-﻿#if !NETSTANDARD1_3
-using System;
+﻿using System;
 
 namespace Kzrnm.Competitive.IO
 {
@@ -12,7 +11,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public static (T1[], T2[]) SelectArray<T1, T2>(this RepeatReader r,
             Func<ConsoleReader, (T1, T2)> factory)
         {
@@ -25,7 +24,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public static (T1[], T2[]) SelectArray<T1, T2>(this RepeatReader r,
             Func<ConsoleReader, int, (T1, T2)> factory)
         {
@@ -39,7 +38,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public static (T1[], T2[], T3[]) SelectArray<T1, T2, T3>(this RepeatReader r,
             Func<ConsoleReader, (T1, T2, T3)> factory)
         {
@@ -53,7 +52,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public static (T1[], T2[], T3[]) SelectArray<T1, T2, T3>(this RepeatReader r,
             Func<ConsoleReader, int, (T1, T2, T3)> factory)
         {
@@ -68,7 +67,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public static (T1[], T2[], T3[], T4[]) SelectArray<T1, T2, T3, T4>(this RepeatReader r,
             Func<ConsoleReader, (T1, T2, T3, T4)> factory)
         {
@@ -83,7 +82,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public static (T1[], T2[], T3[], T4[]) SelectArray<T1, T2, T3, T4>(this RepeatReader r,
             Func<ConsoleReader, int, (T1, T2, T3, T4)> factory)
         {
@@ -97,4 +96,3 @@ namespace Kzrnm.Competitive.IO
         }
     }
 }
-#endif

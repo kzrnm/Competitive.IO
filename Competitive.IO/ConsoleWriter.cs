@@ -21,14 +21,14 @@ namespace Kzrnm.Competitive.IO
         /// <para>Output stream: <see cref="Console.OpenStandardOutput()"/></para>
         /// <para>Output encoding: <see cref="Console.OutputEncoding"/></para>
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding, DefaultBufferSize) { }
+        [MI(256)] public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
         /// </summary>
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, DefaultBufferSize) { }
+        [MI(256)] public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
@@ -36,7 +36,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>
         /// <param name="bufferSize">Output buffer size</param>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter(Stream output, Encoding encoding, int bufferSize)
         {
             StreamWriter = new StreamWriter(output, encoding, bufferSize);
@@ -45,13 +45,13 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Flush output stream.
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public void Flush() => StreamWriter.Flush();
+        [MI(256)] public void Flush() => StreamWriter.Flush();
 
         /// <summary>
         /// Write empty line to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter WriteLine()
         {
             StreamWriter.WriteLine();
@@ -62,7 +62,7 @@ namespace Kzrnm.Competitive.IO
         /// Write <paramref name="obj"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter WriteLine<T>(T obj)
         {
             StreamWriter.WriteLine(obj.ToString());
@@ -72,29 +72,29 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public ConsoleWriter WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
-#if !NETSTANDARD1_3
+        [MI(256)] public ConsoleWriter WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
+
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public ConsoleWriter WriteLineJoin<T1, T2>((T1, T2) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
+        [MI(256)] public ConsoleWriter WriteLineJoin<T1, T2>((T1, T2) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public ConsoleWriter WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
+        [MI(256)] public ConsoleWriter WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+        [MI(256)] public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
 #if NETSTANDARD2_1
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter WriteLineJoin<TTuple>(TTuple tuple) where TTuple : System.Runtime.CompilerServices.ITuple
         {
             var col = new object[tuple.Length];
@@ -103,17 +103,16 @@ namespace Kzrnm.Competitive.IO
             return WriteLineJoin(col);
         }
 #endif
-#endif
         /// <summary>
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public ConsoleWriter WriteLineJoin(params object[] col) => WriteMany(' ', col);
+        [MI(256)] public ConsoleWriter WriteLineJoin(params object[] col) => WriteMany(' ', col);
         /// <summary>
         /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter WriteLineJoin<T1, T2>(T1 v1, T2 v2)
         {
             StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
@@ -123,7 +122,7 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
         {
             StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
@@ -134,7 +133,7 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
         {
             StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
@@ -146,12 +145,12 @@ namespace Kzrnm.Competitive.IO
         /// Write line each item of <paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public ConsoleWriter WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
+        [MI(256)] public ConsoleWriter WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
         /// <summary>
         /// Write lines separated by space
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter WriteGrid<T>(IEnumerable<IEnumerable<T>> cols)
         {
             foreach (var col in cols)
@@ -163,7 +162,7 @@ namespace Kzrnm.Competitive.IO
         /// Write line each item of <paramref name="tuples"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public ConsoleWriter WriteGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : System.Runtime.CompilerServices.ITuple
         {
             foreach (var tup in tuples)
@@ -177,7 +176,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="sep">sparating charactor</param>
         /// <param name="col">output items</param>
         /// <returns></returns>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         protected ConsoleWriter WriteMany<T>(char sep, IEnumerable<T> col)
         {
             var en = col.GetEnumerator();
@@ -196,6 +195,6 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Calls <see cref="StreamWriter.Flush()"/>
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public void Dispose() => Flush();
+        [MI(256)] public void Dispose() => Flush();
     }
 }
