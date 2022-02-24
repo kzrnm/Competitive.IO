@@ -45,7 +45,7 @@ namespace Kzrnm.Competitive.IO
     {
         internal readonly ConsoleReader cr;
         internal readonly int count;
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         internal RepeatReader(ConsoleReader cr, int count)
         {
             this.cr = cr; this.count = count;
@@ -54,7 +54,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.<#= p.Name #>"/> array
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MI(256)]
         public <#= p.Type #>[] <#= p.Name #>()
         {
             var arr = new <#= p.Type #>[count];
@@ -68,7 +68,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="RepeatReader.<#= p.Name #>()"/>
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static implicit operator <#= p.Type #>[](RepeatReader rr) => rr.<#= p.Name #>();
+        [MI(256)] public static implicit operator <#= p.Type #>[](RepeatReader rr) => rr.<#= p.Name #>();
 <# } #>
     }
     /// <summary>
@@ -79,6 +79,6 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="RepeatReader"/>
         /// </summary>
-        [MI(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] public static RepeatReader Repeat(this ConsoleReader cr, int count) => new RepeatReader(cr, count);
+        [MI(256)] public static RepeatReader Repeat(this ConsoleReader cr, int count) => new RepeatReader(cr, count);
     }
 }
