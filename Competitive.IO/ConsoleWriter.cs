@@ -143,7 +143,7 @@ namespace Kzrnm.Competitive.IO
         /// Write lines separated by space
         /// </summary>
         /// <returns>this instance.</returns>
-        public ConsoleWriter WriteLineGrid<T>(IEnumerable<IEnumerable<T>> cols)
+        public ConsoleWriter WriteGrid<T>(IEnumerable<IEnumerable<T>> cols)
         {
             foreach (var col in cols)
                 WriteLineJoin(col);
@@ -154,7 +154,7 @@ namespace Kzrnm.Competitive.IO
         /// Write line each item of <paramref name="tuples"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        public ConsoleWriter WriteLineGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : System.Runtime.CompilerServices.ITuple
+        public ConsoleWriter WriteGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : System.Runtime.CompilerServices.ITuple
         {
             foreach (var tup in tuples)
                 WriteLineJoin(tup);
