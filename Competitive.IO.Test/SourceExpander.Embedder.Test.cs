@@ -14,7 +14,7 @@ namespace Kzrnm.Competitive.IO
             embedded.AssemblyMetadatas.Should().NotContainKey("SourceExpander.EmbeddedAllowUnsafe");
             embedded.AssemblyMetadatas.Should().ContainKey("SourceExpander.EmbedderVersion");
             embedded.AssemblyMetadatas.Keys.Should().ContainSingle(key => key.StartsWith("SourceExpander.EmbeddedSourceCode"));
-
+            embedded.EmbeddedNamespaces.Should().BeEquivalentTo("Kzrnm.Competitive.IO");
             embedded.SourceFiles.SelectMany(s => s.TypeNames)
                 .Should().Contain(
                     "Kzrnm.Competitive.IO.ConsoleReader",
