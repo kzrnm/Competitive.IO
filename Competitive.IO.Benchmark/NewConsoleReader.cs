@@ -1,23 +1,27 @@
-﻿using System;
+﻿#define NETSTANDARD2_1_OR_GREATER
+#pragma warning disable CA1806
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
+#if NETSTANDARD2_1_OR_GREATER
+using System.Buffers.Text;
+#endif
 
-namespace Kzrnm.Competitive.IO
+namespace Kzrnm.Competitive.IO.Benchmark
 {
-    using static MethodImplOptions;
+    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Input Reader
     /// </summary>
-    public class NewConsoleReader
+    public class ConsoleReader
     {
         private const int DefaultBufferSize = 1 << 12;
         private readonly Stream input;
         private readonly Encoding encoding;
         internal readonly byte[] buffer;
-        internal int pos = 0;
-        internal int len = 0;
+        internal int pos;
+        internal int len;
 
 
         /// <summary>
@@ -25,14 +29,14 @@ namespace Kzrnm.Competitive.IO
         /// <para>Input stream: <see cref="Console.OpenStandardInput()"/></para>
         /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
         /// </summary>
-        public NewConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, DefaultBufferSize) { }
+        [MI(256)] public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
         /// </summary>
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
-        public NewConsoleReader(Stream input, Encoding encoding) : this(input, encoding, DefaultBufferSize) { }
+        [MI(256)] public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
@@ -40,36 +44,76 @@ namespace Kzrnm.Competitive.IO
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
         /// <param name="bufferSize">Input buffer size</param>
-        public NewConsoleReader(Stream input, Encoding encoding, int bufferSize)
+        [MI(256)]
+        public ConsoleReader(Stream input, Encoding encoding, int bufferSize)
         {
             this.input = input;
             this.encoding = encoding;
             buffer = new byte[bufferSize];
         }
 
+#if NETSTANDARD2_1_OR_GREATER
+        /// <summary>
+        /// Read entire numeric string
+        /// </summary>
+        [MI(256)]
+        private void FillEntireNumber()
+        {
+            if ((uint)pos >= (uint)buffer.Length)
+                FillNextBuffer();
+            while (buffer[pos] <= ' ')
+                if (++pos >= len)
+                    FillNextBuffer();
+            if (pos + 21 >= buffer.Length)
+                FillEntireNumberImpl();
+        }
+        private void FillEntireNumberImpl()
+        {
+            var remaining = buffer.Length - pos;
+            buffer.AsSpan(pos).CopyTo(buffer);
+            pos = 0;
+            var numberOfBytes = input.Read(buffer, remaining, buffer.Length - remaining);
+            if (numberOfBytes == 0)
+            {
+                numberOfBytes = 1;
+                buffer[remaining] = 10;
+            }
+            len = remaining + numberOfBytes;
+        }
+#endif
+        private void FillNextBuffer()
+        {
+            if ((len = input.Read(buffer, 0, buffer.Length)) == 0)
+            {
+                buffer[0] = 10;
+                len = 1;
+            }
+            pos = 0;
+        }
+
         /// <summary>
         /// Move to next positon
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        protected internal byte Read()
+        [MI(256)]
+        internal byte Read()
         {
-            if (++pos >= len)
-            {
-                if ((len = input.Read(buffer, 0, buffer.Length)) <= 0)
-                {
-                    buffer[0] = 10;
-                }
-                pos = 0;
-            }
-            return buffer[pos];
+            if (pos >= len)
+                FillNextBuffer();
+            return buffer[pos++];
         }
 
         /// <summary>
         /// Parse <see cref="int"/> from stdin
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(256)]
         public int Int()
         {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out int v, out int consumed);
+            pos += consumed;
+            return v;
+#else
             int res = 0;
             bool neg = false;
             byte b;
@@ -86,20 +130,57 @@ namespace Kzrnm.Competitive.IO
                 b = Read();
             } while ('0' <= b);
             return neg ? -res : res;
+#endif
         }
 
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public int Int0() => Int() - 1;
+        [MI(256)] public int Int0() => Int() - 1;
+
+        /// <summary>
+        /// Parse <see cref="uint"/> from stdin
+        /// </summary>
+        [MI(256)]
+        public uint UInt()
+        {
+
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out uint v, out int consumed);
+            pos += consumed;
+            return v;
+#else
+            uint res = 0;
+            byte b;
+            do b = Read();
+            while (b < '0');
+            do
+            {
+                res = res * 10 + (b ^ (uint)'0');
+                b = Read();
+            } while ('0' <= b);
+            return res;
+#endif
+        }
+
+        /// <summary>
+        /// Parse <see cref="uint"/> from stdin and decrement
+        /// </summary>
+        [MI(256)] public uint UInt0() => UInt() - 1;
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(256)]
         public long Long()
         {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out long v, out int consumed);
+            pos += consumed;
+            return v;
+#else
             long res = 0;
             bool neg = false;
             byte b;
@@ -116,20 +197,26 @@ namespace Kzrnm.Competitive.IO
                 b = Read();
             } while ('0' <= b);
             return neg ? -res : res;
+#endif
         }
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin and decrement
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public long Long0() => Long() - 1;
+        [MI(256)] public long Long0() => Long() - 1;
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(256)]
         public ulong ULong()
         {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out ulong v, out int consumed);
+            pos += consumed;
+            return v;
+#else
             ulong res = 0;
             byte b;
             do b = Read();
@@ -140,18 +227,50 @@ namespace Kzrnm.Competitive.IO
                 b = Read();
             } while ('0' <= b);
             return res;
+#endif
         }
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public ulong ULong0() => ULong() - 1;
+        [MI(256)] public ulong ULong0() => ULong() - 1;
+
+        /// <summary>
+        /// Read a <see cref="double"/> from stdin
+        /// </summary>
+        [MI(256)]
+        public double Double()
+        {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out double v, out int consumed);
+            pos += consumed;
+            return v;
+#else
+            return double.Parse(Ascii());
+#endif
+        }
+
+        /// <summary>
+        /// Read a <see cref="decimal"/> from stdin
+        /// </summary>
+        [MI(256)]
+        public decimal Decimal()
+        {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out decimal v, out int consumed);
+            pos += consumed;
+            return v;
+#else
+            return decimal.Parse(Ascii());
+#endif
+        }
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(256)]
         public string String()
         {
             var sb = new List<byte>(); ;
@@ -169,7 +288,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(256)]
         public string Ascii()
         {
             var sb = new StringBuilder();
@@ -187,7 +306,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(256)]
         public string Line()
         {
             var sb = new List<byte>();
@@ -206,7 +325,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
+        [MI(256)]
         public char Char()
         {
             byte b;
@@ -216,51 +335,38 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// Read a <see cref="double"/> from stdin
-        /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public double Double() => double.Parse(Ascii());
-
-        /// <summary>
-        /// Read a <see cref="decimal"/> from stdin
-        /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public decimal Decimal() => decimal.Parse(Ascii());
-
-        /// <summary>
         /// implicit call <see cref="Int()"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public static implicit operator int(NewConsoleReader cr) => cr.Int();
+        [MI(256)] public static implicit operator int(ConsoleReader cr) => cr.Int();
+
+        /// <summary>
+        /// implicit call <see cref="UInt()"/>
+        /// </summary>
+        [MI(256)] public static implicit operator uint(ConsoleReader cr) => cr.UInt();
 
         /// <summary>
         /// implicit call <see cref="Long()"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public static implicit operator long(NewConsoleReader cr) => cr.Long();
+        [MI(256)] public static implicit operator long(ConsoleReader cr) => cr.Long();
 
         /// <summary>
         /// implicit call <see cref="ULong()"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public static implicit operator ulong(NewConsoleReader cr) => cr.ULong();
+        [MI(256)] public static implicit operator ulong(ConsoleReader cr) => cr.ULong();
 
         /// <summary>
         /// implicit call <see cref="Double()"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public static implicit operator double(NewConsoleReader cr) => cr.Double();
+        [MI(256)] public static implicit operator double(ConsoleReader cr) => cr.Double();
 
         /// <summary>
         /// implicit call <see cref="Decimal"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public static implicit operator decimal(NewConsoleReader cr) => cr.Decimal();
+        [MI(256)] public static implicit operator decimal(ConsoleReader cr) => cr.Decimal();
 
         /// <summary>
         /// implicit call <see cref="Ascii()"/>
         /// </summary>
-        [MethodImpl(AggressiveInlining)]
-        public static implicit operator string(NewConsoleReader cr) => cr.Ascii();
+        [MI(256)] public static implicit operator string(ConsoleReader cr) => cr.Ascii();
     }
 }

@@ -6,7 +6,7 @@
 
 		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
 
-		<NoWarn>$(NoWarn);CA1063</NoWarn>
+		<NoWarn>$(NoWarn);CA1063;CA1806</NoWarn>
 
 		<PackageTags>AtCoder;Competitive Programing</PackageTags>
 		<PackageId>Competitive.IO</PackageId>

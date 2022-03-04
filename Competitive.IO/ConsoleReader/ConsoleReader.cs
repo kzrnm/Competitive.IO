@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+#if NETSTANDARD2_1_OR_GREATER
+using System.Buffers.Text;
+#endif
 
 namespace Kzrnm.Competitive.IO
 {
@@ -47,21 +50,54 @@ namespace Kzrnm.Competitive.IO
             buffer = new byte[bufferSize];
         }
 
+#if NETSTANDARD2_1_OR_GREATER
+        /// <summary>
+        /// Read entire numeric string
+        /// </summary>
+        [MI(256)]
+        private void FillEntireNumber()
+        {
+            if ((uint)pos >= (uint)buffer.Length)
+                FillNextBuffer();
+            while (buffer[pos] <= ' ')
+                if (++pos >= len)
+                    FillNextBuffer();
+            if (pos + 21 >= buffer.Length)
+                FillEntireNumberImpl();
+        }
+        private void FillEntireNumberImpl()
+        {
+            var remaining = buffer.Length - pos;
+            buffer.AsSpan(pos).CopyTo(buffer);
+            pos = 0;
+            var numberOfBytes = input.Read(buffer, remaining, buffer.Length - remaining);
+            if (numberOfBytes == 0)
+            {
+                numberOfBytes = 1;
+                buffer[remaining] = 10;
+            }
+            len = remaining + numberOfBytes;
+        }
+#endif
+        private void FillNextBuffer()
+        {
+            if ((len = input.Read(buffer, 0, buffer.Length)) == 0)
+            {
+                buffer[0] = 10;
+                len = 1;
+            }
+            pos = 0;
+        }
+
         /// <summary>
         /// Move to next positon
         /// </summary>
         [MI(256)]
-        protected internal byte Read()
+        internal byte Read()
         {
-            if (++pos >= len)
-            {
-                if ((len = input.Read(buffer, 0, buffer.Length)) <= 0)
-                {
-                    buffer[0] = 10;
-                }
-                pos = 0;
-            }
-            return buffer[pos];
+            if (pos >= len)
+                FillNextBuffer();
+            return buffer[pos++];
         }
 
         /// <summary>
@@ -70,6 +106,12 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         public int Int()
         {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out int v, out int consumed);
+            pos += consumed;
+            return v;
+#else
             int res = 0;
             bool neg = false;
             byte b;
@@ -86,6 +128,7 @@ namespace Kzrnm.Competitive.IO
                 b = Read();
             } while ('0' <= b);
             return neg ? -res : res;
+#endif
         }
 
         /// <summary>
@@ -96,7 +139,28 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="uint"/> from stdin
         /// </summary>
-        [MI(256)] public uint UInt() => (uint)ULong();
+        [MI(256)]
+        public uint UInt()
+        {
+
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out uint v, out int consumed);
+            pos += consumed;
+            return v;
+#else
+            uint res = 0;
+            byte b;
+            do b = Read();
+            while (b < '0');
+            do
+            {
+                res = res * 10 + (b ^ (uint)'0');
+                b = Read();
+            } while ('0' <= b);
+            return res;
+#endif
+        }
 
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
@@ -109,6 +173,12 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         public long Long()
         {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out long v, out int consumed);
+            pos += consumed;
+            return v;
+#else
             long res = 0;
             bool neg = false;
             byte b;
@@ -125,6 +195,7 @@ namespace Kzrnm.Competitive.IO
                 b = Read();
             } while ('0' <= b);
             return neg ? -res : res;
+#endif
         }
 
         /// <summary>
@@ -138,6 +209,12 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         public ulong ULong()
         {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out ulong v, out int consumed);
+            pos += consumed;
+            return v;
+#else
             ulong res = 0;
             byte b;
             do b = Read();
@@ -148,12 +225,45 @@ namespace Kzrnm.Competitive.IO
                 b = Read();
             } while ('0' <= b);
             return res;
+#endif
         }
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
         [MI(256)] public ulong ULong0() => ULong() - 1;
+
+        /// <summary>
+        /// Read a <see cref="double"/> from stdin
+        /// </summary>
+        [MI(256)]
+        public double Double()
+        {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out double v, out int consumed);
+            pos += consumed;
+            return v;
+#else
+            return double.Parse(Ascii());
+#endif
+        }
+
+        /// <summary>
+        /// Read a <see cref="decimal"/> from stdin
+        /// </summary>
+        [MI(256)]
+        public decimal Decimal()
+        {
+#if NETSTANDARD2_1_OR_GREATER
+            FillEntireNumber();
+            Utf8Parser.TryParse(buffer.AsSpan(pos), out decimal v, out int consumed);
+            pos += consumed;
+            return v;
+#else
+            return decimal.Parse(Ascii());
+#endif
+        }
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
@@ -221,16 +331,6 @@ namespace Kzrnm.Competitive.IO
             while (b <= ' ');
             return (char)b;
         }
-
-        /// <summary>
-        /// Read a <see cref="double"/> from stdin
-        /// </summary>
-        [MI(256)] public double Double() => double.Parse(Ascii());
-
-        /// <summary>
-        /// Read a <see cref="decimal"/> from stdin
-        /// </summary>
-        [MI(256)] public decimal Decimal() => decimal.Parse(Ascii());
 
         /// <summary>
         /// implicit call <see cref="Int()"/>
