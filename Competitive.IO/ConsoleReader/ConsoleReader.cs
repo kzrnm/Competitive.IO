@@ -51,21 +51,17 @@ namespace Kzrnm.Competitive.IO
         }
 
 #if NETSTANDARD2_1_OR_GREATER
-        [MI(256)]
-        internal void SkipBlank()
-        {
-            while (buffer[pos] <= ' ')
-                if (++pos >= len)
-                    FillNextBuffer();
-        }
-
         /// <summary>
         /// Read entire numeric string
         /// </summary>
         [MI(256)]
-        internal void FillEntireNumber()
+        private void FillEntireNumber()
         {
-            SkipBlank();
+            if ((uint)pos >= (uint)buffer.Length)
+                FillNextBuffer();
+            while (buffer[pos] <= ' ')
+                if (++pos >= len)
+                    FillNextBuffer();
             if (pos + 21 >= buffer.Length)
                 FillEntireNumberImpl();
         }
@@ -86,7 +82,10 @@ namespace Kzrnm.Competitive.IO
         private void FillNextBuffer()
         {
             if ((len = input.Read(buffer, 0, buffer.Length)) == 0)
+            {
                 buffer[0] = 10;
+                len = 1;
+            }
             pos = 0;
         }
 

@@ -11,9 +11,10 @@ using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
-using Kzrnm.Competitive.IO;
+using ConsoleReader = Kzrnm.Competitive.IO.ConsoleReader;
+using NewConsoleReader = Kzrnm.Competitive.IO.Benchmark.ConsoleReader;
 
-#pragma warning disable CS0436 // 型がインポートされた型と競合しています
+#pragma warning disable CS0436
 #if DEBUG
 BenchmarkSwitcher.FromAssembly(typeof(BenchmarkConfig).Assembly).Run(args, new DebugInProcessConfig());
 #else
@@ -140,53 +141,53 @@ public class Benchmark
 
 
 
-[Config(typeof(BenchmarkConfig))]
-[GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-public class BenchmarkRepeat
-{
-    readonly Assembly assembly = Assembly.GetExecutingAssembly();
+//[Config(typeof(BenchmarkConfig))]
+//[GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
+//public class BenchmarkRepeat
+//{
+//    readonly Assembly assembly = Assembly.GetExecutingAssembly();
 
-    private Stream AsciiStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Ascii.txt");
-    private Stream IntStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Int.txt");
-    private Stream DoubleStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Double.txt");
+//    private Stream AsciiStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Ascii.txt");
+//    private Stream IntStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Int.txt");
+//    private Stream DoubleStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Double.txt");
 
-    [Benchmark]
-    [BenchmarkCategory("Current")]
-    public long RepeatInt()
-    {
-        var cr = new ConsoleReader(IntStream(), new UTF8Encoding(false));
-        long sum = 0;
-        int N = cr.Int();
-        foreach (var s in cr.Repeat(3 * N).Int())
-        {
-            sum += sum;
-        }
-        return sum;
-    }
-    [Benchmark]
-    [BenchmarkCategory("Current")]
-    public double RepeatDouble()
-    {
-        var cr = new ConsoleReader(DoubleStream(), new UTF8Encoding(false));
-        double sum = 0;
-        int N = cr.Int();
-        foreach (var s in cr.Repeat(3 * N).Double())
-        {
-            sum += sum;
-        }
-        return sum;
-    }
-    [Benchmark]
-    [BenchmarkCategory("Current")]
-    public int RepeatAscii()
-    {
-        var cr = new ConsoleReader(AsciiStream(), new UTF8Encoding(false));
-        int hash = 0;
-        int N = cr.Int();
-        foreach (var s in cr.Repeat(3 * N).Ascii())
-        {
-            hash ^= s.GetHashCode();
-        }
-        return hash;
-    }
-}
+//    [Benchmark]
+//    [BenchmarkCategory("Current")]
+//    public long RepeatInt()
+//    {
+//        var cr = new ConsoleReader(IntStream(), new UTF8Encoding(false));
+//        long sum = 0;
+//        int N = cr.Int();
+//        foreach (var s in cr.Repeat(3 * N).Int())
+//        {
+//            sum += sum;
+//        }
+//        return sum;
+//    }
+//    [Benchmark]
+//    [BenchmarkCategory("Current")]
+//    public double RepeatDouble()
+//    {
+//        var cr = new ConsoleReader(DoubleStream(), new UTF8Encoding(false));
+//        double sum = 0;
+//        int N = cr.Int();
+//        foreach (var s in cr.Repeat(3 * N).Double())
+//        {
+//            sum += sum;
+//        }
+//        return sum;
+//    }
+//    [Benchmark]
+//    [BenchmarkCategory("Current")]
+//    public int RepeatAscii()
+//    {
+//        var cr = new ConsoleReader(AsciiStream(), new UTF8Encoding(false));
+//        int hash = 0;
+//        int N = cr.Int();
+//        foreach (var s in cr.Repeat(3 * N).Ascii())
+//        {
+//            hash ^= s.GetHashCode();
+//        }
+//        return hash;
+//    }
+//}
