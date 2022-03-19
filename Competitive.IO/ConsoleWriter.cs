@@ -12,10 +12,11 @@ namespace Kzrnm.Competitive.IO
     public partial class ConsoleWriter : IDisposable
     {
         private const int DefaultBufferSize = 1 << 12;
+        private readonly StreamWriter sw;
         /// <summary>
         /// Implements writer
         /// </summary>
-        public StreamWriter StreamWriter { get; }
+        public StreamWriter StreamWriter => sw;
         /// <summary>
         /// <para>Wrapper of stdout</para>
         /// <para>Output stream: <see cref="Console.OpenStandardOutput()"/></para>
@@ -38,13 +39,13 @@ namespace Kzrnm.Competitive.IO
         /// <param name="bufferSize">Output buffer size</param>
         public ConsoleWriter(Stream output, Encoding encoding, int bufferSize)
         {
-            StreamWriter = new StreamWriter(output, encoding, bufferSize);
+            sw = new StreamWriter(output, encoding, bufferSize);
         }
 
         /// <summary>
         /// Flush output stream.
         /// </summary>
-        [MI(256)] public void Flush() => StreamWriter.Flush();
+        [MI(256)] public void Flush() => sw.Flush();
 
         /// <summary>
         /// Calls <see cref="StreamWriter.Flush()"/>
@@ -58,7 +59,7 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         public ConsoleWriter WriteLine()
         {
-            StreamWriter.WriteLine();
+            sw.WriteLine();
             return this;
         }
 
@@ -69,7 +70,7 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         public ConsoleWriter WriteLine<T>(T v)
         {
-            StreamWriter.WriteLine(v.ToString());
+            sw.WriteLine(v.ToString());
             return this;
         }
         /// <summary>
@@ -119,8 +120,8 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         public ConsoleWriter WriteLineJoin<T1, T2>(T1 v1, T2 v2)
         {
-            StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
-            StreamWriter.WriteLine(v2.ToString()); return this;
+            sw.Write(v1.ToString()); sw.Write(' ');
+            sw.WriteLine(v2.ToString()); return this;
         }
         /// <summary>
         /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to output stream.
@@ -129,9 +130,9 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         public ConsoleWriter WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
         {
-            StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
-            StreamWriter.Write(v2.ToString()); StreamWriter.Write(' ');
-            StreamWriter.WriteLine(v3.ToString()); return this;
+            sw.Write(v1.ToString()); sw.Write(' ');
+            sw.Write(v2.ToString()); sw.Write(' ');
+            sw.WriteLine(v3.ToString()); return this;
         }
         /// <summary>
         /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to output stream.
@@ -140,10 +141,10 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
         {
-            StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
-            StreamWriter.Write(v2.ToString()); StreamWriter.Write(' ');
-            StreamWriter.Write(v3.ToString()); StreamWriter.Write(' ');
-            StreamWriter.WriteLine(v4.ToString()); return this;
+            sw.Write(v1.ToString()); sw.Write(' ');
+            sw.Write(v2.ToString()); sw.Write(' ');
+            sw.Write(v3.ToString()); sw.Write(' ');
+            sw.WriteLine(v4.ToString()); return this;
         }
         /// <summary>
         /// Write line each item of <paramref name="col"/>
@@ -186,13 +187,13 @@ namespace Kzrnm.Competitive.IO
             var en = col.GetEnumerator();
             if (!en.MoveNext())
                 goto End;
-            StreamWriter.Write(en.Current.ToString());
+            sw.Write(en.Current.ToString());
             while (en.MoveNext())
             {
-                StreamWriter.Write(sep);
-                StreamWriter.Write(en.Current.ToString());
+                sw.Write(sep);
+                sw.Write(en.Current.ToString());
             }
-        End: StreamWriter.WriteLine();
+        End: sw.WriteLine();
             return this;
         }
     }

@@ -10,7 +10,7 @@ namespace Kzrnm.Competitive.IO
         /// Write <paramref name="v"/> to output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public ConsoleWriter WriteLine(ReadOnlySpan<char> v) { StreamWriter.WriteLine(v); return this; }
+        [MI(256)] public ConsoleWriter WriteLine(ReadOnlySpan<char> v) { sw.WriteLine(v); return this; }
         /// <summary>
         /// Write joined <paramref name="col"/> to output stream with end of line.
         /// </summary>
@@ -43,13 +43,13 @@ namespace Kzrnm.Competitive.IO
             var en = col.GetEnumerator();
             if (!en.MoveNext())
                 return this;
-            StreamWriter.Write(en.Current.ToString());
+            sw.Write(en.Current.ToString());
             while (en.MoveNext())
             {
-                StreamWriter.Write(sep);
-                StreamWriter.Write(en.Current.ToString());
+                sw.Write(sep);
+                sw.Write(en.Current.ToString());
             }
-            StreamWriter.WriteLine();
+            sw.WriteLine();
             return this;
         }
     }
