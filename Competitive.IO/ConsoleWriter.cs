@@ -9,7 +9,7 @@ namespace Kzrnm.Competitive.IO
     /// <summary>
     /// Output Writer
     /// </summary>
-    public partial class ConsoleWriter : IDisposable
+    public sealed partial class ConsoleWriter : IDisposable
     {
         private const int DefaultBufferSize = 1 << 12;
         private readonly StreamWriter sw;

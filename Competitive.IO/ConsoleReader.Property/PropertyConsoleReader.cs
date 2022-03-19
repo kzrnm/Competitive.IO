@@ -13,7 +13,7 @@ namespace Kzrnm.Competitive.IO
     /// <summary>
     /// Input Reader
     /// </summary>
-    public class PropertyConsoleReader
+    public sealed class PropertyConsoleReader
     {
         private const int BufSize = 1 << 12;
         private readonly Stream input;
