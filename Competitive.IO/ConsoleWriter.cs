@@ -21,14 +21,14 @@ namespace Kzrnm.Competitive.IO
         /// <para>Output stream: <see cref="Console.OpenStandardOutput()"/></para>
         /// <para>Output encoding: <see cref="Console.OutputEncoding"/></para>
         /// </summary>
-        [MI(256)] public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding, DefaultBufferSize) { }
+        public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
         /// </summary>
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>
-        [MI(256)] public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, DefaultBufferSize) { }
+        public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
@@ -36,7 +36,6 @@ namespace Kzrnm.Competitive.IO
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>
         /// <param name="bufferSize">Output buffer size</param>
-        [MI(256)]
         public ConsoleWriter(Stream output, Encoding encoding, int bufferSize)
         {
             StreamWriter = new StreamWriter(output, encoding, bufferSize);
@@ -46,6 +45,11 @@ namespace Kzrnm.Competitive.IO
         /// Flush output stream.
         /// </summary>
         [MI(256)] public void Flush() => StreamWriter.Flush();
+
+        /// <summary>
+        /// Calls <see cref="StreamWriter.Flush()"/>
+        /// </summary>
+        [MI(256)] public void Dispose() => Flush();
 
         /// <summary>
         /// Write empty line to output stream.
@@ -59,13 +63,13 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// Write <paramref name="obj"/> to output stream.
+        /// Write <paramref name="v"/> to output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteLine<T>(T obj)
+        public ConsoleWriter WriteLine<T>(T v)
         {
-            StreamWriter.WriteLine(obj.ToString());
+            StreamWriter.WriteLine(v.ToString());
             return this;
         }
         /// <summary>
@@ -191,10 +195,5 @@ namespace Kzrnm.Competitive.IO
         End: StreamWriter.WriteLine();
             return this;
         }
-
-        /// <summary>
-        /// Calls <see cref="StreamWriter.Flush()"/>
-        /// </summary>
-        [MI(256)] public void Dispose() => Flush();
     }
 }
