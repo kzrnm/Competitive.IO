@@ -38,7 +38,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="col">output items</param>
         /// <returns></returns>
         [MI(256)]
-        protected ConsoleWriter WriteMany<T>(char sep, ReadOnlySpan<T> col)
+        private ConsoleWriter WriteMany<T>(char sep, ReadOnlySpan<T> col)
         {
             var en = col.GetEnumerator();
             if (!en.MoveNext())
