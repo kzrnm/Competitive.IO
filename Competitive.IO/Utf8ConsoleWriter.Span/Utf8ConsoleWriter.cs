@@ -114,6 +114,8 @@ namespace Kzrnm.Competitive.IO
                     bw = Utf8NoBom.GetBytes(s, dst);
                 }
             }
+            else if (v is char[] charr)
+                return Write(charr.AsSpan());
             else if (v is IUtf8ConsoleWriterFormatter f)
             {
                 f.Write(this);

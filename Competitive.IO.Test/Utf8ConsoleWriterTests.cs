@@ -219,6 +219,16 @@ namespace Kzrnm.Competitive.IO
         }
 
         [Fact]
+        public void WriteLineCharArray()
+        {
+            var foo = new[] { 'f', 'o', 'o', 'b', 'a', 'r', 'b', 'a', 'z' };
+            cw.WriteLine(foo);
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes($"foobarbaz{newLine}"));
+        }
+
+        [Fact]
         public void WriteLinesFormatter()
         {
             var pts = new[] {
