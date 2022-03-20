@@ -12,7 +12,7 @@ namespace Kzrnm.Competitive.IO
     /// <summary>
     /// Input Reader
     /// </summary>
-    public class ConsoleReader
+    public sealed class ConsoleReader
     {
         private const int DefaultBufferSize = 1 << 12;
         private readonly Stream input;

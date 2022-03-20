@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NETCOREAPP3_0_OR_GREATER
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,18 +8,18 @@ using Xunit;
 
 namespace Kzrnm.Competitive.IO
 {
-    public class ConsoleWriterTests
+    public class Utf8ConsoleWriterTests
     {
         private const int BufSize = 1 << 8;
         private readonly byte[] buffer = new byte[BufSize];
         private readonly string newLine;
         private readonly MemoryStream stream;
-        private readonly ConsoleWriter cw;
-        public ConsoleWriterTests()
+        private readonly Utf8ConsoleWriter cw;
+        public Utf8ConsoleWriterTests()
         {
             stream = new MemoryStream(buffer);
-            cw = new ConsoleWriter(stream, new UTF8Encoding(false));
-            newLine = cw.StreamWriter.NewLine;
+            cw = new Utf8ConsoleWriter(stream);
+            newLine = "\n";
         }
         private static byte[] ToBytes(string str)
         {
@@ -127,7 +128,6 @@ namespace Kzrnm.Competitive.IO
             buffer.Should().Equal(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
 
-#if !NETFRAMEWORK
         [Fact]
         public void WriteLineSpan()
         {
@@ -217,6 +217,42 @@ namespace Kzrnm.Competitive.IO
             cw.Flush();
             buffer.Should().Equal(ToBytes($"1 2 a 4{newLine}"));
         }
-#endif
+
+        [Fact]
+        public void WriteLinesFormatter()
+        {
+            var pts = new[] {
+                new Pt { x = 1, y = 2 },
+                new Pt { x = -1, y = -2 },
+                new Pt { x = 3, y = 4 },
+                new Pt { x = -3, y = -4 },
+                new Pt { x = 5, y = 6 },
+                new Pt { x = -5, y = -6 },
+            };
+            cw.WriteLines(pts);
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes(@"1 2
+-1 -2
+3 4
+-3 -4
+5 6
+-5 -6
+".Replace("\r\n", "\n")));
+        }
+        struct Pt : IUtf8ConsoleWriterFormatter
+        {
+            public long x;
+            public long y;
+
+            public void Write(Utf8ConsoleWriter cw)
+            {
+                cw.Write(x);
+                cw.Write(' ');
+                cw.Write(y);
+            }
+            public override string ToString() => $"{x} {y}";
+        }
     }
 }
+#endif

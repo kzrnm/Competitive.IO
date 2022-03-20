@@ -2,7 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
-		<LangVersion>7</LangVersion>
+		<LangVersion Condition="'$(TargetFramework)' == 'netstandard2.0'">7</LangVersion>
+		<LangVersion Condition="'$(TargetFramework)' != 'netstandard2.0'">7.3</LangVersion>
 
 		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
 

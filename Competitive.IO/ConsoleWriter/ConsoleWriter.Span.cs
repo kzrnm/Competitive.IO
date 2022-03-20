@@ -7,17 +7,17 @@ namespace Kzrnm.Competitive.IO
     public partial class ConsoleWriter
     {
         /// <summary>
-        /// Write <paramref name="obj"/> to output stream.
+        /// Write <paramref name="v"/> to output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public ConsoleWriter WriteLine(ReadOnlySpan<char> obj) { StreamWriter.WriteLine(obj); return this; }
+        [MI(256)] public ConsoleWriter WriteLine(ReadOnlySpan<char> v) { sw.WriteLine(v); return this; }
         /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
+        /// Write joined <paramref name="col"/> to output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)] public ConsoleWriter WriteLineJoin<T>(Span<T> col) => WriteMany(' ', (ReadOnlySpan<T>)col);
         /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
+        /// Write joined <paramref name="col"/> to output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)] public ConsoleWriter WriteLineJoin<T>(ReadOnlySpan<T> col) => WriteMany(' ', col);
@@ -38,18 +38,18 @@ namespace Kzrnm.Competitive.IO
         /// <param name="col">output items</param>
         /// <returns></returns>
         [MI(256)]
-        protected ConsoleWriter WriteMany<T>(char sep, ReadOnlySpan<T> col)
+        private ConsoleWriter WriteMany<T>(char sep, ReadOnlySpan<T> col)
         {
             var en = col.GetEnumerator();
             if (!en.MoveNext())
                 return this;
-            StreamWriter.Write(en.Current.ToString());
+            sw.Write(en.Current.ToString());
             while (en.MoveNext())
             {
-                StreamWriter.Write(sep);
-                StreamWriter.Write(en.Current.ToString());
+                sw.Write(sep);
+                sw.Write(en.Current.ToString());
             }
-            StreamWriter.WriteLine();
+            sw.WriteLine();
             return this;
         }
     }

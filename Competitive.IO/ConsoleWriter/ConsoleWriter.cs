@@ -5,30 +5,32 @@ using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
+    using _W = ConsoleWriter;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Output Writer
     /// </summary>
-    public partial class ConsoleWriter : IDisposable
+    public sealed partial class ConsoleWriter : IDisposable
     {
         private const int DefaultBufferSize = 1 << 12;
+        private readonly StreamWriter sw;
         /// <summary>
         /// Implements writer
         /// </summary>
-        public StreamWriter StreamWriter { get; }
+        public StreamWriter StreamWriter => sw;
         /// <summary>
         /// <para>Wrapper of stdout</para>
         /// <para>Output stream: <see cref="Console.OpenStandardOutput()"/></para>
         /// <para>Output encoding: <see cref="Console.OutputEncoding"/></para>
         /// </summary>
-        [MI(256)] public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding, DefaultBufferSize) { }
+        public ConsoleWriter() : this(Console.OpenStandardOutput(), Console.OutputEncoding) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
         /// </summary>
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>
-        [MI(256)] public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, DefaultBufferSize) { }
+        public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, DefaultBufferSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
@@ -36,66 +38,81 @@ namespace Kzrnm.Competitive.IO
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>
         /// <param name="bufferSize">Output buffer size</param>
-        [MI(256)]
         public ConsoleWriter(Stream output, Encoding encoding, int bufferSize)
         {
-            StreamWriter = new StreamWriter(output, encoding, bufferSize);
+            sw = new StreamWriter(output, encoding, bufferSize);
         }
 
         /// <summary>
         /// Flush output stream.
         /// </summary>
-        [MI(256)] public void Flush() => StreamWriter.Flush();
+        [MI(256)] public void Flush() => sw.Flush();
+
+        /// <summary>
+        /// Calls <see cref="StreamWriter.Flush()"/>
+        /// </summary>
+        [MI(256)] public void Dispose() => Flush();
+
+        /// <summary>
+        /// Write <paramref name="v"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [MI(256)]
+        public _W Write<T>(T v)
+        {
+            sw.Write(v.ToString());
+            return this;
+        }
 
         /// <summary>
         /// Write empty line to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteLine()
+        public _W WriteLine()
         {
-            StreamWriter.WriteLine();
+            sw.WriteLine();
             return this;
         }
 
         /// <summary>
-        /// Write <paramref name="obj"/> to output stream.
+        /// Write <paramref name="v"/> to output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteLine<T>(T obj)
+        public _W WriteLine<T>(T v)
         {
-            StreamWriter.WriteLine(obj.ToString());
+            sw.WriteLine(v.ToString());
             return this;
         }
         /// <summary>
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public ConsoleWriter WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
+        [MI(256)] public _W WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
 
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public ConsoleWriter WriteLineJoin<T1, T2>((T1, T2) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
+        [MI(256)] public _W WriteLineJoin<T1, T2>((T1, T2) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public ConsoleWriter WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
+        [MI(256)] public _W WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+        [MI(256)] public _W WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
 #if NETSTANDARD2_1
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteLineJoin<TTuple>(TTuple tuple) where TTuple : System.Runtime.CompilerServices.ITuple
+        public _W WriteLineJoin<TTuple>(TTuple tuple) where TTuple : System.Runtime.CompilerServices.ITuple
         {
             var col = new object[tuple.Length];
             for (int i = 0; i < col.Length; i++)
@@ -107,51 +124,51 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public ConsoleWriter WriteLineJoin(params object[] col) => WriteMany(' ', col);
+        [MI(256)] public _W WriteLineJoin(params object[] col) => WriteMany(' ', col);
         /// <summary>
         /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteLineJoin<T1, T2>(T1 v1, T2 v2)
+        public _W WriteLineJoin<T1, T2>(T1 v1, T2 v2)
         {
-            StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
-            StreamWriter.WriteLine(v2.ToString()); return this;
+            sw.Write(v1.ToString()); sw.Write(' ');
+            sw.WriteLine(v2.ToString()); return this;
         }
         /// <summary>
         /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
+        public _W WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
         {
-            StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
-            StreamWriter.Write(v2.ToString()); StreamWriter.Write(' ');
-            StreamWriter.WriteLine(v3.ToString()); return this;
+            sw.Write(v1.ToString()); sw.Write(' ');
+            sw.Write(v2.ToString()); sw.Write(' ');
+            sw.WriteLine(v3.ToString()); return this;
         }
         /// <summary>
         /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
+        public _W WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
         {
-            StreamWriter.Write(v1.ToString()); StreamWriter.Write(' ');
-            StreamWriter.Write(v2.ToString()); StreamWriter.Write(' ');
-            StreamWriter.Write(v3.ToString()); StreamWriter.Write(' ');
-            StreamWriter.WriteLine(v4.ToString()); return this;
+            sw.Write(v1.ToString()); sw.Write(' ');
+            sw.Write(v2.ToString()); sw.Write(' ');
+            sw.Write(v3.ToString()); sw.Write(' ');
+            sw.WriteLine(v4.ToString()); return this;
         }
         /// <summary>
         /// Write line each item of <paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public ConsoleWriter WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
+        [MI(256)] public _W WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
         /// <summary>
         /// Write lines separated by space
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteGrid<T>(IEnumerable<IEnumerable<T>> cols)
+        public _W WriteGrid<T>(IEnumerable<IEnumerable<T>> cols)
         {
             foreach (var col in cols)
                 WriteLineJoin(col);
@@ -163,7 +180,7 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <returns>this instance.</returns>
         [MI(256)]
-        public ConsoleWriter WriteGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : System.Runtime.CompilerServices.ITuple
+        public _W WriteGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : System.Runtime.CompilerServices.ITuple
         {
             foreach (var tup in tuples)
                 WriteLineJoin(tup);
@@ -177,24 +194,19 @@ namespace Kzrnm.Competitive.IO
         /// <param name="col">output items</param>
         /// <returns></returns>
         [MI(256)]
-        protected ConsoleWriter WriteMany<T>(char sep, IEnumerable<T> col)
+        private _W WriteMany<T>(char sep, IEnumerable<T> col)
         {
             var en = col.GetEnumerator();
             if (!en.MoveNext())
                 goto End;
-            StreamWriter.Write(en.Current.ToString());
+            sw.Write(en.Current.ToString());
             while (en.MoveNext())
             {
-                StreamWriter.Write(sep);
-                StreamWriter.Write(en.Current.ToString());
+                sw.Write(sep);
+                sw.Write(en.Current.ToString());
             }
-        End: StreamWriter.WriteLine();
+        End: sw.WriteLine();
             return this;
         }
-
-        /// <summary>
-        /// Calls <see cref="StreamWriter.Flush()"/>
-        /// </summary>
-        [MI(256)] public void Dispose() => Flush();
     }
 }
