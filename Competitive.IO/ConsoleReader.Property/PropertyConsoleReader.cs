@@ -19,7 +19,7 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public sealed class PropertyConsoleReader
     {
-        private const int BufSize = 1 << 12;
+        internal const int BufSize = 1 << 12;
         private readonly Stream input;
         private readonly Encoding encoding;
         internal readonly byte[] buf = new byte[BufSize];

@@ -396,5 +396,19 @@ abc def
             cr.Ascii().Should().Be("abc");
             cr.String().Should().Be("def");
         });
+
+        [Theory(Timeout = 1000)]
+        [InlineData(4)]
+        [InlineData(5)]
+        [InlineData(6)]
+        [InlineData(7)]
+        [InlineData(8)]
+        public async Task FillEntireNumber(int remaining) => await Task.Run(() =>
+        {
+            var str = new string('a', ConsoleReader.BufSize - remaining);
+            var cr = GetConsoleReader(str + " 12345");
+            cr.Ascii().Should().Be(str);
+            cr.Long().Should().Be(12345);
+        });
     }
 }
