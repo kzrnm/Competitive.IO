@@ -56,21 +56,20 @@ namespace Kzrnm.Competitive.IO
             while (buf[pos] <= ' ')
                 if (++pos >= len)
                     FillNextBuffer();
-            if (pos + 21 >= buf.Length)
+            if (pos + 21 >= buf.Length && buf[buf.Length - 1] > ' ')
                 FillEntireNumberImpl();
         }
         private void FillEntireNumberImpl()
         {
-            var remaining = buf.Length - pos;
-            buf.AsSpan(pos).CopyTo(buf);
+            buf.AsSpan(pos, len - pos).CopyTo(buf);
+            len -= pos;
             pos = 0;
-            var numberOfBytes = input.Read(buf, remaining, buf.Length - remaining);
+            var numberOfBytes = input.Read(buf, len, buf.Length - len);
             if (numberOfBytes == 0)
-            {
-                numberOfBytes = 1;
-                buf[remaining] = 10;
-            }
-            len = remaining + numberOfBytes;
+                buf[len++] = 10;
+            else if (numberOfBytes + len < buf.Length)
+                buf[buf.Length - 1] = 10;
+            len += numberOfBytes;
         }
 #endif
         private void FillNextBuffer()
@@ -80,6 +79,8 @@ namespace Kzrnm.Competitive.IO
                 buf[0] = 10;
                 len = 1;
             }
+            else if (len < buf.Length)
+                buf[buf.Length - 1] = 10;
             pos = 0;
         }
 

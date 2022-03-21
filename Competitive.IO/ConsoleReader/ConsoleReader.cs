@@ -76,13 +76,9 @@ namespace Kzrnm.Competitive.IO
             pos = 0;
             var numberOfBytes = input.Read(buf, len, buf.Length - len);
             if (numberOfBytes == 0)
-            {
                 buf[len++] = 10;
-            }
             else if (numberOfBytes + len < buf.Length)
-            {
-                buf[buf.Length - 1] = (byte)'\n';
-            }
+                buf[buf.Length - 1] = 10;
             len += numberOfBytes;
         }
 #endif
@@ -94,7 +90,7 @@ namespace Kzrnm.Competitive.IO
                 len = 1;
             }
             else if (len < buf.Length)
-                buf[buf.Length - 1] = (byte)'\n';
+                buf[buf.Length - 1] = 10;
             pos = 0;
         }
 

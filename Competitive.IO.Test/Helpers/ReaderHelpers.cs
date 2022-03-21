@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Kzrnm.Competitive.IO.Helpers
@@ -6,11 +7,37 @@ namespace Kzrnm.Competitive.IO.Helpers
     internal static class ReaderHelpers
     {
         public static MemoryStream UTF8Stream(string str)
-            => new MemoryStream(new UTF8Encoding(false).GetBytes(str));
+            => new SplitedStream(new UTF8Encoding(false).GetBytes(str));
 
         public static PropertyConsoleReader GetPropertyConsoleReader(string str)
-            => new PropertyConsoleReader(UTF8Stream(str), new UTF8Encoding(false));
+            => new(UTF8Stream(str + "\n"), new UTF8Encoding(false));
         public static ConsoleReader GetConsoleReader(string str)
-            => new ConsoleReader(UTF8Stream(str), new UTF8Encoding(false));
+            => new(UTF8Stream(str + "\n"), new UTF8Encoding(false));
+
+        private class SplitedStream : MemoryStream
+        {
+            public SplitedStream(byte[] buffer) : base(buffer) { }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                var pos = Position;
+                var tmp = new byte[count];
+                var read = base.Read(tmp, 0, count);
+                if (read == 0)
+                    throw new Exception("if in console, console is freezed.");
+
+                var sp = tmp.AsSpan(0, read);
+                var lineLength = sp.IndexOf((byte)'\n') + 1;
+                if (lineLength > 0)
+                {
+                    Position = pos + lineLength;
+                    sp = sp.Slice(0, lineLength);
+                }
+                else
+                    lineLength = read;
+                sp.CopyTo(buffer.AsSpan(offset, count));
+                return lineLength;
+            }
+        }
     }
 }
