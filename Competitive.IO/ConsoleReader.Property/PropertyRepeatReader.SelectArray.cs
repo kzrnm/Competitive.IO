@@ -2,8 +2,8 @@
 
 namespace Kzrnm.Competitive.IO
 {
-    using _S = PropertyRepeatReader;
     using _R = PropertyConsoleReader;
+    using _S = PropertyRepeatReader;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// <see cref="PropertyRepeatReader"/>

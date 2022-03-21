@@ -2,8 +2,8 @@
 
 namespace Kzrnm.Competitive.IO
 {
-    using _S = RepeatReader;
     using _R = ConsoleReader;
+    using _S = RepeatReader;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// <see cref="RepeatReader"/>
