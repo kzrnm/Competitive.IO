@@ -42,7 +42,7 @@ namespace Kzrnm.Competitive.IO
 -2147483647 2147483647
 1 2
 ");
-            var grid = cr.Repeat(3).Grid(2, c => c.Int());
+            var grid = cr.Grid(3, 2, c => c.Int());
             grid[0].Should().Equal(123, -14421);
             grid[1].Should().Equal(-2147483647, 2147483647);
             grid[2].Should().Equal(1, 2);
@@ -57,7 +57,7 @@ namespace Kzrnm.Competitive.IO
 -2147483647 2147483647
 1 2
 ");
-            var grid = cr.Repeat(3).Grid(2, (c, i, j) => (i, j, c.Int()));
+            var grid = cr.Grid(3, 2, (c, i, j) => (i, j, c.Int()));
             grid[0].Should().Equal((0, 0, 123), (0, 1, -14421));
             grid[1].Should().Equal((1, 0, -2147483647), (1, 1, 2147483647));
             grid[2].Should().Equal((2, 0, 1), (2, 1, 2));
