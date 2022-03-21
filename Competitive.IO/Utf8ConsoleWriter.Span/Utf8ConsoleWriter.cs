@@ -9,8 +9,8 @@ using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
-    using _W = Utf8ConsoleWriter;
     using static Utf8Formatter;
+    using _W = Utf8ConsoleWriter;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Output Writer
@@ -18,10 +18,10 @@ namespace Kzrnm.Competitive.IO
     public sealed class Utf8ConsoleWriter : IDisposable
     {
         internal static readonly UTF8Encoding Utf8NoBom = new UTF8Encoding(false);
-        private const int BufSize = 1 << 12;
-        private readonly Stream output;
-        private byte[] buf;
-        private int len;
+        internal const int BufSize = 1 << 12;
+        internal readonly Stream output;
+        internal byte[] buf;
+        internal int len;
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
@@ -60,7 +60,7 @@ namespace Kzrnm.Competitive.IO
         /// Flush output stream.
         /// </summary>
         [MI(256)]
-        public void Flush() => output.Write(buf, 0, len);
+        public void Flush() { output.Write(buf, 0, len); len = 0; }
 
         /// <summary>
         /// Calls <see cref="Flush()"/>
@@ -76,7 +76,6 @@ namespace Kzrnm.Competitive.IO
             if (buf.Length - len < size)
             {
                 Flush();
-                len = 0;
             }
             return buf.AsSpan(len, size);
         }
@@ -88,21 +87,27 @@ namespace Kzrnm.Competitive.IO
         [MI(256 | 512)]
         public _W Write<T>(T v)
         {
-            Span<byte> dst = EnsureBuf(32);
+            void FormatFloat(double d, out int b)
+                => TryFormat(d, EnsureBuf(Math.Max(25 + (int)Math.Log10(Math.Abs(d)), 32)), out b, new StandardFormat('F', 20));
+
+            void FormatDec(decimal d, out int b)
+                => TryFormat(d, EnsureBuf(Math.Max(25 + (int)Math.Log10((double)Math.Abs(d)), 32)), out b, new StandardFormat('F', 20));
+
             int bw;
-            if (typeof(T) == typeof(int)) TryFormat((int)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(long)) TryFormat((long)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(uint)) TryFormat((uint)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(ulong)) TryFormat((ulong)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(short)) TryFormat((short)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(ushort)) TryFormat((ushort)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(byte)) TryFormat((byte)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(sbyte)) TryFormat((sbyte)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(float)) TryFormat((float)(object)v, EnsureBuf(32), out bw, new StandardFormat('F', 16));
-            else if (typeof(T) == typeof(double)) TryFormat((double)(object)v, EnsureBuf(32), out bw, new StandardFormat('F', 16));
-            else if (typeof(T) == typeof(decimal)) TryFormat((decimal)(object)v, EnsureBuf(32), out bw);
+            if (typeof(T) == typeof(int)) TryFormat((int)(object)v, EnsureBuf(21), out bw);
+            else if (typeof(T) == typeof(long)) TryFormat((long)(object)v, EnsureBuf(21), out bw);
+            else if (typeof(T) == typeof(uint)) TryFormat((uint)(object)v, EnsureBuf(21), out bw);
+            else if (typeof(T) == typeof(ulong)) TryFormat((ulong)(object)v, EnsureBuf(21), out bw);
+            else if (typeof(T) == typeof(short)) TryFormat((short)(object)v, EnsureBuf(9), out bw);
+            else if (typeof(T) == typeof(ushort)) TryFormat((ushort)(object)v, EnsureBuf(9), out bw);
+            else if (typeof(T) == typeof(byte)) TryFormat((byte)(object)v, EnsureBuf(9), out bw);
+            else if (typeof(T) == typeof(sbyte)) TryFormat((sbyte)(object)v, EnsureBuf(9), out bw);
+            else if (typeof(T) == typeof(float)) FormatFloat((float)(object)v, out bw);
+            else if (typeof(T) == typeof(double)) FormatFloat((double)(object)v, out bw);
+            else if (typeof(T) == typeof(decimal)) FormatDec((decimal)(object)v, out bw);
             else if (typeof(T) == typeof(char))
             {
+                var dst = EnsureBuf(6);
                 var c = (char)(object)v;
                 if (c < 0x007f)
                 {
@@ -139,12 +144,10 @@ namespace Kzrnm.Competitive.IO
             {
                 Flush();
                 buf = new byte[mlen * 2];
-                len = 0;
             }
             else if (mlen > buf.Length - len)
             {
                 Flush();
-                len = 0;
             }
             var bw = Utf8NoBom.GetBytes(v, buf.AsSpan(len));
             len += bw;

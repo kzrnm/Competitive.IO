@@ -10,7 +10,7 @@ namespace Kzrnm.Competitive.IO
 {
     public class Utf8ConsoleWriterTests
     {
-        private const int BufSize = 1 << 8;
+        private const int BufSize = 1 << 13;
         private readonly byte[] buffer = new byte[BufSize];
         private readonly string newLine;
         private readonly MemoryStream stream;
@@ -262,6 +262,40 @@ namespace Kzrnm.Competitive.IO
                 cw.Write(y);
             }
             public override string ToString() => $"{x} {y}";
+        }
+
+        [Fact]
+        public void EnsureLong()
+        {
+            var len = Utf8ConsoleWriter.BufSize - long.MinValue.ToString().Length + 1;
+            for (int i = 0; i < len; i++)
+                cw.Write('1');
+            cw.Write(long.MinValue);
+            cw.len.Should().Be(20);
+            cw.Flush();
+            buffer.Should().Equal(ToBytes(new string('1', len) + long.MinValue.ToString()));
+        }
+        [Fact]
+        public void EnsureDouble()
+        {
+            var len = Utf8ConsoleWriter.BufSize - double.MinValue.ToString("F20").Length + 1;
+            for (int i = 0; i < len; i++)
+                cw.Write('1');
+            cw.Write(double.MinValue);
+            cw.len.Should().Be(331);
+            cw.Flush();
+            buffer.Should().Equal(ToBytes(new string('1', len) + double.MinValue.ToString("F20")));
+        }
+        [Fact]
+        public void EnsureDecimal()
+        {
+            var len = Utf8ConsoleWriter.BufSize - decimal.MinValue.ToString("F20").Length + 1;
+            for (int i = 0; i < len; i++)
+                cw.Write('1');
+            cw.Write(decimal.MinValue);
+            cw.len.Should().Be(51);
+            cw.Flush();
+            buffer.Should().Equal(ToBytes(new string('1', len) + decimal.MinValue.ToString("F20")));
         }
     }
 }
