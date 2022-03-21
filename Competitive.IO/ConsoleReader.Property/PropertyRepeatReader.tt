@@ -38,6 +38,7 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    using _R = PropertyRepeatReader;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Calls <see cref="PropertyConsoleReader"/> several times
@@ -73,7 +74,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.<#= p.Name #>"/>
         /// </summary>
-        [MI(256)] public static implicit operator <#= p.Type #>[](PropertyRepeatReader rr) => rr.<#= p.Name #>;
+        [MI(256)] public static implicit operator <#= p.Type #>[](_R rr) => rr.<#= p.Name #>;
 <# } #>
     }
     /// <summary>
@@ -84,6 +85,6 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="PropertyRepeatReader"/>
         /// </summary>
-        [MI(256)] public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
+        [MI(256)] public static _R Repeat(this PropertyConsoleReader cr, int count) => new _R(cr, count);
     }
 }

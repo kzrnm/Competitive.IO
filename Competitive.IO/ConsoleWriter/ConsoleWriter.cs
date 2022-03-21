@@ -12,7 +12,7 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public sealed partial class ConsoleWriter : IDisposable
     {
-        private const int DefaultBufferSize = 1 << 12;
+        private const int BufSize = 1 << 12;
         private readonly StreamWriter sw;
         /// <summary>
         /// Implements writer
@@ -30,7 +30,7 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <param name="output">Output stream</param>
         /// <param name="encoding">Output encoding</param>
-        public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, DefaultBufferSize) { }
+        public ConsoleWriter(Stream output, Encoding encoding) : this(output, encoding, BufSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>

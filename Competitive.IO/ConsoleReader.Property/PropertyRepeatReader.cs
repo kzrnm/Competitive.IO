@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace Kzrnm.Competitive.IO
 {
+    using _R = PropertyRepeatReader;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Calls <see cref="PropertyConsoleReader"/> several times
@@ -218,31 +219,31 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.Ascii"/>
         /// </summary>
-        [MI(256)] public static implicit operator string[](PropertyRepeatReader rr) => rr.Ascii;
+        [MI(256)] public static implicit operator string[](_R rr) => rr.Ascii;
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.Int"/>
         /// </summary>
-        [MI(256)] public static implicit operator int[](PropertyRepeatReader rr) => rr.Int;
+        [MI(256)] public static implicit operator int[](_R rr) => rr.Int;
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.UInt"/>
         /// </summary>
-        [MI(256)] public static implicit operator uint[](PropertyRepeatReader rr) => rr.UInt;
+        [MI(256)] public static implicit operator uint[](_R rr) => rr.UInt;
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.Long"/>
         /// </summary>
-        [MI(256)] public static implicit operator long[](PropertyRepeatReader rr) => rr.Long;
+        [MI(256)] public static implicit operator long[](_R rr) => rr.Long;
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.ULong"/>
         /// </summary>
-        [MI(256)] public static implicit operator ulong[](PropertyRepeatReader rr) => rr.ULong;
+        [MI(256)] public static implicit operator ulong[](_R rr) => rr.ULong;
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.Double"/>
         /// </summary>
-        [MI(256)] public static implicit operator double[](PropertyRepeatReader rr) => rr.Double;
+        [MI(256)] public static implicit operator double[](_R rr) => rr.Double;
         /// <summary>
         /// implicit call <see cref="PropertyRepeatReader.Decimal"/>
         /// </summary>
-        [MI(256)] public static implicit operator decimal[](PropertyRepeatReader rr) => rr.Decimal;
+        [MI(256)] public static implicit operator decimal[](_R rr) => rr.Decimal;
     }
     /// <summary>
     /// Defines extension
@@ -252,6 +253,6 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="PropertyRepeatReader"/>
         /// </summary>
-        [MI(256)] public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
+        [MI(256)] public static _R Repeat(this PropertyConsoleReader cr, int count) => new _R(cr, count);
     }
 }

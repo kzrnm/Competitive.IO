@@ -10,6 +10,7 @@ using System.Text;
 namespace Kzrnm.Competitive.IO
 {
     using _W = Utf8ConsoleWriter;
+    using static Utf8Formatter;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Output Writer
@@ -17,7 +18,7 @@ namespace Kzrnm.Competitive.IO
     public sealed class Utf8ConsoleWriter : IDisposable
     {
         internal static readonly UTF8Encoding Utf8NoBom = new UTF8Encoding(false);
-        private const int DefaultBufferSize = 1 << 12;
+        private const int BufSize = 1 << 12;
         private readonly Stream output;
         private byte[] buf;
         private int len;
@@ -33,7 +34,7 @@ namespace Kzrnm.Competitive.IO
         /// <para>Wrapper of stdout</para>
         /// </summary>
         /// <param name="output">Output stream</param>
-        public Utf8ConsoleWriter(Stream output) : this(output, DefaultBufferSize) { }
+        public Utf8ConsoleWriter(Stream output) : this(output, BufSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
@@ -89,17 +90,17 @@ namespace Kzrnm.Competitive.IO
         {
             Span<byte> dst = EnsureBuf(32);
             int bw;
-            if (typeof(T) == typeof(int)) Utf8Formatter.TryFormat((int)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(long)) Utf8Formatter.TryFormat((long)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(uint)) Utf8Formatter.TryFormat((uint)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(ulong)) Utf8Formatter.TryFormat((ulong)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(short)) Utf8Formatter.TryFormat((short)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(ushort)) Utf8Formatter.TryFormat((ushort)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(byte)) Utf8Formatter.TryFormat((byte)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(sbyte)) Utf8Formatter.TryFormat((sbyte)(object)v, EnsureBuf(32), out bw);
-            else if (typeof(T) == typeof(float)) Utf8Formatter.TryFormat((float)(object)v, EnsureBuf(32), out bw, new StandardFormat('F', 16));
-            else if (typeof(T) == typeof(double)) Utf8Formatter.TryFormat((double)(object)v, EnsureBuf(32), out bw, new StandardFormat('F', 16));
-            else if (typeof(T) == typeof(decimal)) Utf8Formatter.TryFormat((decimal)(object)v, EnsureBuf(32), out bw);
+            if (typeof(T) == typeof(int)) TryFormat((int)(object)v, EnsureBuf(32), out bw);
+            else if (typeof(T) == typeof(long)) TryFormat((long)(object)v, EnsureBuf(32), out bw);
+            else if (typeof(T) == typeof(uint)) TryFormat((uint)(object)v, EnsureBuf(32), out bw);
+            else if (typeof(T) == typeof(ulong)) TryFormat((ulong)(object)v, EnsureBuf(32), out bw);
+            else if (typeof(T) == typeof(short)) TryFormat((short)(object)v, EnsureBuf(32), out bw);
+            else if (typeof(T) == typeof(ushort)) TryFormat((ushort)(object)v, EnsureBuf(32), out bw);
+            else if (typeof(T) == typeof(byte)) TryFormat((byte)(object)v, EnsureBuf(32), out bw);
+            else if (typeof(T) == typeof(sbyte)) TryFormat((sbyte)(object)v, EnsureBuf(32), out bw);
+            else if (typeof(T) == typeof(float)) TryFormat((float)(object)v, EnsureBuf(32), out bw, new StandardFormat('F', 16));
+            else if (typeof(T) == typeof(double)) TryFormat((double)(object)v, EnsureBuf(32), out bw, new StandardFormat('F', 16));
+            else if (typeof(T) == typeof(decimal)) TryFormat((decimal)(object)v, EnsureBuf(32), out bw);
             else if (typeof(T) == typeof(char))
             {
                 var c = (char)(object)v;

@@ -9,6 +9,10 @@ using System.Buffers.Text;
 
 namespace Kzrnm.Competitive.IO
 {
+    using _R = PropertyConsoleReader;
+#if NETSTANDARD2_1_OR_GREATER
+    using static Utf8Parser;
+#endif
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Input Reader
@@ -18,7 +22,7 @@ namespace Kzrnm.Competitive.IO
         private const int BufSize = 1 << 12;
         private readonly Stream input;
         private readonly Encoding encoding;
-        internal readonly byte[] buffer = new byte[BufSize];
+        internal readonly byte[] buf = new byte[BufSize];
         internal int pos;
         internal int len;
 
@@ -47,33 +51,33 @@ namespace Kzrnm.Competitive.IO
         [MI(256)]
         private void FillEntireNumber()
         {
-            if ((uint)pos >= (uint)buffer.Length)
+            if ((uint)pos >= (uint)buf.Length)
                 FillNextBuffer();
-            while (buffer[pos] <= ' ')
+            while (buf[pos] <= ' ')
                 if (++pos >= len)
                     FillNextBuffer();
-            if (pos + 21 >= buffer.Length)
+            if (pos + 21 >= buf.Length)
                 FillEntireNumberImpl();
         }
         private void FillEntireNumberImpl()
         {
-            var remaining = buffer.Length - pos;
-            buffer.AsSpan(pos).CopyTo(buffer);
+            var remaining = buf.Length - pos;
+            buf.AsSpan(pos).CopyTo(buf);
             pos = 0;
-            var numberOfBytes = input.Read(buffer, remaining, buffer.Length - remaining);
+            var numberOfBytes = input.Read(buf, remaining, buf.Length - remaining);
             if (numberOfBytes == 0)
             {
                 numberOfBytes = 1;
-                buffer[remaining] = 10;
+                buf[remaining] = 10;
             }
             len = remaining + numberOfBytes;
         }
 #endif
         private void FillNextBuffer()
         {
-            if ((len = input.Read(buffer, 0, buffer.Length)) == 0)
+            if ((len = input.Read(buf, 0, buf.Length)) == 0)
             {
-                buffer[0] = 10;
+                buf[0] = 10;
                 len = 1;
             }
             pos = 0;
@@ -87,7 +91,7 @@ namespace Kzrnm.Competitive.IO
         {
             if (pos >= len)
                 FillNextBuffer();
-            return buffer[pos++];
+            return buf[pos++];
         }
 
         /// <summary>
@@ -101,8 +105,8 @@ namespace Kzrnm.Competitive.IO
             {
 #if NETSTANDARD2_1_OR_GREATER
                 FillEntireNumber();
-                Utf8Parser.TryParse(buffer.AsSpan(pos), out int v, out int consumed);
-                pos += consumed;
+                TryParse(buf.AsSpan(pos), out int v, out int bc);
+                pos += bc;
                 return v;
 #else
                 int res = 0;
@@ -150,8 +154,8 @@ namespace Kzrnm.Competitive.IO
             {
 #if NETSTANDARD2_1_OR_GREATER
                 FillEntireNumber();
-                Utf8Parser.TryParse(buffer.AsSpan(pos), out uint v, out int consumed);
-                pos += consumed;
+                TryParse(buf.AsSpan(pos), out uint v, out int bc);
+                pos += bc;
                 return v;
 #else
                 uint res = 0;
@@ -189,8 +193,8 @@ namespace Kzrnm.Competitive.IO
             {
 #if NETSTANDARD2_1_OR_GREATER
                 FillEntireNumber();
-                Utf8Parser.TryParse(buffer.AsSpan(pos), out long v, out int consumed);
-                pos += consumed;
+                TryParse(buf.AsSpan(pos), out long v, out int bc);
+                pos += bc;
                 return v;
 #else
                 long res = 0;
@@ -234,8 +238,8 @@ namespace Kzrnm.Competitive.IO
             {
 #if NETSTANDARD2_1_OR_GREATER
                 FillEntireNumber();
-                Utf8Parser.TryParse(buffer.AsSpan(pos), out ulong v, out int consumed);
-                pos += consumed;
+                TryParse(buf.AsSpan(pos), out ulong v, out int bc);
+                pos += bc;
                 return v;
 #else
                 ulong res = 0;
@@ -273,8 +277,8 @@ namespace Kzrnm.Competitive.IO
             {
 #if NETSTANDARD2_1_OR_GREATER
                 FillEntireNumber();
-                Utf8Parser.TryParse(buffer.AsSpan(pos), out double v, out int consumed);
-                pos += consumed;
+                TryParse(buf.AsSpan(pos), out double v, out int bc);
+                pos += bc;
                 return v;
 #else
                 return double.Parse(Ascii);
@@ -293,8 +297,8 @@ namespace Kzrnm.Competitive.IO
             {
 #if NETSTANDARD2_1_OR_GREATER
                 FillEntireNumber();
-                Utf8Parser.TryParse(buffer.AsSpan(pos), out decimal v, out int consumed);
-                pos += consumed;
+                TryParse(buf.AsSpan(pos), out decimal v, out int bc);
+                pos += bc;
                 return v;
 #else
                 return decimal.Parse(Ascii);
@@ -389,42 +393,42 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="Int"/>
         /// </summary>
         [MI(256)]
-        public static implicit operator int(PropertyConsoleReader cr) => cr.Int;
+        public static implicit operator int(_R cr) => cr.Int;
 
         /// <summary>
         /// implicit call <see cref="UInt"/>
         /// </summary>
         [MI(256)]
-        public static implicit operator uint(PropertyConsoleReader cr) => cr.UInt;
+        public static implicit operator uint(_R cr) => cr.UInt;
 
         /// <summary>
         /// implicit call <see cref="Long"/>
         /// </summary>
         [MI(256)]
-        public static implicit operator long(PropertyConsoleReader cr) => cr.Long;
+        public static implicit operator long(_R cr) => cr.Long;
 
         /// <summary>
         /// implicit call <see cref="ULong"/>
         /// </summary>
         [MI(256)]
-        public static implicit operator ulong(PropertyConsoleReader cr) => cr.ULong;
+        public static implicit operator ulong(_R cr) => cr.ULong;
 
         /// <summary>
         /// implicit call <see cref="Double"/>
         /// </summary>
         [MI(256)]
-        public static implicit operator double(PropertyConsoleReader cr) => cr.Double;
+        public static implicit operator double(_R cr) => cr.Double;
 
         /// <summary>
         /// implicit call <see cref="Decimal"/>
         /// </summary>
         [MI(256)]
-        public static implicit operator decimal(PropertyConsoleReader cr) => cr.Decimal;
+        public static implicit operator decimal(_R cr) => cr.Decimal;
 
         /// <summary>
         /// implicit call <see cref="Ascii"/>
         /// </summary>
         [MI(256)]
-        public static implicit operator string(PropertyConsoleReader cr) => cr.Ascii;
+        public static implicit operator string(_R cr) => cr.Ascii;
     }
 }

@@ -5,6 +5,7 @@ using System;
 
 namespace Kzrnm.Competitive.IO
 {
+    using _R = RepeatReader;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Calls <see cref="ConsoleReader"/> several times
@@ -165,31 +166,31 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="RepeatReader.Ascii()"/>
         /// </summary>
-        [MI(256)] public static implicit operator string[](RepeatReader rr) => rr.Ascii();
+        [MI(256)] public static implicit operator string[](_R rr) => rr.Ascii();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Int()"/>
         /// </summary>
-        [MI(256)] public static implicit operator int[](RepeatReader rr) => rr.Int();
+        [MI(256)] public static implicit operator int[](_R rr) => rr.Int();
         /// <summary>
         /// implicit call <see cref="RepeatReader.UInt()"/>
         /// </summary>
-        [MI(256)] public static implicit operator uint[](RepeatReader rr) => rr.UInt();
+        [MI(256)] public static implicit operator uint[](_R rr) => rr.UInt();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Long()"/>
         /// </summary>
-        [MI(256)] public static implicit operator long[](RepeatReader rr) => rr.Long();
+        [MI(256)] public static implicit operator long[](_R rr) => rr.Long();
         /// <summary>
         /// implicit call <see cref="RepeatReader.ULong()"/>
         /// </summary>
-        [MI(256)] public static implicit operator ulong[](RepeatReader rr) => rr.ULong();
+        [MI(256)] public static implicit operator ulong[](_R rr) => rr.ULong();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Double()"/>
         /// </summary>
-        [MI(256)] public static implicit operator double[](RepeatReader rr) => rr.Double();
+        [MI(256)] public static implicit operator double[](_R rr) => rr.Double();
         /// <summary>
         /// implicit call <see cref="RepeatReader.Decimal()"/>
         /// </summary>
-        [MI(256)] public static implicit operator decimal[](RepeatReader rr) => rr.Decimal();
+        [MI(256)] public static implicit operator decimal[](_R rr) => rr.Decimal();
     }
     /// <summary>
     /// Defines extension
@@ -199,6 +200,6 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="RepeatReader"/>
         /// </summary>
-        [MI(256)] public static RepeatReader Repeat(this ConsoleReader cr, int count) => new RepeatReader(cr, count);
+        [MI(256)] public static _R Repeat(this ConsoleReader cr, int count) => new _R(cr, count);
     }
 }
