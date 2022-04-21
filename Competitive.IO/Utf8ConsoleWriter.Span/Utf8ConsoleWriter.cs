@@ -265,7 +265,7 @@ namespace Kzrnm.Competitive.IO
         /// Write line each item of<paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public _W WriteLines<T>(params T[] col) => WriteMany('\n', (ReadOnlySpan<T>)col);
+        [MI(256)] public _W WriteLines<T>(T[] col) => WriteMany('\n', (ReadOnlySpan<T>)col);
         /// <summary>
         /// Write line each item of<paramref name="col"/>
         /// </summary>
