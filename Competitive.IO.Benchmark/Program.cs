@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable IDE0005 // Using ディレクティブは必要ありません。
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,6 +14,7 @@ using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
 using ConsoleReader = Kzrnm.Competitive.IO.ConsoleReader;
 using NewConsoleReader = Kzrnm.Competitive.IO.Benchmark.ConsoleReader;
+#pragma warning restore IDE0005 // Using ディレクティブは必要ありません。
 
 #pragma warning disable CS0436
 #if DEBUG
