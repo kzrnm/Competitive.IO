@@ -170,7 +170,7 @@ namespace Kzrnm.Competitive.IO
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [MI(256)]
-        public T[] Select<T>(Func<ConsoleReader, T> factory)
+        public T[] Select<T>(Func<R, T> factory)
         {
             var c = count;
             var arr = new T[c];
@@ -182,7 +182,7 @@ namespace Kzrnm.Competitive.IO
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [MI(256)]
-        public T[] Select<T>(Func<ConsoleReader, int, T> factory)
+        public T[] Select<T>(Func<R, int, T> factory)
         {
             var c = count;
             var arr = new T[c];
