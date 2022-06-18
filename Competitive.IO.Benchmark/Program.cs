@@ -1,19 +1,14 @@
 ﻿#pragma warning disable IDE0005 // Using ディレクティブは必要ありません。
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
 using ConsoleReader = Kzrnm.Competitive.IO.ConsoleReader;
-using NewConsoleReader = Kzrnm.Competitive.IO.Benchmark.ConsoleReader;
 #pragma warning restore IDE0005 // Using ディレクティブは必要ありません。
 
 #pragma warning disable CS0436
@@ -98,14 +93,14 @@ public class Benchmark
     [BenchmarkCategory("New")]
     public long NewReadInt()
     {
-        var cr = new NewConsoleReader(IntStream(), new UTF8Encoding(false));
+        var cr = new ConsoleReader(IntStream(), new UTF8Encoding(false));
         long sum = 0;
         int N = cr.Int();
         for (int i = 0; i < N; i++)
         {
-            sum += cr.Int();
-            sum += cr.Int();
-            sum += cr.Int();
+            sum += cr.Read<int>();
+            sum += cr.Read<int>();
+            sum += cr.Read<int>();
         }
         return sum;
     }
@@ -113,14 +108,14 @@ public class Benchmark
     [BenchmarkCategory("New")]
     public double NewReadDouble()
     {
-        var cr = new NewConsoleReader(DoubleStream(), new UTF8Encoding(false));
+        var cr = new ConsoleReader(DoubleStream(), new UTF8Encoding(false));
         double sum = 0;
         int N = cr.Int();
         for (int i = 0; i < N; i++)
         {
-            sum += cr.Double();
-            sum += cr.Double();
-            sum += cr.Double();
+            sum += cr.Read<double>();
+            sum += cr.Read<double>();
+            sum += cr.Read<double>();
         }
         return sum;
     }
@@ -128,68 +123,32 @@ public class Benchmark
     [BenchmarkCategory("New")]
     public double NewReadAscii()
     {
-        var cr = new NewConsoleReader(AsciiStream(), new UTF8Encoding(false));
+        var cr = new ConsoleReader(AsciiStream(), new UTF8Encoding(false));
         int hash = 0;
         int N = cr.Int();
         for (int i = 0; i < N; i++)
         {
-            hash ^= cr.Ascii().GetHashCode();
-            hash ^= cr.Ascii().GetHashCode();
-            hash ^= cr.Ascii().GetHashCode();
+            hash ^= cr.Read<string>().GetHashCode();
+            hash ^= cr.Read<string>().GetHashCode();
+            hash ^= cr.Read<string>().GetHashCode();
         }
         return hash;
     }
 }
 
-
-
-//[Config(typeof(BenchmarkConfig))]
-//[GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-//public class BenchmarkRepeat
-//{
-//    readonly Assembly assembly = Assembly.GetExecutingAssembly();
-
-//    private Stream AsciiStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Ascii.txt");
-//    private Stream IntStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Int.txt");
-//    private Stream DoubleStream() => assembly.GetManifestResourceStream("Competitive.IO.Benchmark.Double.txt");
-
-//    [Benchmark]
-//    [BenchmarkCategory("Current")]
-//    public long RepeatInt()
-//    {
-//        var cr = new ConsoleReader(IntStream(), new UTF8Encoding(false));
-//        long sum = 0;
-//        int N = cr.Int();
-//        foreach (var s in cr.Repeat(3 * N).Int())
-//        {
-//            sum += sum;
-//        }
-//        return sum;
-//    }
-//    [Benchmark]
-//    [BenchmarkCategory("Current")]
-//    public double RepeatDouble()
-//    {
-//        var cr = new ConsoleReader(DoubleStream(), new UTF8Encoding(false));
-//        double sum = 0;
-//        int N = cr.Int();
-//        foreach (var s in cr.Repeat(3 * N).Double())
-//        {
-//            sum += sum;
-//        }
-//        return sum;
-//    }
-//    [Benchmark]
-//    [BenchmarkCategory("Current")]
-//    public int RepeatAscii()
-//    {
-//        var cr = new ConsoleReader(AsciiStream(), new UTF8Encoding(false));
-//        int hash = 0;
-//        int N = cr.Int();
-//        foreach (var s in cr.Repeat(3 * N).Ascii())
-//        {
-//            hash ^= s.GetHashCode();
-//        }
-//        return hash;
-//    }
-//}
+public static class Ex
+{
+    [MethodImpl(256)]
+    public static T Read<T>(this ConsoleReader cr)
+    {
+        if (typeof(T) == typeof(int)) return (T)(object)cr.Int();
+        if (typeof(T) == typeof(uint)) return (T)(object)cr.UInt();
+        if (typeof(T) == typeof(long)) return (T)(object)cr.Long();
+        if (typeof(T) == typeof(ulong)) return (T)(object)cr.ULong();
+        if (typeof(T) == typeof(string)) return (T)(object)cr.Ascii();
+        if (typeof(T) == typeof(char)) return (T)(object)cr.Char();
+        if (typeof(T) == typeof(double)) return (T)(object)cr.Double();
+        if (typeof(T) == typeof(decimal)) return (T)(object)cr.Decimal();
+        return default;
+    }
+}

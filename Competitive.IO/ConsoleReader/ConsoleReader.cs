@@ -13,18 +13,18 @@ namespace Kzrnm.Competitive.IO
 #endif
     using _R = ConsoleReader;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
+
     /// <summary>
     /// Input Reader
     /// </summary>
-    public sealed class ConsoleReader
+    public class ConsoleReader
     {
         internal const int BufSize = 1 << 12;
-        private readonly Stream input;
-        private readonly Encoding encoding;
+        internal readonly Stream input;
+        internal readonly Encoding encoding;
         internal readonly byte[] buf;
         internal int pos;
         internal int len;
-
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
@@ -98,12 +98,31 @@ namespace Kzrnm.Competitive.IO
         /// Move to next positon
         /// </summary>
         [MI(256)]
-        internal byte Read()
+        internal byte ReadByte()
         {
             if (pos >= len)
                 FillNextBuffer();
             return buf[pos++];
         }
+
+
+        /// <summary>
+        /// Parse value from stdin
+        /// </summary>
+        [MI(256)]
+        public T Read<T>()
+        {
+            if (typeof(T) == typeof(int)) return (T)(object)Int();
+            if (typeof(T) == typeof(uint)) return (T)(object)UInt();
+            if (typeof(T) == typeof(long)) return (T)(object)Long();
+            if (typeof(T) == typeof(ulong)) return (T)(object)ULong();
+            if (typeof(T) == typeof(double)) return (T)(object)Double();
+            if (typeof(T) == typeof(decimal)) return (T)(object)Decimal();
+            if (typeof(T) == typeof(char)) return (T)(object)Char();
+            if (typeof(T) == typeof(string)) return (T)(object)Ascii();
+            return Throw<T>();
+        }
+        static T Throw<T>() => throw new NotSupportedException(typeof(T).Name);
 
         /// <summary>
         /// Parse <see cref="int"/> from stdin
@@ -122,7 +141,7 @@ namespace Kzrnm.Competitive.IO
             byte b;
             do
             {
-                b = Read();
+                b = ReadByte();
                 if (b == '-')
                     neg = true;
             }
@@ -130,16 +149,11 @@ namespace Kzrnm.Competitive.IO
             do
             {
                 res = res * 10 + (b ^ '0');
-                b = Read();
+                b = ReadByte();
             } while ('0' <= b);
             return neg ? -res : res;
 #endif
         }
-
-        /// <summary>
-        /// Parse <see cref="int"/> from stdin and decrement
-        /// </summary>
-        [MI(256)] public int Int0() => Int() - 1;
 
         /// <summary>
         /// Parse <see cref="uint"/> from stdin
@@ -156,21 +170,16 @@ namespace Kzrnm.Competitive.IO
 #else
             uint res = 0;
             byte b;
-            do b = Read();
+            do b = ReadByte();
             while (b < '0');
             do
             {
                 res = res * 10 + (b ^ (uint)'0');
-                b = Read();
+                b = ReadByte();
             } while ('0' <= b);
             return res;
 #endif
         }
-
-        /// <summary>
-        /// Parse <see cref="uint"/> from stdin and decrement
-        /// </summary>
-        [MI(256)] public uint UInt0() => UInt() - 1;
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin
@@ -189,7 +198,7 @@ namespace Kzrnm.Competitive.IO
             byte b;
             do
             {
-                b = Read();
+                b = ReadByte();
                 if (b == '-')
                     neg = true;
             }
@@ -197,16 +206,11 @@ namespace Kzrnm.Competitive.IO
             do
             {
                 res = res * 10 + (b ^ '0');
-                b = Read();
+                b = ReadByte();
             } while ('0' <= b);
             return neg ? -res : res;
 #endif
         }
-
-        /// <summary>
-        /// Parse <see cref="long"/> from stdin and decrement
-        /// </summary>
-        [MI(256)] public long Long0() => Long() - 1;
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
@@ -222,21 +226,16 @@ namespace Kzrnm.Competitive.IO
 #else
             ulong res = 0;
             byte b;
-            do b = Read();
+            do b = ReadByte();
             while (b < '0');
             do
             {
                 res = res * 10 + (b ^ (ulong)'0');
-                b = Read();
+                b = ReadByte();
             } while ('0' <= b);
             return res;
 #endif
         }
-
-        /// <summary>
-        /// Parse <see cref="ulong"/> from stdin and decrement
-        /// </summary>
-        [MI(256)] public ulong ULong0() => ULong() - 1;
 
         /// <summary>
         /// Read a <see cref="double"/> from stdin
@@ -278,12 +277,12 @@ namespace Kzrnm.Competitive.IO
         {
             var sb = new List<byte>(); ;
             byte b;
-            do b = Read();
+            do b = ReadByte();
             while (b <= ' ');
             do
             {
                 sb.Add(b);
-                b = Read();
+                b = ReadByte();
             } while (' ' < b);
             return encoding.GetString(sb.ToArray());
         }
@@ -296,12 +295,12 @@ namespace Kzrnm.Competitive.IO
         {
             var sb = new StringBuilder();
             byte b;
-            do b = Read();
+            do b = ReadByte();
             while (b <= ' ');
             do
             {
                 sb.Append((char)b);
-                b = Read();
+                b = ReadByte();
             } while (' ' < b);
             return sb.ToString();
         }
@@ -314,13 +313,13 @@ namespace Kzrnm.Competitive.IO
         {
             var sb = new List<byte>();
             byte b;
-            do b = Read();
+            do b = ReadByte();
             while (b <= ' ');
 
             do
             {
                 sb.Add(b);
-                b = Read();
+                b = ReadByte();
             } while (b != '\n' && b != '\r');
             return encoding.GetString(sb.ToArray());
         }
@@ -332,10 +331,30 @@ namespace Kzrnm.Competitive.IO
         public char Char()
         {
             byte b;
-            do b = Read();
+            do b = ReadByte();
             while (b <= ' ');
             return (char)b;
         }
+
+
+        /// <summary>
+        /// Parse <see cref="int"/> from stdin and decrement
+        /// </summary>
+        [MI(256)] public int Int0() => Int() - 1;
+        /// <summary>
+        /// Parse <see cref="uint"/> from stdin and decrement
+        /// </summary>
+        [MI(256)] public uint UInt0() => UInt() - 1;
+
+        /// <summary>
+        /// Parse <see cref="long"/> from stdin and decrement
+        /// </summary>
+        [MI(256)] public long Long0() => Long() - 1;
+        /// <summary>
+        /// Parse <see cref="ulong"/> from stdin and decrement
+        /// </summary>
+        [MI(256)] public ulong ULong0() => ULong() - 1;
+
 
         /// <summary>
         /// implicit call <see cref="Int()"/>
@@ -371,5 +390,16 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="Ascii()"/>
         /// </summary>
         [MI(256)] public static implicit operator string(_R cr) => cr.Ascii();
+
+        /// <summary>
+        /// Get array of <typeparamref name="T"/>.
+        /// </summary>
+        public T[] Repeat<T>(int count)
+        {
+            var arr = new T[count];
+            for (int i = 0; i < arr.Length; i++)
+                arr[i] = Read<T>();
+            return arr;
+        }
     }
 }

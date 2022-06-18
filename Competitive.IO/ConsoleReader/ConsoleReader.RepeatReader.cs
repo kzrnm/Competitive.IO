@@ -5,20 +5,59 @@ using System;
 
 namespace Kzrnm.Competitive.IO
 {
-    using _R = RepeatReader;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
     /// Calls <see cref="ConsoleReader"/> several times
     /// </summary>
-    public struct RepeatReader
+    public class RepeatReader<R> where R : ConsoleReader
     {
-        internal readonly ConsoleReader cr;
+        internal readonly R cr;
         internal readonly int count;
+        /// <summary>
+        /// Initialize <see cref="RepeatReader{R}"/>
+        /// </summary>
         [MI(256)]
-        internal RepeatReader(ConsoleReader cr, int count)
+        public RepeatReader(R cr, int count)
         {
             this.cr = cr; this.count = count;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Ascii"/> array
+        /// </summary>
+        [MI(256)]
+        public string[] Ascii() => Read<string>();
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Int"/> array
+        /// </summary>
+        [MI(256)]
+        public int[] Int() => Read<int>();
+        /// <summary>
+        /// Read <see cref="ConsoleReader.UInt"/> array
+        /// </summary>
+        [MI(256)]
+        public uint[] UInt() => Read<uint>();
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Long"/> array
+        /// </summary>
+        [MI(256)]
+        public long[] Long() => Read<long>();
+        /// <summary>
+        /// Read <see cref="ConsoleReader.ULong"/> array
+        /// </summary>
+        [MI(256)]
+        public ulong[] ULong() => Read<ulong>();
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Double"/> array
+        /// </summary>
+        [MI(256)]
+        public double[] Double() => Read<double>();
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Decimal"/> array
+        /// </summary>
+        [MI(256)]
+        public decimal[] Decimal() => Read<decimal>();
+
         /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
@@ -41,28 +80,7 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.String();
             return arr;
         }
-        /// <summary>
-        /// Read <see cref="ConsoleReader.Ascii"/> array
-        /// </summary>
-        [MI(256)]
-        public string[] Ascii()
-        {
-            var arr = new string[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = cr.Ascii();
-            return arr;
-        }
-        /// <summary>
-        /// Read <see cref="ConsoleReader.Int"/> array
-        /// </summary>
-        [MI(256)]
-        public int[] Int()
-        {
-            var arr = new int[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = cr.Int();
-            return arr;
-        }
+
         /// <summary>
         /// Read <see cref="ConsoleReader.Int0"/> array
         /// </summary>
@@ -72,17 +90,6 @@ namespace Kzrnm.Competitive.IO
             var arr = new int[count];
             for (var i = 0; i < count; i++)
                 arr[i] = cr.Int0();
-            return arr;
-        }
-        /// <summary>
-        /// Read <see cref="ConsoleReader.UInt"/> array
-        /// </summary>
-        [MI(256)]
-        public uint[] UInt()
-        {
-            var arr = new uint[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = cr.UInt();
             return arr;
         }
         /// <summary>
@@ -97,17 +104,6 @@ namespace Kzrnm.Competitive.IO
             return arr;
         }
         /// <summary>
-        /// Read <see cref="ConsoleReader.Long"/> array
-        /// </summary>
-        [MI(256)]
-        public long[] Long()
-        {
-            var arr = new long[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = cr.Long();
-            return arr;
-        }
-        /// <summary>
         /// Read <see cref="ConsoleReader.Long0"/> array
         /// </summary>
         [MI(256)]
@@ -116,17 +112,6 @@ namespace Kzrnm.Competitive.IO
             var arr = new long[count];
             for (var i = 0; i < count; i++)
                 arr[i] = cr.Long0();
-            return arr;
-        }
-        /// <summary>
-        /// Read <see cref="ConsoleReader.ULong"/> array
-        /// </summary>
-        [MI(256)]
-        public ulong[] ULong()
-        {
-            var arr = new ulong[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = cr.ULong();
             return arr;
         }
         /// <summary>
@@ -140,57 +125,71 @@ namespace Kzrnm.Competitive.IO
                 arr[i] = cr.ULong0();
             return arr;
         }
+
         /// <summary>
-        /// Read <see cref="ConsoleReader.Double"/> array
+        /// implicit call <see cref="Read"/>
         /// </summary>
-        [MI(256)]
-        public double[] Double()
-        {
-            var arr = new double[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = cr.Double();
-            return arr;
-        }
+        [MI(256)] public static implicit operator string[](RepeatReader<R> rr) => rr.Read<string>();
         /// <summary>
-        /// Read <see cref="ConsoleReader.Decimal"/> array
+        /// implicit call <see cref="Read"/>
         /// </summary>
-        [MI(256)]
-        public decimal[] Decimal()
+        [MI(256)] public static implicit operator int[](RepeatReader<R> rr) => rr.Read<int>();
+        /// <summary>
+        /// implicit call <see cref="Read"/>
+        /// </summary>
+        [MI(256)] public static implicit operator uint[](RepeatReader<R> rr) => rr.Read<uint>();
+        /// <summary>
+        /// implicit call <see cref="Read"/>
+        /// </summary>
+        [MI(256)] public static implicit operator long[](RepeatReader<R> rr) => rr.Read<long>();
+        /// <summary>
+        /// implicit call <see cref="Read"/>
+        /// </summary>
+        [MI(256)] public static implicit operator ulong[](RepeatReader<R> rr) => rr.Read<ulong>();
+        /// <summary>
+        /// implicit call <see cref="Read"/>
+        /// </summary>
+        [MI(256)] public static implicit operator double[](RepeatReader<R> rr) => rr.Double();
+        /// <summary>
+        /// implicit call <see cref="Read"/>
+        /// </summary>
+        [MI(256)] public static implicit operator decimal[](RepeatReader<R> rr) => rr.Decimal();
+
+        /// <summary>
+        /// Get array of <typeparamref name="T"/>.
+        /// </summary>
+        public T[] Read<T>()
         {
-            var arr = new decimal[count];
-            for (var i = 0; i < count; i++)
-                arr[i] = cr.Decimal();
+            var arr = new T[count];
+            for (int i = 0; i < arr.Length; i++)
+                arr[i] = cr.Read<T>();
             return arr;
         }
 
         /// <summary>
-        /// implicit call <see cref="RepeatReader.Ascii()"/>
+        /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(256)] public static implicit operator string[](_R rr) => rr.Ascii();
+        [MI(256)]
+        public T[] Select<T>(Func<ConsoleReader, T> factory)
+        {
+            var c = count;
+            var arr = new T[c];
+            for (var i = 0; i < c; i++)
+                arr[i] = factory(cr);
+            return arr;
+        }
         /// <summary>
-        /// implicit call <see cref="RepeatReader.Int()"/>
+        /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(256)] public static implicit operator int[](_R rr) => rr.Int();
-        /// <summary>
-        /// implicit call <see cref="RepeatReader.UInt()"/>
-        /// </summary>
-        [MI(256)] public static implicit operator uint[](_R rr) => rr.UInt();
-        /// <summary>
-        /// implicit call <see cref="RepeatReader.Long()"/>
-        /// </summary>
-        [MI(256)] public static implicit operator long[](_R rr) => rr.Long();
-        /// <summary>
-        /// implicit call <see cref="RepeatReader.ULong()"/>
-        /// </summary>
-        [MI(256)] public static implicit operator ulong[](_R rr) => rr.ULong();
-        /// <summary>
-        /// implicit call <see cref="RepeatReader.Double()"/>
-        /// </summary>
-        [MI(256)] public static implicit operator double[](_R rr) => rr.Double();
-        /// <summary>
-        /// implicit call <see cref="RepeatReader.Decimal()"/>
-        /// </summary>
-        [MI(256)] public static implicit operator decimal[](_R rr) => rr.Decimal();
+        [MI(256)]
+        public T[] Select<T>(Func<ConsoleReader, int, T> factory)
+        {
+            var c = count;
+            var arr = new T[c];
+            for (var i = 0; i < c; i++)
+                arr[i] = factory(cr, i);
+            return arr;
+        }
     }
     /// <summary>
     /// Defines extension
@@ -198,8 +197,8 @@ namespace Kzrnm.Competitive.IO
     public static class RepeatEx
     {
         /// <summary>
-        /// Get <see cref="RepeatReader"/>
+        /// Get <see cref="RepeatReader{R}"/>
         /// </summary>
-        [MI(256)] public static _R Repeat(this ConsoleReader cr, int count) => new _R(cr, count);
+        [MI(256)] public static RepeatReader<ConsoleReader> Repeat(this ConsoleReader cr, int count)  => new RepeatReader<ConsoleReader>(cr, count);
     }
 }

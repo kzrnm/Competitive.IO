@@ -143,6 +143,43 @@ namespace Kzrnm.Competitive.IO
         });
 
         [Fact(Timeout = 3000)]
+        public async Task UInt() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+0 4294967295
+1
+");
+            cr.Repeat(4).UInt().Should().Equal(123, 14421, 0, 4294967295);
+        });
+
+        [Fact(Timeout = 3000)]
+        public async Task UIntImplicit() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+0 4294967295
+1
+");
+            uint[] r = cr.Repeat(4);
+            r.Should().Equal(123, 14421, 0, 4294967295);
+        });
+
+        [Fact(Timeout = 3000)]
+        public async Task UInt0() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+123 14421
+0 4294967295
+1
+");
+            cr.Repeat(4).UInt0().Should().Equal(122, 14420, 4294967295, 4294967294);
+        });
+
+        [Fact(Timeout = 3000)]
         public async Task Long() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -304,5 +341,17 @@ qrstuv wxyz
             cr.Repeat(8).String().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터");
         });
 
+
+        [Fact(Timeout = 3000)]
+        public async Task Line() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+abcdefg hijklmnop 123
+qrstuv wxyz
+コンピュータ 电脑😀 컴퓨터
+-------
+");
+            cr.Repeat(4).Line().Should().Equal("abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------");
+        });
     }
 }

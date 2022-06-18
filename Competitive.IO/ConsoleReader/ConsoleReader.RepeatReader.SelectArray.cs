@@ -2,11 +2,9 @@
 
 namespace Kzrnm.Competitive.IO
 {
-    using _R = ConsoleReader;
-    using _S = RepeatReader;
     using MI = System.Runtime.CompilerServices.MethodImplAttribute;
     /// <summary>
-    /// <see cref="RepeatReader"/>
+    /// <see cref="RepeatReader{R}"/>
     /// </summary>
     public static class RepeatReaderSelectArray
     {
@@ -14,8 +12,8 @@ namespace Kzrnm.Competitive.IO
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [MI(256)]
-        public static (T1[], T2[]) SelectArray<T1, T2>(this _S r,
-            Func<_R, (T1, T2)> factory)
+        public static (T1[], T2[]) SelectArray<R, T1, T2>(this RepeatReader<R> r,
+            Func<R, (T1, T2)> factory) where R : ConsoleReader
         {
             var c = r.count;
             var cr = r.cr;
@@ -29,8 +27,8 @@ namespace Kzrnm.Competitive.IO
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [MI(256)]
-        public static (T1[], T2[]) SelectArray<T1, T2>(this _S r,
-            Func<_R, int, (T1, T2)> factory)
+        public static (T1[], T2[]) SelectArray<R, T1, T2>(this RepeatReader<R> r,
+            Func<R, int, (T1, T2)> factory) where R : ConsoleReader
         {
             var c = r.count;
             var cr = r.cr;
@@ -45,8 +43,8 @@ namespace Kzrnm.Competitive.IO
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [MI(256)]
-        public static (T1[], T2[], T3[]) SelectArray<T1, T2, T3>(this _S r,
-            Func<_R, (T1, T2, T3)> factory)
+        public static (T1[], T2[], T3[]) SelectArray<R, T1, T2, T3>(this RepeatReader<R> r,
+            Func<R, (T1, T2, T3)> factory) where R : ConsoleReader
         {
             var c = r.count;
             var cr = r.cr;
@@ -61,8 +59,8 @@ namespace Kzrnm.Competitive.IO
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [MI(256)]
-        public static (T1[], T2[], T3[]) SelectArray<T1, T2, T3>(this _S r,
-            Func<_R, int, (T1, T2, T3)> factory)
+        public static (T1[], T2[], T3[]) SelectArray<R, T1, T2, T3>(this RepeatReader<R> r,
+            Func<R, int, (T1, T2, T3)> factory) where R : ConsoleReader
         {
             var c = r.count;
             var cr = r.cr;
@@ -78,8 +76,8 @@ namespace Kzrnm.Competitive.IO
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [MI(256)]
-        public static (T1[], T2[], T3[], T4[]) SelectArray<T1, T2, T3, T4>(this _S r,
-            Func<_R, (T1, T2, T3, T4)> factory)
+        public static (T1[], T2[], T3[], T4[]) SelectArray<R, T1, T2, T3, T4>(this RepeatReader<R> r,
+            Func<R, (T1, T2, T3, T4)> factory) where R : ConsoleReader
         {
             var c = r.count;
             var cr = r.cr;
@@ -95,8 +93,8 @@ namespace Kzrnm.Competitive.IO
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [MI(256)]
-        public static (T1[], T2[], T3[], T4[]) SelectArray<T1, T2, T3, T4>(this _S r,
-            Func<_R, int, (T1, T2, T3, T4)> factory)
+        public static (T1[], T2[], T3[], T4[]) SelectArray<R, T1, T2, T3, T4>(this RepeatReader<R> r,
+            Func<R, int, (T1, T2, T3, T4)> factory) where R : ConsoleReader
         {
             var c = r.count;
             var cr = r.cr;

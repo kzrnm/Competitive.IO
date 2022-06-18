@@ -378,7 +378,7 @@ qrstuv wxyz
 
             var cr = GetConsoleReader(@"
 
-1 2 3 4 5 6.0
+1 2 3 4 5 6.0 8 9 10.1
 | a | b | b |
 7 8 9
 -10 -11 -12
@@ -386,15 +386,36 @@ abc def
 ");
             cr.Int().Should().Be(1);
             cr.Long().Should().Be(2);
-            cr.Int0().Should().Be(2);
-            cr.Long0().Should().Be(3);
+            cr.UInt().Should().Be(3);
+            cr.ULong().Should().Be(4);
             cr.Char().Should().Be('5');
             cr.Double().Should().Be(6);
+            cr.Int0().Should().Be(7);
+            cr.Long0().Should().Be(8);
+            cr.Decimal().Should().Be(10.1m);
             cr.Line().Should().Be("| a | b | b |");
             cr.Line().Should().Be("7 8 9");
             cr.Repeat(3).Long().Should().Equal(-10, -11, -12);
             cr.Ascii().Should().Be("abc");
             cr.String().Should().Be("def");
+        });
+
+        [Fact(Timeout = 3000)]
+        public async Task Read() => await Task.Run(() =>
+        {
+
+            var cr = GetConsoleReader(@"
+
+1 2 3 4 5 6.0
+abc
+");
+            cr.Read<int>().Should().Be(1);
+            cr.Read<long>().Should().Be(2);
+            cr.Read<uint>().Should().Be(3);
+            cr.Read<ulong>().Should().Be(4);
+            cr.Read<char>().Should().Be('5');
+            cr.Read<double>().Should().Be(6);
+            cr.Read<string>().Should().Be("abc");
         });
 
         [Theory(Timeout = 1000)]
