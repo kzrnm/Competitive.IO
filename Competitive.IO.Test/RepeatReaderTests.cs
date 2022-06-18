@@ -16,7 +16,7 @@ namespace Kzrnm.Competitive.IO
 -2147483647 2147483647
 1 2
 ");
-            cr.Repeat(3).Select<(int, int)>(c => (c, c))
+            cr.Repeat(3).Select<(int, int)>(c => (c.Int(), c))
             .Should().Equal((123, -14421), (-2147483647, 2147483647), (1, 2));
         });
 
@@ -29,7 +29,7 @@ namespace Kzrnm.Competitive.IO
 -2147483647 2147483647
 1 2
 ");
-            cr.Repeat(3).Select<(int, int, int)>((c, i) => (i, c, c))
+            cr.Repeat(3).Select<(int, int, int)>((c, i) => (i, c.Int(), c))
             .Should().Equal((0, 123, -14421), (1, -2147483647, 2147483647), (2, 1, 2));
         });
 
