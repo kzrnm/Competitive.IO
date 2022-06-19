@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
-    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
+    using _D = DebuggerBrowsableAttribute;
     /// <summary>
     /// Input Reader
     /// </summary>
@@ -36,22 +36,12 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new int Int
-        {
-            [MI(256)]
-            get => Int();
-        }
+        [_D(0)] public new int Int => Int();
 
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new int Int0
-        {
-            [MI(256)]
-            get => Int0();
-        }
+        [_D(0)] public new int Int0 => Int0();
 
         /// <summary>
         /// Parse <see cref="uint"/> from stdin
@@ -60,121 +50,61 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new uint UInt
-        {
-            [MI(256)]
-            get => UInt();
-        }
+        [_D(0)] public new uint UInt => UInt();
 
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new uint UInt0
-        {
-            [MI(256)]
-            get => UInt0();
-        }
+        [_D(0)] public new uint UInt0 => UInt0();
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new long Long
-        {
-            [MI(256)]
-            get => Long();
-        }
+        [_D(0)] public new long Long => Long();
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new long Long0
-        {
-            [MI(256)]
-            get => Long0();
-        }
+        [_D(0)] public new long Long0 => Long0();
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new ulong ULong
-        {
-            [MI(256)]
-            get => ULong();
-        }
+        [_D(0)] public new ulong ULong => ULong();
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new ulong ULong0
-        {
-            [MI(256)]
-            get => ULong0();
-        }
+        [_D(0)] public new ulong ULong0 => ULong0();
 
         /// <summary>
         /// Read a <see cref="double"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new double Double
-        {
-            [MI(256)]
-            get => Double();
-        }
+        [_D(0)] public new double Double => Double();
 
         /// <summary>
         /// Read a <see cref="decimal"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new decimal Decimal
-        {
-            [MI(256)]
-            get => Decimal();
-        }
+        [_D(0)] public new decimal Decimal => Decimal();
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new string String
-        {
-            [MI(256)]
-            get => String();
-        }
+        [_D(0)] public new string String => String();
 
         /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new string Ascii
-        {
-            [MI(256)]
-            get => Ascii();
-        }
+        [_D(0)] public new string Ascii => Ascii();
 
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new string Line
-        {
-            [MI(256)]
-            get => Line();
-        }
+        [_D(0)] public new string Line => Line();
 
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
-        [DebuggerBrowsable(0)]
-        public new char Char
-        {
-            [MI(256)]
-            get => Char();
-        }
+        [_D(0)] public new char Char => Char();
     }
 }

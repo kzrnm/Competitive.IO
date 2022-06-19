@@ -1,7 +1,10 @@
-﻿namespace Kzrnm.Competitive.IO
-{
-    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
+
+namespace Kzrnm.Competitive.IO
+{
+    using _D = DebuggerBrowsableAttribute;
     /// <summary>
     /// Calls <see cref="PropertyConsoleReader"/> several times
     /// </summary>
@@ -10,65 +13,64 @@
         /// <summary>
         /// Initialize <see cref="PropertyRepeatReader"/>
         /// </summary>
-        [MI(256)]
         public PropertyRepeatReader(PropertyConsoleReader cr, int count) : base(cr, count) { }
 
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Ascii"/> array
         /// </summary>
-        public new string[] Ascii { [MI(256)] get => Ascii(); }
+        [_D(0)] public new string[] Ascii => Ascii();
         /// <summary>
         /// Read <see cref="ConsoleReader.Int"/> array
         /// </summary>
-        public new int[] Int { [MI(256)] get => Int(); }
+        [_D(0)] public new int[] Int => Int();
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt"/> array
         /// </summary>
-        public new uint[] UInt { [MI(256)] get => UInt(); }
+        [_D(0)] public new uint[] UInt => UInt();
         /// <summary>
         /// Read <see cref="ConsoleReader.Long"/> array
         /// </summary>
-        public new long[] Long { [MI(256)] get => Long(); }
+        [_D(0)] public new long[] Long => Long();
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong"/> array
         /// </summary>
-        public new ulong[] ULong { [MI(256)] get => ULong(); }
+        [_D(0)] public new ulong[] ULong => ULong();
         /// <summary>
         /// Read <see cref="ConsoleReader.Double"/> array
         /// </summary>
-        public new double[] Double { [MI(256)] get => Double(); }
+        [_D(0)] public new double[] Double => Double();
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Decimal"/> array
         /// </summary>
-        public new decimal[] Decimal { [MI(256)] get => Decimal(); }
+        [_D(0)] public new decimal[] Decimal => Decimal();
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
-        public new string[] Line { [MI(256)] get => Line(); }
+        [_D(0)] public new string[] Line => Line();
         /// <summary>
         /// Read <see cref="ConsoleReader.String"/> array
         /// </summary>
-        public new string[] String { [MI(256)] get => String(); }
+        [_D(0)] public new string[] String => String();
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Int0"/> array
         /// </summary>
-        public new int[] Int0 { [MI(256)] get => Int0(); }
+        [_D(0)] public new int[] Int0 => Int0();
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt0"/> array
         /// </summary>
-        public new uint[] UInt0 { [MI(256)] get => UInt0(); }
+        [_D(0)] public new uint[] UInt0 => UInt0();
         /// <summary>
         /// Read <see cref="ConsoleReader.Long0"/> array
         /// </summary>
-        public new long[] Long0 { [MI(256)] get => Long0(); }
+        [_D(0)] public new long[] Long0 => Long0();
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong0"/> array
         /// </summary>
-        public new ulong[] ULong0 { [MI(256)] get => ULong0(); }
+        [_D(0)] public new ulong[] ULong0 => ULong0();
     }
 
     /// <summary>
@@ -79,6 +81,6 @@
         /// <summary>
         /// Get <see cref="RepeatReader{R}"/>
         /// </summary>
-        [MI(256)] public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
+        [MethodImpl(256)] public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
     }
 }
