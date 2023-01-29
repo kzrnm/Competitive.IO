@@ -119,9 +119,27 @@ namespace Kzrnm.Competitive.IO
         }
 
         [Fact]
+        public void WriteLineJoinList()
+        {
+            cw.WriteLineJoin(Enumerable.Range(1, 5).ToList());
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes($"1 2 3 4 5{newLine}"));
+        }
+
+        [Fact]
         public void WriteLinesIEnumerable()
         {
             cw.WriteLines(Enumerable.Range(1, 5));
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes($"1\n2\n3\n4\n5{newLine}"));
+        }
+
+        [Fact]
+        public void WriteLinesList()
+        {
+            cw.WriteLines(Enumerable.Range(1, 5).ToList());
             buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().Equal(ToBytes($"1\n2\n3\n4\n5{newLine}"));

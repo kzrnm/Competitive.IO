@@ -1,5 +1,4 @@
-﻿#if NETSTANDARD2_1_OR_GREATER
-using System;
+﻿using System;
 using System.Buffers;
 using System.Buffers.Text;
 using System.Collections.Generic;
@@ -177,6 +176,43 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
+        [M(256)] public W WriteLineJoin(params object[] col) => WriteMany(' ', col);
+        /// <summary>
+        /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)]
+        public W WriteLineJoin<T1, T2>(T1 v1, T2 v2)
+        { Write(v1); Write(' '); return WriteLine(v2); }
+        /// <summary>
+        /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)]
+        public W WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
+        { Write(v1); Write(' '); Write(v2); Write(' '); return WriteLine(v3); }
+        /// <summary>
+        /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)]
+        public W WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
+        { Write(v1); Write(' '); Write(v2); Write(' '); Write(v3); Write(' '); return WriteLine(v4); }
+        /// <summary>
+        /// Write joined <paramref name="col"/> to output stream with end of line.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)] public W WriteLineJoin<T>(Span<T> col) => WriteMany(' ', (ReadOnlySpan<T>)col);
+        /// <summary>
+        /// Write joined <paramref name="col"/> to output stream with end of line.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)] public W WriteLineJoin<T>(ReadOnlySpan<T> col) => WriteMany(' ', col);
+
+        /// <summary>
+        /// Write joined <paramref name="col"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
 
         /// <summary>
@@ -212,49 +248,6 @@ namespace Kzrnm.Competitive.IO
             }
             return WriteLine();
         }
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin(params object[] col) => WriteMany(' ', col);
-        /// <summary>
-        /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2>(T1 v1, T2 v2)
-        { Write(v1); Write(' '); return WriteLine(v2); }
-        /// <summary>
-        /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
-        { Write(v1); Write(' '); Write(v2); Write(' '); return WriteLine(v3); }
-        /// <summary>
-        /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
-        { Write(v1); Write(' '); Write(v2); Write(' '); Write(v3); Write(' '); return WriteLine(v4); }
-
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream with end of line.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(params T[] col) => WriteMany(' ', (ReadOnlySpan<T>)col);
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream with end of line.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(Span<T> col) => WriteMany(' ', (ReadOnlySpan<T>)col);
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream with end of line.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(ReadOnlySpan<T> col) => WriteMany(' ', col);
-
 
         /// <summary>
         /// Write line each item of <paramref name="col"/>
@@ -357,4 +350,3 @@ namespace Kzrnm.Competitive.IO
         void Write(W cw);
     }
 }
-#endif
