@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace Kzrnm.Competitive.IO
 {
-    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
+    using M = MethodImplAttribute;
     /// <summary>
     /// <see cref="RepeatReader{R}"/>
     /// </summary>
@@ -11,7 +12,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static (T1[], T2[]) SelectArray<R, T1, T2>(this RepeatReader<R> r,
             Func<R, (T1, T2)> factory) where R : ConsoleReader
         {
@@ -26,7 +27,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static (T1[], T2[]) SelectArray<R, T1, T2>(this RepeatReader<R> r,
             Func<R, int, (T1, T2)> factory) where R : ConsoleReader
         {
@@ -42,7 +43,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static (T1[], T2[], T3[]) SelectArray<R, T1, T2, T3>(this RepeatReader<R> r,
             Func<R, (T1, T2, T3)> factory) where R : ConsoleReader
         {
@@ -58,7 +59,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static (T1[], T2[], T3[]) SelectArray<R, T1, T2, T3>(this RepeatReader<R> r,
             Func<R, int, (T1, T2, T3)> factory) where R : ConsoleReader
         {
@@ -75,7 +76,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static (T1[], T2[], T3[], T4[]) SelectArray<R, T1, T2, T3, T4>(this RepeatReader<R> r,
             Func<R, (T1, T2, T3, T4)> factory) where R : ConsoleReader
         {
@@ -92,7 +93,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static (T1[], T2[], T3[], T4[]) SelectArray<R, T1, T2, T3, T4>(this RepeatReader<R> r,
             Func<R, int, (T1, T2, T3, T4)> factory) where R : ConsoleReader
         {

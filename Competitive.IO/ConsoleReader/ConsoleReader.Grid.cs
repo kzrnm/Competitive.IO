@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace Kzrnm.Competitive.IO
 {
-    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
+    using M = MethodImplAttribute;
     /// <summary>
     /// Get grid extension class.
     /// </summary>
@@ -11,7 +12,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <paramref name="H"/> × <paramref name="W"/> grid.
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static T[][] Grid<T>(this ConsoleReader cr, int H, int W)
         {
             var arr = new T[H][];
@@ -27,7 +28,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <paramref name="H"/> × <paramref name="W"/> grid.
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static T[][] Grid<R, T>(this R cr, int H, int W, Func<R, T> factory) where R : ConsoleReader
         {
             var arr = new T[H][];
@@ -42,7 +43,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <paramref name="H"/> × <paramref name="W"/> grid.
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public static T[][] Grid<R, T>(this R cr, int H, int W, Func<R, int, int, T> factory) where R : ConsoleReader
         {
             var arr = new T[H][];

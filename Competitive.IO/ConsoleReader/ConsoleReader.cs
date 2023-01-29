@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Runtime.CompilerServices;
 #if NETSTANDARD2_1_OR_GREATER
 using System.Buffers.Text;
 #endif
@@ -11,8 +12,8 @@ namespace Kzrnm.Competitive.IO
 #if NETSTANDARD2_1_OR_GREATER
     using static Utf8Parser;
 #endif
-    using _R = ConsoleReader;
-    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
+    using R = ConsoleReader;
+    using M = MethodImplAttribute;
 
     /// <summary>
     /// Input Reader
@@ -31,14 +32,14 @@ namespace Kzrnm.Competitive.IO
         /// <para>Input stream: <see cref="Console.OpenStandardInput()"/></para>
         /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
         /// </summary>
-        [MI(256)] public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, BufSize) { }
+        [M(256)] public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, BufSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
         /// </summary>
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
-        [MI(256)] public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, BufSize) { }
+        [M(256)] public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, BufSize) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
@@ -46,7 +47,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
         /// <param name="bufferSize">Input buffer size</param>
-        [MI(256)]
+        [M(256)]
         public ConsoleReader(Stream input, Encoding encoding, int bufferSize)
         {
             this.input = input;
@@ -58,7 +59,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read entire numeric string
         /// </summary>
-        [MI(256)]
+        [M(256)]
         private void FillEntireNumber()
         {
             if ((uint)pos >= (uint)buf.Length)
@@ -97,7 +98,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Move to next positon
         /// </summary>
-        [MI(256)]
+        [M(256)]
         internal byte ReadByte()
         {
             if (pos >= len)
@@ -109,7 +110,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse value from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public T Read<T>()
         {
             if (typeof(T) == typeof(int)) return (T)(object)Int();
@@ -127,7 +128,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public int Int()
         {
 #if NETSTANDARD2_1_OR_GREATER
@@ -158,7 +159,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="uint"/> from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public uint UInt()
         {
 
@@ -184,7 +185,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public long Long()
         {
 #if NETSTANDARD2_1_OR_GREATER
@@ -215,7 +216,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public ulong ULong()
         {
 #if NETSTANDARD2_1_OR_GREATER
@@ -240,7 +241,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="double"/> from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public double Double()
         {
 #if NETSTANDARD2_1_OR_GREATER
@@ -256,7 +257,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="decimal"/> from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public decimal Decimal()
         {
 #if NETSTANDARD2_1_OR_GREATER
@@ -272,7 +273,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public string String()
         {
             var sb = new List<byte>(); ;
@@ -290,7 +291,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public string Ascii()
         {
             var sb = new StringBuilder();
@@ -308,7 +309,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public string Line()
         {
             var sb = new List<byte>();
@@ -327,7 +328,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
-        [MI(256)]
+        [M(256)]
         public char Char()
         {
             byte b;
@@ -340,56 +341,56 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
-        [MI(256)] public int Int0() => Int() - 1;
+        [M(256)] public int Int0() => Int() - 1;
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [MI(256)] public uint UInt0() => UInt() - 1;
+        [M(256)] public uint UInt0() => UInt() - 1;
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin and decrement
         /// </summary>
-        [MI(256)] public long Long0() => Long() - 1;
+        [M(256)] public long Long0() => Long() - 1;
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
-        [MI(256)] public ulong ULong0() => ULong() - 1;
+        [M(256)] public ulong ULong0() => ULong() - 1;
 
 
         /// <summary>
         /// implicit call <see cref="Int()"/>
         /// </summary>
-        [MI(256)] public static implicit operator int(_R cr) => cr.Int();
+        [M(256)] public static implicit operator int(R cr) => cr.Int();
 
         /// <summary>
         /// implicit call <see cref="UInt()"/>
         /// </summary>
-        [MI(256)] public static implicit operator uint(_R cr) => cr.UInt();
+        [M(256)] public static implicit operator uint(R cr) => cr.UInt();
 
         /// <summary>
         /// implicit call <see cref="Long()"/>
         /// </summary>
-        [MI(256)] public static implicit operator long(_R cr) => cr.Long();
+        [M(256)] public static implicit operator long(R cr) => cr.Long();
 
         /// <summary>
         /// implicit call <see cref="ULong()"/>
         /// </summary>
-        [MI(256)] public static implicit operator ulong(_R cr) => cr.ULong();
+        [M(256)] public static implicit operator ulong(R cr) => cr.ULong();
 
         /// <summary>
         /// implicit call <see cref="Double()"/>
         /// </summary>
-        [MI(256)] public static implicit operator double(_R cr) => cr.Double();
+        [M(256)] public static implicit operator double(R cr) => cr.Double();
 
         /// <summary>
         /// implicit call <see cref="Decimal"/>
         /// </summary>
-        [MI(256)] public static implicit operator decimal(_R cr) => cr.Decimal();
+        [M(256)] public static implicit operator decimal(R cr) => cr.Decimal();
 
         /// <summary>
         /// implicit call <see cref="Ascii()"/>
         /// </summary>
-        [MI(256)] public static implicit operator string(_R cr) => cr.Ascii();
+        [M(256)] public static implicit operator string(R cr) => cr.Ascii();
 
         /// <summary>
         /// Get array of <typeparamref name="T"/>.

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
-    using _D = DebuggerBrowsableAttribute;
+    using D = DebuggerBrowsableAttribute;
     /// <summary>
     /// Input Reader
     /// </summary>
@@ -36,12 +36,12 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin
         /// </summary>
-        [_D(0)] public new int Int => Int();
+        [D(0)] public new int Int => Int();
 
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
-        [_D(0)] public new int Int0 => Int0();
+        [D(0)] public new int Int0 => Int0();
 
         /// <summary>
         /// Parse <see cref="uint"/> from stdin
@@ -50,61 +50,61 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [_D(0)] public new uint UInt => UInt();
+        [D(0)] public new uint UInt => UInt();
 
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [_D(0)] public new uint UInt0 => UInt0();
+        [D(0)] public new uint UInt0 => UInt0();
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
-        [_D(0)] public new long Long => Long();
+        [D(0)] public new long Long => Long();
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin and decrement
         /// </summary>
-        [_D(0)] public new long Long0 => Long0();
+        [D(0)] public new long Long0 => Long0();
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
         /// </summary>
-        [_D(0)] public new ulong ULong => ULong();
+        [D(0)] public new ulong ULong => ULong();
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
-        [_D(0)] public new ulong ULong0 => ULong0();
+        [D(0)] public new ulong ULong0 => ULong0();
 
         /// <summary>
         /// Read a <see cref="double"/> from stdin
         /// </summary>
-        [_D(0)] public new double Double => Double();
+        [D(0)] public new double Double => Double();
 
         /// <summary>
         /// Read a <see cref="decimal"/> from stdin
         /// </summary>
-        [_D(0)] public new decimal Decimal => Decimal();
+        [D(0)] public new decimal Decimal => Decimal();
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
-        [_D(0)] public new string String => String();
+        [D(0)] public new string String => String();
 
         /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
-        [_D(0)] public new string Ascii => Ascii();
+        [D(0)] public new string Ascii => Ascii();
 
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [_D(0)] public new string Line => Line();
+        [D(0)] public new string Line => Line();
 
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
-        [_D(0)] public new char Char => Char();
+        [D(0)] public new char Char => Char();
     }
 }

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace Kzrnm.Competitive.IO
 {
-    using _W = ConsoleWriter;
-    using MI = System.Runtime.CompilerServices.MethodImplAttribute;
+    using W = ConsoleWriter;
+    using M = MethodImplAttribute;
     /// <summary>
     /// Output Writer
     /// </summary>
@@ -46,19 +47,19 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Flush output stream.
         /// </summary>
-        [MI(256)] public void Flush() => sw.Flush();
+        [M(256)] public void Flush() => sw.Flush();
 
         /// <summary>
         /// Calls <see cref="StreamWriter.Flush()"/>
         /// </summary>
-        [MI(256)] public void Dispose() => Flush();
+        [M(256)] public void Dispose() => Flush();
 
         /// <summary>
         /// Write <paramref name="v"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W Write<T>(T v)
+        [M(256)]
+        public W Write<T>(T v)
         {
             sw.Write(v.ToString());
             return this;
@@ -68,8 +69,8 @@ namespace Kzrnm.Competitive.IO
         /// Write empty line to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W WriteLine()
+        [M(256)]
+        public W WriteLine()
         {
             sw.WriteLine();
             return this;
@@ -79,8 +80,8 @@ namespace Kzrnm.Competitive.IO
         /// Write <paramref name="v"/> to output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W WriteLine<T>(T v)
+        [M(256)]
+        public W WriteLine<T>(T v)
         {
             sw.WriteLine(v.ToString());
             return this;
@@ -89,30 +90,30 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public _W WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
+        [M(256)] public W WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
 
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public _W WriteLineJoin<T1, T2>((T1, T2) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
+        [M(256)] public W WriteLineJoin<T1, T2>((T1, T2) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public _W WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
+        [M(256)] public W WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public _W WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+        [M(256)] public W WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
 #if NETSTANDARD2_1
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W WriteLineJoin<TTuple>(TTuple tuple) where TTuple : System.Runtime.CompilerServices.ITuple
+        [M(256)]
+        public W WriteLineJoin<TTuple>(TTuple tuple) where TTuple : System.Runtime.CompilerServices.ITuple
         {
             var col = new object[tuple.Length];
             for (int i = 0; i < col.Length; i++)
@@ -124,13 +125,13 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public _W WriteLineJoin(params object[] col) => WriteMany(' ', col);
+        [M(256)] public W WriteLineJoin(params object[] col) => WriteMany(' ', col);
         /// <summary>
         /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W WriteLineJoin<T1, T2>(T1 v1, T2 v2)
+        [M(256)]
+        public W WriteLineJoin<T1, T2>(T1 v1, T2 v2)
         {
             sw.Write(v1.ToString()); sw.Write(' ');
             sw.WriteLine(v2.ToString()); return this;
@@ -139,8 +140,8 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
+        [M(256)]
+        public W WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
         {
             sw.Write(v1.ToString()); sw.Write(' ');
             sw.Write(v2.ToString()); sw.Write(' ');
@@ -150,8 +151,8 @@ namespace Kzrnm.Competitive.IO
         /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
+        [M(256)]
+        public W WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
         {
             sw.Write(v1.ToString()); sw.Write(' ');
             sw.Write(v2.ToString()); sw.Write(' ');
@@ -162,13 +163,13 @@ namespace Kzrnm.Competitive.IO
         /// Write line each item of <paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)] public _W WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
+        [M(256)] public W WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
         /// <summary>
         /// Write lines separated by space
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W WriteGrid<T>(IEnumerable<IEnumerable<T>> cols)
+        [M(256)]
+        public W WriteGrid<T>(IEnumerable<IEnumerable<T>> cols)
         {
             foreach (var col in cols)
                 WriteLineJoin(col);
@@ -179,8 +180,8 @@ namespace Kzrnm.Competitive.IO
         /// Write line each item of <paramref name="tuples"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [MI(256)]
-        public _W WriteGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : System.Runtime.CompilerServices.ITuple
+        [M(256)]
+        public W WriteGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : System.Runtime.CompilerServices.ITuple
         {
             foreach (var tup in tuples)
                 WriteLineJoin(tup);
@@ -193,8 +194,8 @@ namespace Kzrnm.Competitive.IO
         /// <param name="sep">sparating charactor</param>
         /// <param name="col">output items</param>
         /// <returns></returns>
-        [MI(256)]
-        private _W WriteMany<T>(char sep, IEnumerable<T> col)
+        [M(256)]
+        private W WriteMany<T>(char sep, IEnumerable<T> col)
         {
             var en = col.GetEnumerator();
             if (!en.MoveNext())
