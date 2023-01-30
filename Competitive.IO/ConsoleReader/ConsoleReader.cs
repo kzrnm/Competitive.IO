@@ -435,6 +435,11 @@ namespace Kzrnm.Competitive.IO
         [M(256)] public static implicit operator string(R cr) => cr.Ascii();
 
         /// <summary>
+        /// implicit call <see cref="AsciiChars()"/>
+        /// </summary>
+        [M(256)] public static implicit operator char[](R cr) => cr.AsciiChars();
+
+        /// <summary>
         /// Get array of <typeparamref name="T"/>.
         /// </summary>
         public T[] Repeat<T>(int count)
