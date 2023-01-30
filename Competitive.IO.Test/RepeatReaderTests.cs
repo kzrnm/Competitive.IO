@@ -353,5 +353,56 @@ qrstuv wxyz
 ");
             cr.Repeat(4).Line().Should().Equal("abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------");
         });
+
+        [Fact(Timeout = 3000)]
+        public async Task AsciiChars() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+abcdefg hijklmnop 123
+qrstuv wxyz
+-----
+");
+            cr.Repeat(5).AsciiChars().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+        });
+
+        [Fact(Timeout = 3000)]
+        public async Task AsciiCharsImplicit() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+abcdefg hijklmnop 123
+qrstuv wxyz
+
+");
+            char[][] r = cr.Repeat(5);
+            r.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+        });
+
+        [Fact(Timeout = 3000)]
+        public async Task StringChars() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+abcdefg hijklmnop 123
+qrstuv wxyz
+コンピュータ 电脑😀 컴퓨터
+-------
+");
+            cr.Repeat(8).StringChars().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터");
+        });
+
+
+        [Fact(Timeout = 3000)]
+        public async Task LineChars() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+abcdefg hijklmnop 123
+qrstuv wxyz
+コンピュータ 电脑😀 컴퓨터
+-------
+");
+            cr.Repeat(4).LineChars().Should().Equal("abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------");
+        });
     }
 }

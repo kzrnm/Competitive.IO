@@ -90,5 +90,18 @@ qrstuv wxyz
 ");
             cr.Repeat<string>(5).Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
         });
+
+
+        [Fact(Timeout = 3000)]
+        public async Task AsciiChars() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+abcdefg hijklmnop 123
+qrstuv wxyz
+-----
+");
+            cr.Repeat<char[]>(5).Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+        });
     }
 }

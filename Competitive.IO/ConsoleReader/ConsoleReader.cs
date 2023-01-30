@@ -120,6 +120,7 @@ namespace Kzrnm.Competitive.IO
             if (typeof(T) == typeof(decimal)) return (T)(object)Decimal();
             if (typeof(T) == typeof(char)) return (T)(object)Char();
             if (typeof(T) == typeof(string)) return (T)(object)Ascii();
+            if (typeof(T) == typeof(char[])) return (T)(object)AsciiChars();
             return Throw<T>();
         }
         static T Throw<T>() => throw new NotSupportedException(typeof(T).Name);

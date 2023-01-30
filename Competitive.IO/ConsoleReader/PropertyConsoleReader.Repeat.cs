@@ -16,10 +16,6 @@ namespace Kzrnm.Competitive.IO
 
 
         /// <summary>
-        /// Read <see cref="ConsoleReader.Ascii"/> array
-        /// </summary>
-        [D(0)] public new string[] Ascii => Ascii();
-        /// <summary>
         /// Read <see cref="ConsoleReader.Int"/> array
         /// </summary>
         [D(0)] public new int[] Int => Int();
@@ -39,12 +35,15 @@ namespace Kzrnm.Competitive.IO
         /// Read <see cref="ConsoleReader.Double"/> array
         /// </summary>
         [D(0)] public new double[] Double => Double();
-
         /// <summary>
         /// Read <see cref="ConsoleReader.Decimal"/> array
         /// </summary>
         [D(0)] public new decimal[] Decimal => Decimal();
 
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Ascii"/> array
+        /// </summary>
+        [D(0)] public new string[] Ascii => Ascii();
         /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
@@ -53,6 +52,18 @@ namespace Kzrnm.Competitive.IO
         /// Read <see cref="ConsoleReader.String"/> array
         /// </summary>
         [D(0)] public new string[] String => String();
+        /// <summary>
+        /// Read <see cref="ConsoleReader.AsciiChars"/> array
+        /// </summary>
+        [D(0)] public new char[][] AsciiChars => AsciiChars();
+        /// <summary>
+        /// Read <see cref="ConsoleReader.LineChars"/> array
+        /// </summary>
+        [D(0)] public new char[][] LineChars => LineChars();
+        /// <summary>
+        /// Read <see cref="ConsoleReader.StringChars"/> array
+        /// </summary>
+        [D(0)] public new char[][] StringChars => StringChars();
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Int0"/> array

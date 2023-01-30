@@ -456,6 +456,7 @@ abc def
 
 1 2 3 4 5 6.0
 abc
+def
 ");
             cr.Read<int>().Should().Be(1);
             cr.Read<long>().Should().Be(2);
@@ -464,6 +465,7 @@ abc
             cr.Read<char>().Should().Be('5');
             cr.Read<double>().Should().Be(6);
             cr.Read<string>().Should().Be("abc");
+            cr.Read<char[]>().Should().Equal(new[] { 'd', 'e', 'f' });
         });
 
         [Theory(Timeout = 1000)]

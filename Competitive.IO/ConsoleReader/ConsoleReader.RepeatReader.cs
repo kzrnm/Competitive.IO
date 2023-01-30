@@ -63,7 +63,7 @@ namespace Kzrnm.Competitive.IO
         public string[] Line()
         {
             var arr = new string[count];
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < arr.Length; i++)
                 arr[i] = cr.Line();
             return arr;
         }
@@ -74,8 +74,41 @@ namespace Kzrnm.Competitive.IO
         public string[] String()
         {
             var arr = new string[count];
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < arr.Length; i++)
                 arr[i] = cr.String();
+            return arr;
+        }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.AsciiChars"/> array
+        /// </summary>
+        [M(256)]
+        public char[][] AsciiChars()
+        {
+            var arr = new char[count][];
+            for (var i = 0; i < arr.Length; i++)
+                arr[i] = cr.AsciiChars();
+            return arr;
+        }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.LineChars"/> array
+        /// </summary>
+        [M(256)]
+        public char[][] LineChars()
+        {
+            var arr = new char[count][];
+            for (var i = 0; i < arr.Length; i++)
+                arr[i] = cr.LineChars();
+            return arr;
+        }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.StringChars"/> array
+        /// </summary>
+        [M(256)]
+        public char[][] StringChars()
+        {
+            var arr = new char[count][];
+            for (var i = 0; i < arr.Length; i++)
+                arr[i] = cr.StringChars();
             return arr;
         }
 
@@ -127,23 +160,19 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator string[](RepeatReader<R> rr) => rr.Read<string>();
+        [M(256)] public static implicit operator int[](RepeatReader<R> rr) => rr.Int();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator int[](RepeatReader<R> rr) => rr.Read<int>();
+        [M(256)] public static implicit operator uint[](RepeatReader<R> rr) => rr.UInt();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator uint[](RepeatReader<R> rr) => rr.Read<uint>();
+        [M(256)] public static implicit operator long[](RepeatReader<R> rr) => rr.Long();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator long[](RepeatReader<R> rr) => rr.Read<long>();
-        /// <summary>
-        /// implicit call <see cref="Read"/>
-        /// </summary>
-        [M(256)] public static implicit operator ulong[](RepeatReader<R> rr) => rr.Read<ulong>();
+        [M(256)] public static implicit operator ulong[](RepeatReader<R> rr) => rr.ULong();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
@@ -152,6 +181,14 @@ namespace Kzrnm.Competitive.IO
         /// implicit call <see cref="Read"/>
         /// </summary>
         [M(256)] public static implicit operator decimal[](RepeatReader<R> rr) => rr.Decimal();
+        /// <summary>
+        /// implicit call <see cref="Read"/>
+        /// </summary>
+        [M(256)] public static implicit operator string[](RepeatReader<R> rr) => rr.Ascii();
+        /// <summary>
+        /// implicit call <see cref="Read"/>
+        /// </summary>
+        [M(256)] public static implicit operator char[][](RepeatReader<R> rr) => rr.AsciiChars();
 
         /// <summary>
         /// Get array of <typeparamref name="T"/>.
@@ -170,9 +207,8 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public T[] Select<T>(Func<R, T> factory)
         {
-            var c = count;
-            var arr = new T[c];
-            for (var i = 0; i < c; i++)
+            var arr = new T[count];
+            for (var i = 0; i < arr.Length; i++)
                 arr[i] = factory(cr);
             return arr;
         }
@@ -182,9 +218,8 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public T[] Select<T>(Func<R, int, T> factory)
         {
-            var c = count;
-            var arr = new T[c];
-            for (var i = 0; i < c; i++)
+            var arr = new T[count];
+            for (var i = 0; i < arr.Length; i++)
                 arr[i] = factory(cr, i);
             return arr;
         }
