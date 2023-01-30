@@ -10,14 +10,22 @@ namespace Kzrnm.Competitive.IO
     public class RepeatReader<R> where R : ConsoleReader
     {
         internal readonly R cr;
-        internal readonly int count;
+        /// <summary>
+        /// The instance of <typeparamref name="R"/>
+        /// </summary>
+        public R ConsoleReader => cr;
+        /// <summary>
+        /// The count of read method invocations.
+        /// </summary>
+        public int Count { get; }
         /// <summary>
         /// Initialize <see cref="RepeatReader{R}"/>
         /// </summary>
         [M(256)]
         public RepeatReader(R cr, int count)
         {
-            this.cr = cr; this.count = count;
+            this.cr = cr;
+            Count = count;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.Ascii"/> array
@@ -62,7 +70,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public string[] Line()
         {
-            var arr = new string[count];
+            var arr = new string[Count];
             for (var i = 0; i < arr.Length; i++)
                 arr[i] = cr.Line();
             return arr;
@@ -73,7 +81,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public string[] String()
         {
-            var arr = new string[count];
+            var arr = new string[Count];
             for (var i = 0; i < arr.Length; i++)
                 arr[i] = cr.String();
             return arr;
@@ -84,7 +92,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public char[][] AsciiChars()
         {
-            var arr = new char[count][];
+            var arr = new char[Count][];
             for (var i = 0; i < arr.Length; i++)
                 arr[i] = cr.AsciiChars();
             return arr;
@@ -95,7 +103,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public char[][] LineChars()
         {
-            var arr = new char[count][];
+            var arr = new char[Count][];
             for (var i = 0; i < arr.Length; i++)
                 arr[i] = cr.LineChars();
             return arr;
@@ -106,7 +114,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public char[][] StringChars()
         {
-            var arr = new char[count][];
+            var arr = new char[Count][];
             for (var i = 0; i < arr.Length; i++)
                 arr[i] = cr.StringChars();
             return arr;
@@ -118,8 +126,8 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public int[] Int0()
         {
-            var arr = new int[count];
-            for (var i = 0; i < count; i++)
+            var arr = new int[Count];
+            for (var i = 0; i < Count; i++)
                 arr[i] = cr.Int0();
             return arr;
         }
@@ -129,8 +137,8 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public uint[] UInt0()
         {
-            var arr = new uint[count];
-            for (var i = 0; i < count; i++)
+            var arr = new uint[Count];
+            for (var i = 0; i < Count; i++)
                 arr[i] = cr.UInt0();
             return arr;
         }
@@ -140,8 +148,8 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public long[] Long0()
         {
-            var arr = new long[count];
-            for (var i = 0; i < count; i++)
+            var arr = new long[Count];
+            for (var i = 0; i < Count; i++)
                 arr[i] = cr.Long0();
             return arr;
         }
@@ -151,8 +159,8 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public ulong[] ULong0()
         {
-            var arr = new ulong[count];
-            for (var i = 0; i < count; i++)
+            var arr = new ulong[Count];
+            for (var i = 0; i < Count; i++)
                 arr[i] = cr.ULong0();
             return arr;
         }
@@ -195,7 +203,7 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         public T[] Read<T>()
         {
-            var arr = new T[count];
+            var arr = new T[Count];
             for (int i = 0; i < arr.Length; i++)
                 arr[i] = cr.Read<T>();
             return arr;
@@ -207,7 +215,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public T[] Select<T>(Func<R, T> factory)
         {
-            var arr = new T[count];
+            var arr = new T[Count];
             for (var i = 0; i < arr.Length; i++)
                 arr[i] = factory(cr);
             return arr;
@@ -218,7 +226,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public T[] Select<T>(Func<R, int, T> factory)
         {
-            var arr = new T[count];
+            var arr = new T[Count];
             for (var i = 0; i < arr.Length; i++)
                 arr[i] = factory(cr, i);
             return arr;

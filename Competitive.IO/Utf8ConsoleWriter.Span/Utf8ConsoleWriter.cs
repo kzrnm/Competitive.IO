@@ -18,7 +18,10 @@ namespace Kzrnm.Competitive.IO
     {
         internal static readonly UTF8Encoding Utf8NoBom = new UTF8Encoding(false);
         internal const int BufSize = 1 << 12;
-        internal readonly Stream output;
+        /// <summary>
+        /// The desination stream.
+        /// </summary>
+        public Stream Output { get; }
         internal byte[] buf;
         internal int len;
 
@@ -42,7 +45,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="bufferSize">Output buffer size</param>
         public Utf8ConsoleWriter(Stream output, int bufferSize)
         {
-            this.output = output;
+            this.Output = output;
             buf = new byte[bufferSize];
         }
 
@@ -52,14 +55,14 @@ namespace Kzrnm.Competitive.IO
         public StreamWriter ToStreamWriter()
         {
             Flush();
-            return new StreamWriter(output, Utf8NoBom);
+            return new StreamWriter(Output, Utf8NoBom);
         }
 
         /// <summary>
         /// Flush output stream.
         /// </summary>
         [M(256)]
-        public void Flush() { output.Write(buf, 0, len); len = 0; }
+        public void Flush() { Output.Write(buf, 0, len); len = 0; }
 
         /// <summary>
         /// Calls <see cref="Flush()"/>

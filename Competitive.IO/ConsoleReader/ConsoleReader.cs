@@ -19,9 +19,18 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public class ConsoleReader
     {
-        internal const int BufSize = 1 << 12;
-        internal readonly Stream input;
-        internal readonly Encoding encoding;
+        /// <summary>
+        /// The size of buffer.
+        /// </summary>
+        protected internal const int BufSize = 1 << 12;
+        /// <summary>
+        /// The source stream.
+        /// </summary>
+        public Stream Input { get; }
+        /// <summary>
+        /// The encoding of <see cref="Input"/>.
+        /// </summary>
+        public Encoding Encoding { get; }
         internal readonly byte[] buf;
         internal int pos;
         internal int len;
@@ -49,8 +58,8 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public ConsoleReader(Stream input, Encoding encoding, int bufferSize)
         {
-            this.input = input;
-            this.encoding = encoding;
+            Input = input;
+            Encoding = encoding;
             buf = new byte[bufferSize];
         }
 
@@ -74,7 +83,7 @@ namespace Kzrnm.Competitive.IO
             buf.AsSpan(pos, len - pos).CopyTo(buf);
             len -= pos;
             pos = 0;
-            var numberOfBytes = input.Read(buf, len, buf.Length - len);
+            var numberOfBytes = Input.Read(buf, len, buf.Length - len);
             if (numberOfBytes == 0)
                 buf[len++] = 10;
             else if (numberOfBytes + len < buf.Length)
@@ -84,7 +93,7 @@ namespace Kzrnm.Competitive.IO
 #endif
         private void FillNextBuffer()
         {
-            if ((len = input.Read(buf, 0, buf.Length)) == 0)
+            if ((len = Input.Read(buf, 0, buf.Length)) == 0)
             {
                 buf[0] = 10;
                 len = 1;
@@ -306,7 +315,7 @@ namespace Kzrnm.Competitive.IO
         public string String()
         {
             var (sb, c) = InnerBlock<AC>();
-            return encoding.GetString(sb, 0, c);
+            return Encoding.GetString(sb, 0, c);
         }
 
         /// <summary>
@@ -316,7 +325,7 @@ namespace Kzrnm.Competitive.IO
         public string Line()
         {
             var (sb, c) = InnerBlock<LB>();
-            return encoding.GetString(sb, 0, c);
+            return Encoding.GetString(sb, 0, c);
         }
 
         /// <summary>
@@ -326,7 +335,7 @@ namespace Kzrnm.Competitive.IO
         public char[] StringChars()
         {
             var (sb, c) = InnerBlock<AC>();
-            return encoding.GetChars(sb, 0, c);
+            return Encoding.GetChars(sb, 0, c);
         }
 
         /// <summary>
@@ -336,7 +345,7 @@ namespace Kzrnm.Competitive.IO
         public char[] LineChars()
         {
             var (sb, c) = InnerBlock<LB>();
-            return encoding.GetChars(sb, 0, c);
+            return Encoding.GetChars(sb, 0, c);
         }
 
         /// <summary>
