@@ -20,7 +20,7 @@ Do not use this library in a production feature.
 ## Status
 
 [![NuGet version (Competitive.IO)](https://img.shields.io/nuget/v/Competitive.IO.svg?style=flat-square)](https://www.nuget.org/packages/Competitive.IO/)
-![build](https://github.com/naminodarie/Competitive.IO/workflows/Build-Release-Publish/badge.svg?branch=master)
+![build](https://github.com/kzrnm/Competitive.IO/workflows/Build-Release-Publish/badge.svg?branch=master)
 
 ## Getting started
 
@@ -38,9 +38,9 @@ Install-Package Competitive.IO
 
 ### SourceExpander
 
-I recommend [SourceExpander](https://github.com/naminodarie/SourceExpander).
+I recommend [SourceExpander](https://github.com/kzrnm/SourceExpander).
 
-[SourceExpander](https://github.com/naminodarie/SourceExpander) outputs combinded source code for submitting.
+[SourceExpander](https://github.com/kzrnm/SourceExpander) outputs combinded source code for submitting.
 
 ## License
 
