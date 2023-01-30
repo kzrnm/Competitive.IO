@@ -20,6 +20,18 @@ namespace Kzrnm.Competitive.IO
         });
 
         [Fact(Timeout = 3000)]
+        public async Task LineChars() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+1 2 3 4 5 6
+| a | b | b |
+");
+            cr.LineChars().Should().Equal("1 2 3 4 5 6".ToCharArray());
+            cr.LineChars().Should().Equal("| a | b | b |".ToCharArray());
+        });
+
+        [Fact(Timeout = 3000)]
         public async Task Char() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -331,6 +343,21 @@ qrstuv wxyz
         });
 
         [Fact(Timeout = 3000)]
+        public async Task AsciiChars() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+abcdefg hijklmnop 123
+qrstuv wxyz
+");
+            cr.AsciiChars().Should().Equal("abcdefg".ToCharArray());
+            cr.AsciiChars().Should().Equal("hijklmnop".ToCharArray());
+            cr.AsciiChars().Should().Equal("123".ToCharArray());
+            cr.AsciiChars().Should().Equal("qrstuv".ToCharArray());
+            cr.AsciiChars().Should().Equal("wxyz".ToCharArray());
+        });
+
+        [Fact(Timeout = 3000)]
         public async Task AsciiImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -370,6 +397,27 @@ qrstuv wxyz
             cr.String().Should().Be("コンピュータ");
             cr.String().Should().Be("电脑😀");
             cr.String().Should().Be("컴퓨터");
+        });
+
+        [Fact(Timeout = 3000)]
+        public async Task StringChars() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+
+abcdefg hijklmnop 123
+qrstuv wxyz
+コンピュータ
+电脑😀
+컴퓨터
+");
+            cr.StringChars().Should().Equal("abcdefg".ToCharArray());
+            cr.StringChars().Should().Equal("hijklmnop".ToCharArray());
+            cr.StringChars().Should().Equal("123".ToCharArray());
+            cr.StringChars().Should().Equal("qrstuv".ToCharArray());
+            cr.StringChars().Should().Equal("wxyz".ToCharArray());
+            cr.StringChars().Should().Equal("コンピュータ".ToCharArray());
+            cr.StringChars().Should().Equal("电脑😀".ToCharArray());
+            cr.StringChars().Should().Equal("컴퓨터".ToCharArray());
         });
 
         [Fact(Timeout = 3000)]

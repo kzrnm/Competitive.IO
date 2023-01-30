@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Runtime.CompilerServices;
+using System.Text;
 #if NETSTANDARD2_1_OR_GREATER
 using System.Buffers.Text;
 #endif
@@ -12,8 +11,8 @@ namespace Kzrnm.Competitive.IO
 #if NETSTANDARD2_1_OR_GREATER
     using static Utf8Parser;
 #endif
-    using R = ConsoleReader;
     using M = MethodImplAttribute;
+    using R = ConsoleReader;
 
     /// <summary>
     /// Input Reader
@@ -270,40 +269,43 @@ namespace Kzrnm.Competitive.IO
 #endif
         }
 
+        private interface IBlock
+        {
+            bool Ok(byte b);
+        }
+        private struct AC : IBlock { [M(256)] public bool Ok(byte b) => ' ' < b; }
+        private struct LB : IBlock { [M(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
+
+        /// <summary>
+        /// Read <see cref="string"/> from stdin with encoding
+        /// </summary>
+        [M(256)]
+        private (byte[], int) InnerBlock<T>() where T : struct, IBlock
+        {
+            var bk = new T();
+            var sb = new byte[32];
+            int c = 0;
+            byte b;
+            do b = ReadByte();
+            while (b <= ' ');
+            do
+            {
+                sb[c++] = b;
+                if (c >= sb.Length)
+                    Array.Resize(ref sb, sb.Length << 1);
+                b = ReadByte();
+            } while (bk.Ok(b));
+            return (sb, c);
+        }
+
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
         [M(256)]
         public string String()
         {
-            var sb = new List<byte>(); ;
-            byte b;
-            do b = ReadByte();
-            while (b <= ' ');
-            do
-            {
-                sb.Add(b);
-                b = ReadByte();
-            } while (' ' < b);
-            return encoding.GetString(sb.ToArray());
-        }
-
-        /// <summary>
-        /// Read <see cref="string"/> from stdin as ascii
-        /// </summary>
-        [M(256)]
-        public string Ascii()
-        {
-            var sb = new StringBuilder();
-            byte b;
-            do b = ReadByte();
-            while (b <= ' ');
-            do
-            {
-                sb.Append((char)b);
-                b = ReadByte();
-            } while (' ' < b);
-            return sb.ToString();
+            var (sb, c) = InnerBlock<AC>();
+            return encoding.GetString(sb, 0, c);
         }
 
         /// <summary>
@@ -312,17 +314,57 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public string Line()
         {
-            var sb = new List<byte>();
+            var (sb, c) = InnerBlock<LB>();
+            return encoding.GetString(sb, 0, c);
+        }
+
+        /// <summary>
+        /// Read <see cref="T:char[]"/> from stdin with encoding
+        /// </summary>
+        [M(256)]
+        public char[] StringChars()
+        {
+            var (sb, c) = InnerBlock<AC>();
+            return encoding.GetChars(sb, 0, c);
+        }
+
+        /// <summary>
+        /// Read line from stdin
+        /// </summary>
+        [M(256)]
+        public char[] LineChars()
+        {
+            var (sb, c) = InnerBlock<LB>();
+            return encoding.GetChars(sb, 0, c);
+        }
+
+        /// <summary>
+        /// Read <see cref="string"/> from stdin as ascii
+        /// </summary>
+        [M(256)]
+        public string Ascii()
+            => new string(AsciiChars());
+
+        /// <summary>
+        /// Read <see cref="T:char[]"/> from stdin as ascii
+        /// </summary>
+        [M(256)]
+        public char[] AsciiChars()
+        {
+            var sb = new char[32];
+            int c = 0;
             byte b;
             do b = ReadByte();
             while (b <= ' ');
-
             do
             {
-                sb.Add(b);
+                sb[c++] = (char)b;
+                if (c >= sb.Length)
+                    Array.Resize(ref sb, sb.Length << 1);
                 b = ReadByte();
-            } while (b != '\n' && b != '\r');
-            return encoding.GetString(sb.ToArray());
+            } while (' ' < b);
+            Array.Resize(ref sb, c);
+            return sb;
         }
 
         /// <summary>

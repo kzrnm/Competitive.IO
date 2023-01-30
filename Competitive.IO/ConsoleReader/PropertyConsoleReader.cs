@@ -93,14 +93,30 @@ namespace Kzrnm.Competitive.IO
         [D(0)] public new string String => String();
 
         /// <summary>
+        /// Read line from stdin
+        /// </summary>
+        [D(0)] public new string Line => Line();
+
+        /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
         [D(0)] public new string Ascii => Ascii();
 
+
+        /// <summary>
+        /// Read <see cref="T:char[]"/> from stdin with encoding
+        /// </summary>
+        [D(0)] public new char[] StringChars => StringChars();
+
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [D(0)] public new string Line => Line();
+        [D(0)] public new char[] LineChars => LineChars();
+
+        /// <summary>
+        /// Read <see cref="T:char[]"/> from stdin as ascii
+        /// </summary>
+        [D(0)] public new char[] AsciiChars => AsciiChars();
 
         /// <summary>
         /// Read a <see cref="char"/> from stdin
