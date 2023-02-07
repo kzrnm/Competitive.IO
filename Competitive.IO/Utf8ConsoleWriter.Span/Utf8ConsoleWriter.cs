@@ -181,6 +181,11 @@ namespace Kzrnm.Competitive.IO
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin(params object[] col) => WriteMany(' ', col);
         /// <summary>
+        /// Write joined <paramref name="col"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)] public W WriteLineJoin<T>(T[] col) => WriteMany(' ', col);
+        /// <summary>
         /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to output stream.
         /// </summary>
         /// <returns>this instance.</returns>
@@ -306,8 +311,8 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         private W WriteMany<T>(char sep, IEnumerable<T> col)
         {
-            if (col is T[] array)
-                return WriteMany(sep, (ReadOnlySpan<T>)array);
+            if (col is T[] a)
+                return WriteMany(sep, (ReadOnlySpan<T>)a);
 
             var en = col.GetEnumerator();
             if (en.MoveNext())

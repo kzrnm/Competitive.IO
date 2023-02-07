@@ -86,7 +86,6 @@ namespace Kzrnm.Competitive.IO
             sw.WriteLine(v.ToString());
             return this;
         }
-
         /// <summary>
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
@@ -125,6 +124,11 @@ namespace Kzrnm.Competitive.IO
             sw.Write(v3.ToString()); sw.Write(' ');
             sw.WriteLine(v4.ToString()); return this;
         }
+        /// <summary>
+        /// Write joined <paramref name="col"/> to output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)] public W WriteLineJoin<T>(T[] col) => WriteMany(' ', col);
         /// <summary>
         /// Write joined <paramref name="col"/> to output stream.
         /// </summary>
@@ -199,6 +203,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         private W WriteMany<T>(char sep, IEnumerable<T> col)
         {
+#if NETSTANDARD2_1
+            if (col is T[] a)
+                return WriteMany(sep, (ReadOnlySpan<T>)a);
+#endif
             var en = col.GetEnumerator();
             if (en.MoveNext())
             {

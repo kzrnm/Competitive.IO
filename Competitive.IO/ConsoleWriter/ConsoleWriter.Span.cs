@@ -41,14 +41,14 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         private ConsoleWriter WriteMany<T>(char sep, ReadOnlySpan<T> col)
         {
-            var en = col.GetEnumerator();
-            if (!en.MoveNext())
-                return this;
-            sw.Write(en.Current.ToString());
-            while (en.MoveNext())
+            if (col.Length > 0)
             {
-                sw.Write(sep);
-                sw.Write(en.Current.ToString());
+                sw.Write(col[0].ToString());
+                foreach (var c in col.Slice(1))
+                {
+                    sw.Write(sep);
+                    sw.Write(c.ToString());
+                }
             }
             sw.WriteLine();
             return this;
