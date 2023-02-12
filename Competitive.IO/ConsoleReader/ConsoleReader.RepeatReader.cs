@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Kzrnm.Competitive.IO
@@ -13,10 +14,12 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// The instance of <typeparamref name="R"/>
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public R ConsoleReader => cr;
         /// <summary>
         /// The count of read method invocations.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public int Count { get; }
         /// <summary>
         /// Initialize <see cref="RepeatReader{R}"/>

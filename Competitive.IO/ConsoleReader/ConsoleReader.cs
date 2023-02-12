@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.ComponentModel;
 #if NETSTANDARD2_1_OR_GREATER
 using System.Buffers.Text;
 #endif
@@ -26,10 +27,12 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// The source stream.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Stream Input { get; }
         /// <summary>
         /// The encoding of <see cref="Input"/>.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Encoding Encoding { get; }
         internal readonly byte[] buf;
         internal int pos;

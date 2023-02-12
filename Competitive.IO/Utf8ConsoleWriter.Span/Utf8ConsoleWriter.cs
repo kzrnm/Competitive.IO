@@ -2,6 +2,7 @@
 using System.Buffers;
 using System.Buffers.Text;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -21,6 +22,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// The desination stream.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Stream Output { get; }
         internal byte[] buf;
         internal int len;
