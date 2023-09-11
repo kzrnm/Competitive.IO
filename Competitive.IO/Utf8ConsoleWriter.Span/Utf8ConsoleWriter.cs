@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Kzrnm.Competitive.IO
@@ -303,7 +304,18 @@ namespace Kzrnm.Competitive.IO
                 WriteLineJoin(tup);
             return this;
         }
-
+        /// <summary>
+        /// Write lines separated by space
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)]
+        public W WriteGrid<T>(T[,] cols)
+        {
+            var width = cols.GetLength(1);
+            for (var s = MemoryMarshal.CreateReadOnlySpan(ref cols[0, 0], cols.Length); !s.IsEmpty; s = s.Slice(width))
+                WriteLineJoin(s.Slice(0, width));
+            return this;
+        }
         /// <summary>
         /// Write items separated by <paramref name="sep"/>
         /// </summary>

@@ -256,6 +256,48 @@ namespace Kzrnm.Competitive.IO.Writer
         }
 
         [Fact]
+        public void WriteGridJaggedArray()
+        {
+            cw.WriteGrid(new int[][]
+            {
+                new int[]{ 1, 2, 3, },
+                new int[]{ -1, -2, -3, },
+                new int[]{ 4, 5, 6, },
+            });
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
+        }
+
+        [Fact]
+        public void WriteGridTuple()
+        {
+            cw.WriteGrid(new (int, int, int)[]
+            {
+                (1, 2, 3),
+                (-1, -2, -3),
+                (4, 5, 6),
+            });
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
+        }
+
+        [Fact]
+        public void WriteGridArray()
+        {
+            cw.WriteGrid(new int[,]
+            {
+                { 1, 2, 3, },
+                { -1, -2, -3, },
+                { 4, 5, 6, },
+            });
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
+        }
+
+        [Fact]
         public void WriteLinesFormatter()
         {
             var pts = new[] {
