@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
+using Kzrnm.Competitive.IO.Reader;
 using Xunit;
-using static Kzrnm.Competitive.IO.Helpers.ReaderHelpers;
+using static Kzrnm.Competitive.IO.Reader.Helpers;
 
-namespace Kzrnm.Competitive.IO
+namespace Kzrnm.Competitive.IO.Reader
 {
     public class ConsoleReaderRepeatGenericTests
     {

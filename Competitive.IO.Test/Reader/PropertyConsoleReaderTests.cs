@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
-using static Kzrnm.Competitive.IO.Helpers.ReaderHelpers;
+using static Kzrnm.Competitive.IO.Reader.Helpers;
 
-namespace Kzrnm.Competitive.IO
+namespace Kzrnm.Competitive.IO.Reader
 {
     public class PropertyConsoleReaderTests
     {

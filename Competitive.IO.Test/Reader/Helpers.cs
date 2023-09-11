@@ -5,9 +5,9 @@ using System.Text;
 using FluentAssertions;
 using FluentAssertions.Collections;
 
-namespace Kzrnm.Competitive.IO.Helpers
+namespace Kzrnm.Competitive.IO.Reader
 {
-    internal static class ReaderHelpers
+    internal static class Helpers
     {
         public static MemoryStream UTF8Stream(string str)
             => new SplitedStream(new UTF8Encoding(false).GetBytes(str));

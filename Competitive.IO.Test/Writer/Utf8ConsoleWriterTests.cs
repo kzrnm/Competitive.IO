@@ -1,24 +1,25 @@
-﻿using System;
+﻿#if NETCOREAPP3_0_OR_GREATER
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
 using FluentAssertions;
 using Xunit;
 
-namespace Kzrnm.Competitive.IO
+namespace Kzrnm.Competitive.IO.Writer
 {
-    public class ConsoleWriterTests
+    public class Utf8ConsoleWriterTests
     {
-        private const int BufSize = 1 << 8;
+        private const int BufSize = 1 << 13;
         private readonly byte[] buffer = new byte[BufSize];
         private readonly string newLine;
         private readonly MemoryStream stream;
-        private readonly ConsoleWriter cw;
-        public ConsoleWriterTests()
+        private readonly Utf8ConsoleWriter cw;
+        public Utf8ConsoleWriterTests()
         {
             stream = new MemoryStream(buffer);
-            cw = new ConsoleWriter(stream, new UTF8Encoding(false));
-            newLine = cw.StreamWriter.NewLine;
+            cw = new Utf8ConsoleWriter(stream);
+            newLine = "\n";
         }
         private static byte[] ToBytes(string str)
         {
@@ -154,7 +155,6 @@ namespace Kzrnm.Competitive.IO
             buffer.Should().Equal(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
 
-#if !NETFRAMEWORK
         [Fact]
         public void WriteLineSpan()
         {
@@ -244,6 +244,86 @@ namespace Kzrnm.Competitive.IO
             cw.Flush();
             buffer.Should().Equal(ToBytes($"1 2 a 4{newLine}"));
         }
-#endif
+
+        [Fact]
+        public void WriteLineCharArray()
+        {
+            var foo = new[] { 'f', 'o', 'o', 'b', 'a', 'r', 'b', 'a', 'z' };
+            cw.WriteLine(foo);
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes($"foobarbaz{newLine}"));
+        }
+
+        [Fact]
+        public void WriteLinesFormatter()
+        {
+            var pts = new[] {
+                new Pt { x = 1, y = 2 },
+                new Pt { x = -1, y = -2 },
+                new Pt { x = 3, y = 4 },
+                new Pt { x = -3, y = -4 },
+                new Pt { x = 5, y = 6 },
+                new Pt { x = -5, y = -6 },
+            };
+            cw.WriteLines(pts);
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes(@"1 2
+-1 -2
+3 4
+-3 -4
+5 6
+-5 -6
+".Replace("\r\n", "\n")));
+        }
+        struct Pt : IUtf8ConsoleWriterFormatter
+        {
+            public long x;
+            public long y;
+
+            public void Write(Utf8ConsoleWriter cw)
+            {
+                cw.Write(x);
+                cw.Write(' ');
+                cw.Write(y);
+            }
+            public override string ToString() => $"{x} {y}";
+        }
+
+        [Fact]
+        public void EnsureLong()
+        {
+            var len = Utf8ConsoleWriter.BufSize - long.MinValue.ToString().Length + 1;
+            for (int i = 0; i < len; i++)
+                cw.Write('1');
+            cw.Write(long.MinValue);
+            cw.len.Should().Be(20);
+            cw.Flush();
+            buffer.Should().Equal(ToBytes(new string('1', len) + long.MinValue.ToString()));
+        }
+        [Fact]
+        public void EnsureDouble()
+        {
+            var len = Utf8ConsoleWriter.BufSize - double.MinValue.ToString("F20").Length + 1;
+            for (int i = 0; i < len; i++)
+                cw.Write('1');
+            cw.Write(double.MinValue);
+            cw.len.Should().Be(331);
+            cw.Flush();
+            buffer.Should().Equal(ToBytes(new string('1', len) + double.MinValue.ToString("F20")));
+        }
+        [Fact]
+        public void EnsureDecimal()
+        {
+            var len = Utf8ConsoleWriter.BufSize - decimal.MinValue.ToString("F20").Length + 1;
+            for (int i = 0; i < len; i++)
+                cw.Write('1');
+            cw.Write(decimal.MinValue);
+            cw.len.Should().Be(51);
+            cw.Flush();
+            buffer.Should().Equal(ToBytes(new string('1', len) + decimal.MinValue.ToString("F20")));
+        }
     }
 }
+#endif

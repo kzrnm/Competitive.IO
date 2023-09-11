@@ -33,4 +33,8 @@
 		<ProjectReference Include="..\Competitive.IO\Competitive.IO.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Helpers\" />
+	</ItemGroup>
+
 </Project>
