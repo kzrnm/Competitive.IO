@@ -91,6 +91,12 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="RepeatReader{R}"/>
         /// </summary>
-        [MethodImpl(256)] public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count) => new PropertyRepeatReader(cr, count);
+        [MethodImpl(256)]
+        public static PropertyRepeatReader Repeat(this PropertyConsoleReader cr, int count)
+#if NET6_0_OR_GREATER
+            => new(cr, count);
+#else
+            => new PropertyRepeatReader(cr, count);
+#endif
     }
 }

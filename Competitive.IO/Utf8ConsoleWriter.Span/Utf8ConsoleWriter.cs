@@ -18,7 +18,12 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public sealed class Utf8ConsoleWriter : IDisposable
     {
-        internal static readonly UTF8Encoding Utf8NoBom = new UTF8Encoding(false);
+        internal static readonly UTF8Encoding Utf8NoBom =
+#if NET6_0_OR_GREATER
+            new(false);
+#else
+            new UTF8Encoding(false);
+#endif
         internal const int BufSize = 1 << 12;
         /// <summary>
         /// The desination stream.
@@ -48,7 +53,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="bufferSize">Output buffer size</param>
         public Utf8ConsoleWriter(Stream output, int bufferSize)
         {
-            this.Output = output;
+            Output = output;
             buf = new byte[bufferSize];
         }
 
@@ -58,7 +63,11 @@ namespace Kzrnm.Competitive.IO
         public StreamWriter ToStreamWriter()
         {
             Flush();
+#if NET6_0_OR_GREATER
+            return new(Output, Utf8NoBom);
+#else
             return new StreamWriter(Output, Utf8NoBom);
+#endif
         }
 
         /// <summary>
@@ -312,8 +321,14 @@ namespace Kzrnm.Competitive.IO
         public W WriteGrid<T>(T[,] cols)
         {
             var width = cols.GetLength(1);
-            for (var s = MemoryMarshal.CreateReadOnlySpan(ref cols[0, 0], cols.Length); !s.IsEmpty; s = s.Slice(width))
+            for (var s = MemoryMarshal.CreateReadOnlySpan(ref cols[0, 0], cols.Length); !s.IsEmpty;
+#if NET6_0_OR_GREATER
+                s = s[width..])
+                WriteLineJoin(s[..width]);
+#else
+                s = s.Slice(width))
                 WriteLineJoin(s.Slice(0, width));
+#endif
             return this;
         }
         /// <summary>
@@ -352,7 +367,11 @@ namespace Kzrnm.Competitive.IO
             if (col.Length > 0)
             {
                 Write(col[0]);
+#if NET6_0_OR_GREATER
+                foreach (var c in col[1..])
+#else
                 foreach (var c in col.Slice(1))
+#endif
                 {
                     Write(sep);
                     Write(c);

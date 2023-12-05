@@ -243,6 +243,12 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="RepeatReader{R}"/>
         /// </summary>
-        [M(256)] public static RepeatReader<ConsoleReader> Repeat(this ConsoleReader cr, int count) => new RepeatReader<ConsoleReader>(cr, count);
+        [M(256)]
+        public static RepeatReader<ConsoleReader> Repeat(this ConsoleReader cr, int count)
+#if NET6_0_OR_GREATER
+            => new(cr, count);
+#else
+            => new RepeatReader<ConsoleReader>(cr, count);
+#endif
     }
 }

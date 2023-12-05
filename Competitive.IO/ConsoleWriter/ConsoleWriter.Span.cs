@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD2_1
+﻿#if !NETSTANDARD2_0
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -42,8 +42,13 @@ namespace Kzrnm.Competitive.IO
         public W WriteGrid<T>(T[,] cols)
         {
             var width = cols.GetLength(1);
+#if NET6_0_OR_GREATER
+            for (var s = MemoryMarshal.CreateReadOnlySpan(ref cols[0, 0], cols.Length); !s.IsEmpty; s = s[width..])
+                WriteLineJoin(s[..width]);
+#else
             for (var s = MemoryMarshal.CreateReadOnlySpan(ref cols[0, 0], cols.Length); !s.IsEmpty; s = s.Slice(width))
                 WriteLineJoin(s.Slice(0, width));
+#endif
             return this;
         }
         /// <summary>
@@ -58,7 +63,11 @@ namespace Kzrnm.Competitive.IO
             if (col.Length > 0)
             {
                 sw.Write(col[0].ToString());
+#if NET6_0_OR_GREATER
+                foreach (var c in col[1..])
+#else
                 foreach (var c in col.Slice(1))
+#endif
                 {
                     sw.Write(sep);
                     sw.Write(c.ToString());

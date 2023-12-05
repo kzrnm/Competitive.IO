@@ -152,7 +152,7 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
-#if NETSTANDARD2_1
+#if !NETSTANDARD2_0
         /// <summary>
         /// Write joined <paramref name="tuple"/> to output stream.
         /// </summary>
@@ -183,7 +183,7 @@ namespace Kzrnm.Competitive.IO
                 WriteLineJoin(col);
             return this;
         }
-#if NETSTANDARD2_1
+#if !NETSTANDARD2_0
         /// <summary>
         /// Write line each item of <paramref name="tuples"/>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         private W WriteMany<T>(char sep, IEnumerable<T> col)
         {
-#if NETSTANDARD2_1
+#if !NETSTANDARD2_0
             if (col is T[] a)
                 return WriteMany(sep, (ReadOnlySpan<T>)a);
 #endif

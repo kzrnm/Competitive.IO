@@ -3,13 +3,13 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.ComponentModel;
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
 using System.Buffers.Text;
 #endif
 
 namespace Kzrnm.Competitive.IO
 {
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
     using static Utf8Parser;
 #endif
     using M = MethodImplAttribute;
@@ -66,7 +66,7 @@ namespace Kzrnm.Competitive.IO
             buf = new byte[bufferSize];
         }
 
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Read entire numeric string
         /// </summary>
@@ -78,7 +78,11 @@ namespace Kzrnm.Competitive.IO
             while (buf[pos] <= ' ')
                 if (++pos >= len)
                     FillNextBuffer();
+#if NET6_0_OR_GREATER
+            if (pos + 21 >= buf.Length && buf[^1] > ' ')
+#else
             if (pos + 21 >= buf.Length && buf[buf.Length - 1] > ' ')
+#endif
                 FillEntireNumberImpl();
         }
         private void FillEntireNumberImpl()
@@ -90,7 +94,11 @@ namespace Kzrnm.Competitive.IO
             if (numberOfBytes == 0)
                 buf[len++] = 10;
             else if (numberOfBytes + len < buf.Length)
+#if NET6_0_OR_GREATER
+                buf[^1] = 10;
+#else
                 buf[buf.Length - 1] = 10;
+#endif
             len += numberOfBytes;
         }
 #endif
@@ -102,7 +110,11 @@ namespace Kzrnm.Competitive.IO
                 len = 1;
             }
             else if (len < buf.Length)
+#if NET6_0_OR_GREATER
+                buf[^1] = 10;
+#else
                 buf[buf.Length - 1] = 10;
+#endif
             pos = 0;
         }
 
@@ -143,7 +155,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public int Int()
         {
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
             FillEntireNumber();
             TryParse(buf.AsSpan(pos), out int v, out int bc);
             pos += bc;
@@ -175,7 +187,7 @@ namespace Kzrnm.Competitive.IO
         public uint UInt()
         {
 
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
             FillEntireNumber();
             TryParse(buf.AsSpan(pos), out uint v, out int bc);
             pos += bc;
@@ -200,7 +212,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public long Long()
         {
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
             FillEntireNumber();
             TryParse(buf.AsSpan(pos), out long v, out int bc);
             pos += bc;
@@ -231,7 +243,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public ulong ULong()
         {
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
             FillEntireNumber();
             TryParse(buf.AsSpan(pos), out ulong v, out int bc);
             pos += bc;
@@ -256,7 +268,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public double Double()
         {
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
             FillEntireNumber();
             TryParse(buf.AsSpan(pos), out double v, out int bc);
             pos += bc;
@@ -272,7 +284,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public decimal Decimal()
         {
-#if NETSTANDARD2_1_OR_GREATER
+#if !NETSTANDARD2_0
             FillEntireNumber();
             TryParse(buf.AsSpan(pos), out decimal v, out int bc);
             pos += bc;
@@ -282,18 +294,22 @@ namespace Kzrnm.Competitive.IO
 #endif
         }
 
-        private interface IBlock
+        interface IBlock
         {
             bool Ok(byte b);
         }
-        private struct AC : IBlock { [M(256)] public bool Ok(byte b) => ' ' < b; }
-        private struct LB : IBlock { [M(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0079")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0251")]
+        struct AC : IBlock { [M(256)] public bool Ok(byte b) => ' ' < b; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0079")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0251")]
+        struct LB : IBlock { [M(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
         [M(256)]
-        private (byte[], int) InnerBlock<T>() where T : struct, IBlock
+        (byte[], int) InnerBlock<T>() where T : struct, IBlock
         {
             var bk = new T();
             var sb = new byte[32];
@@ -356,7 +372,11 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [M(256)]
         public string Ascii()
+#if NET6_0_OR_GREATER
+            => new(AsciiChars());
+#else
             => new string(AsciiChars());
+#endif
 
         /// <summary>
         /// Read <see cref="T:char[]"/> from stdin as ascii

@@ -26,6 +26,11 @@ namespace Kzrnm.Competitive.IO
                     "Kzrnm.Competitive.IO.PropertyRepeatReader",
                     "Kzrnm.Competitive.IO.PropertySplitReader"
                 );
+
+            embedded.SourceFiles.Select(s => s.CodeBody).Should()
+                .NotContain(
+                    "SuppressMessage"
+                );
         }
     }
 }
