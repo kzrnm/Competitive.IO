@@ -15,14 +15,14 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public static T[][] Grid<T>(this ConsoleReader cr, int H, int W)
         {
-            var arr = new T[H][];
+            var a = new T[H][];
             for (var i = 0; i < H; i++)
             {
-                arr[i] = new T[W];
+                a[i] = new T[W];
                 for (var j = 0; j < W; j++)
-                    arr[i][j] = cr.Read<T>();
+                    a[i][j] = cr.Read<T>();
             }
-            return arr;
+            return a;
         }
 
         /// <summary>
@@ -31,14 +31,14 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public static T[][] Grid<R, T>(this R cr, int H, int W, Func<R, T> factory) where R : ConsoleReader
         {
-            var arr = new T[H][];
+            var a = new T[H][];
             for (var i = 0; i < H; i++)
             {
-                arr[i] = new T[W];
+                a[i] = new T[W];
                 for (var j = 0; j < W; j++)
-                    arr[i][j] = factory(cr);
+                    a[i][j] = factory(cr);
             }
-            return arr;
+            return a;
         }
         /// <summary>
         /// Get <paramref name="H"/> × <paramref name="W"/> grid.
@@ -46,14 +46,14 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public static T[][] Grid<R, T>(this R cr, int H, int W, Func<R, int, int, T> factory) where R : ConsoleReader
         {
-            var arr = new T[H][];
+            var a = new T[H][];
             for (var i = 0; i < H; i++)
             {
-                arr[i] = new T[W];
+                a[i] = new T[W];
                 for (var j = 0; j < W; j++)
-                    arr[i][j] = factory(cr, i, j);
+                    a[i][j] = factory(cr, i, j);
             }
-            return arr;
+            return a;
         }
     }
 }

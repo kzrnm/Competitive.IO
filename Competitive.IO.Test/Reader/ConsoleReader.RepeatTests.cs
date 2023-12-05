@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Kzrnm.Competitive.IO.Reader;
 using Xunit;
@@ -104,5 +105,18 @@ qrstuv wxyz
 ");
             cr.Repeat<char[]>(5).Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
         });
+
+#if NETCOREAPP3_0_OR_GREATER
+        [Fact(Timeout = 3000)]
+        public async Task RepeatToSpan() => await Task.Run(() =>
+        {
+            var cr = GetConsoleReader(@"
+1 2 3 4
+");
+            var buf = new int[5];
+            cr.Repeat(buf.AsSpan(1));
+            buf.Should().Equal(0, 1, 2, 3, 4);
+        });
+#endif
     }
 }

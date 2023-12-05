@@ -18,11 +18,11 @@ namespace Kzrnm.Competitive.IO
         {
             var c = r.Count;
             var cr = r.cr;
-            var arr1 = new T1[c];
-            var arr2 = new T2[c];
+            var a1 = new T1[c];
+            var a2 = new T2[c];
             for (var i = 0; i < c; i++)
-                (arr1[i], arr2[i]) = factory(cr);
-            return (arr1, arr2);
+                (a1[i], a2[i]) = factory(cr);
+            return (a1, a2);
         }
         /// <summary>
         /// Repeat <paramref name="factory"/>()
@@ -33,11 +33,11 @@ namespace Kzrnm.Competitive.IO
         {
             var c = r.Count;
             var cr = r.cr;
-            var arr1 = new T1[c];
-            var arr2 = new T2[c];
+            var a1 = new T1[c];
+            var a2 = new T2[c];
             for (var i = 0; i < c; i++)
-                (arr1[i], arr2[i]) = factory(cr, i);
-            return (arr1, arr2);
+                (a1[i], a2[i]) = factory(cr, i);
+            return (a1, a2);
         }
 
         /// <summary>
@@ -49,12 +49,12 @@ namespace Kzrnm.Competitive.IO
         {
             var c = r.Count;
             var cr = r.cr;
-            var arr1 = new T1[c];
-            var arr2 = new T2[c];
-            var arr3 = new T3[c];
+            var a1 = new T1[c];
+            var a2 = new T2[c];
+            var a3 = new T3[c];
             for (var i = 0; i < c; i++)
-                (arr1[i], arr2[i], arr3[i]) = factory(cr);
-            return (arr1, arr2, arr3);
+                (a1[i], a2[i], a3[i]) = factory(cr);
+            return (a1, a2, a3);
         }
         /// <summary>
         /// Repeat <paramref name="factory"/>()
@@ -65,12 +65,12 @@ namespace Kzrnm.Competitive.IO
         {
             var c = r.Count;
             var cr = r.cr;
-            var arr1 = new T1[c];
-            var arr2 = new T2[c];
-            var arr3 = new T3[c];
+            var a1 = new T1[c];
+            var a2 = new T2[c];
+            var a3 = new T3[c];
             for (var i = 0; i < c; i++)
-                (arr1[i], arr2[i], arr3[i]) = factory(cr, i);
-            return (arr1, arr2, arr3);
+                (a1[i], a2[i], a3[i]) = factory(cr, i);
+            return (a1, a2, a3);
         }
 
         /// <summary>
@@ -82,13 +82,13 @@ namespace Kzrnm.Competitive.IO
         {
             var c = r.Count;
             var cr = r.cr;
-            var arr1 = new T1[c];
-            var arr2 = new T2[c];
-            var arr3 = new T3[c];
-            var arr4 = new T4[c];
+            var a1 = new T1[c];
+            var a2 = new T2[c];
+            var a3 = new T3[c];
+            var a4 = new T4[c];
             for (var i = 0; i < c; i++)
-                (arr1[i], arr2[i], arr3[i], arr4[i]) = factory(cr);
-            return (arr1, arr2, arr3, arr4);
+                (a1[i], a2[i], a3[i], a4[i]) = factory(cr);
+            return (a1, a2, a3, a4);
         }
         /// <summary>
         /// Repeat <paramref name="factory"/>()
@@ -99,13 +99,13 @@ namespace Kzrnm.Competitive.IO
         {
             var c = r.Count;
             var cr = r.cr;
-            var arr1 = new T1[c];
-            var arr2 = new T2[c];
-            var arr3 = new T3[c];
-            var arr4 = new T4[c];
+            var a1 = new T1[c];
+            var a2 = new T2[c];
+            var a3 = new T3[c];
+            var a4 = new T4[c];
             for (var i = 0; i < c; i++)
-                (arr1[i], arr2[i], arr3[i], arr4[i]) = factory(cr, i);
-            return (arr1, arr2, arr3, arr4);
+                (a1[i], a2[i], a3[i], a4[i]) = factory(cr, i);
+            return (a1, a2, a3, a4);
         }
     }
 }

@@ -73,10 +73,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public string[] Line()
         {
-            var arr = new string[Count];
-            for (var i = 0; i < arr.Length; i++)
-                arr[i] = cr.Line();
-            return arr;
+            var a = new string[Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = cr.Line();
+            return a;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.String"/> array
@@ -84,10 +84,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public string[] String()
         {
-            var arr = new string[Count];
-            for (var i = 0; i < arr.Length; i++)
-                arr[i] = cr.String();
-            return arr;
+            var a = new string[Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = cr.String();
+            return a;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.AsciiChars"/> array
@@ -95,10 +95,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public char[][] AsciiChars()
         {
-            var arr = new char[Count][];
-            for (var i = 0; i < arr.Length; i++)
-                arr[i] = cr.AsciiChars();
-            return arr;
+            var a = new char[Count][];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = cr.AsciiChars();
+            return a;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.LineChars"/> array
@@ -106,10 +106,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public char[][] LineChars()
         {
-            var arr = new char[Count][];
-            for (var i = 0; i < arr.Length; i++)
-                arr[i] = cr.LineChars();
-            return arr;
+            var a = new char[Count][];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = cr.LineChars();
+            return a;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.StringChars"/> array
@@ -117,10 +117,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public char[][] StringChars()
         {
-            var arr = new char[Count][];
-            for (var i = 0; i < arr.Length; i++)
-                arr[i] = cr.StringChars();
-            return arr;
+            var a = new char[Count][];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = cr.StringChars();
+            return a;
         }
 
         /// <summary>
@@ -129,10 +129,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public int[] Int0()
         {
-            var arr = new int[Count];
+            var a = new int[Count];
             for (var i = 0; i < Count; i++)
-                arr[i] = cr.Int0();
-            return arr;
+                a[i] = cr.Int0();
+            return a;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt0"/> array
@@ -140,10 +140,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public uint[] UInt0()
         {
-            var arr = new uint[Count];
+            var a = new uint[Count];
             for (var i = 0; i < Count; i++)
-                arr[i] = cr.UInt0();
-            return arr;
+                a[i] = cr.UInt0();
+            return a;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.Long0"/> array
@@ -151,10 +151,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public long[] Long0()
         {
-            var arr = new long[Count];
+            var a = new long[Count];
             for (var i = 0; i < Count; i++)
-                arr[i] = cr.Long0();
-            return arr;
+                a[i] = cr.Long0();
+            return a;
         }
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong0"/> array
@@ -162,10 +162,10 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public ulong[] ULong0()
         {
-            var arr = new ulong[Count];
+            var a = new ulong[Count];
             for (var i = 0; i < Count; i++)
-                arr[i] = cr.ULong0();
-            return arr;
+                a[i] = cr.ULong0();
+            return a;
         }
 
         /// <summary>
@@ -206,22 +206,23 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         public T[] Read<T>()
         {
-            var arr = new T[Count];
-            for (int i = 0; i < arr.Length; i++)
-                arr[i] = cr.Read<T>();
-            return arr;
+            var a = new T[Count];
+            for (int i = 0; i < a.Length; i++)
+                a[i] = cr.Read<T>();
+            return a;
         }
 
+#if NETSTANDARD2_0
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
         [M(256)]
         public T[] Select<T>(Func<R, T> factory)
         {
-            var arr = new T[Count];
-            for (var i = 0; i < arr.Length; i++)
-                arr[i] = factory(cr);
-            return arr;
+            var a = new T[Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = factory(cr);
+            return a;
         }
         /// <summary>
         /// Repeat <paramref name="factory"/>()
@@ -229,11 +230,60 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public T[] Select<T>(Func<R, int, T> factory)
         {
-            var arr = new T[Count];
-            for (var i = 0; i < arr.Length; i++)
-                arr[i] = factory(cr, i);
-            return arr;
+            var a = new T[Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = factory(cr, i);
+            return a;
         }
+#else
+        /// <summary>
+        /// Repeat <paramref name="factory"/>()
+        /// </summary>
+        [M(256)]
+        public T[] Select<T>(Func<R, T> factory)
+        {
+            var a = new T[Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = factory(cr);
+            return a;
+        }
+
+        /// <summary>
+        /// Read and write into <paramref name="dst"/>.
+        /// </summary>
+        [M(256)]
+        public void Select<T>(Span<T> dst, Func<R, T> factory)
+        {
+#if NET6_0_OR_GREATER
+            foreach (ref var b in dst)
+                b = factory(cr);
+#else
+            for (int i = 0; i < dst.Length; i++)
+                dst[i] = factory(cr);
+#endif
+        }
+
+        /// <summary>
+        /// Repeat <paramref name="factory"/>()
+        /// </summary>
+        [M(256)]
+        public T[] Select<T>(Func<R, int, T> factory)
+        {
+            var a = new T[Count];
+            Select(a, factory);
+            return a;
+        }
+
+        /// <summary>
+        /// Read and write into <paramref name="dst"/>.
+        /// </summary>
+        [M(256)]
+        public void Select<T>(Span<T> dst, Func<R, int, T> factory)
+        {
+            for (var i = 0; i < dst.Length; i++)
+                dst[i] = factory(cr, i);
+        }
+#endif
     }
     /// <summary>
     /// Defines extension

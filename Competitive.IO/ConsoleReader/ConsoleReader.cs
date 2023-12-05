@@ -475,12 +475,30 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get array of <typeparamref name="T"/>.
         /// </summary>
+        [M(256)]
         public T[] Repeat<T>(int count)
         {
-            var arr = new T[count];
-            for (int i = 0; i < arr.Length; i++)
-                arr[i] = Read<T>();
-            return arr;
+            var a = new T[count];
+            for (int i = 0; i < a.Length; i++)
+                a[i] = Read<T>();
+            return a;
         }
+
+#if !NETSTANDARD2_0
+        /// <summary>
+        /// Read and write into <paramref name="dst"/>.
+        /// </summary>
+        [M(256)]
+        public void Repeat<T>(Span<T> dst)
+        {
+#if NET6_0_OR_GREATER
+            foreach (ref var b in dst)
+                b = Read<T>();
+#else
+            for (int i = 0; i < dst.Length; i++)
+                dst[i] = Read<T>();
+#endif
+        }
+#endif
     }
 }
