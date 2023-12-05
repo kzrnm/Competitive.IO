@@ -24,7 +24,9 @@ jobs:
     uses: kzrnm/dotnet-actions/.github/workflows/format.yml@v1
     with:
       target: Competitive.IO.sln
-      dotnet-version: 6.0.x
+      dotnet-version: |
+        6.0.x
+        3.1.x
 
   build:
     runs-on: windows-latest
@@ -34,7 +36,9 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: |
+            6.0.x
+            3.1.x
       - uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/.nuget/packages
