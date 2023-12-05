@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>net6.0;netcoreapp3.1;net472</TargetFrameworks>
+		<Nullable Condition="'$(TargetFramework)' != 'netcoreapp3.1' And '$(TargetFramework)' != 'net472'">annotations</Nullable>
+
+		<LangVersion Condition="'$(TargetFramework)' == 'net472'">7</LangVersion>
+		<LangVersion Condition="'$(TargetFramework)' == 'netcoreapp3.1'">7.3</LangVersion>
+		<LangVersion Condition="'$(TargetFramework)' == 'net6.0'">10</LangVersion>
+		<SourceExpander_Generator_ExpandingAll>true</SourceExpander_Generator_ExpandingAll>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Competitive.IO\Competitive.IO.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="SourceExpander.Generator" Version="5.5.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzsers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>
