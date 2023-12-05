@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
 		<LangVersion Condition="'$(TargetFramework)' == 'netstandard2.0'">7</LangVersion>
-		<LangVersion Condition="'$(TargetFramework)' != 'netstandard2.0'">7.3</LangVersion>
+		<LangVersion Condition="'$(TargetFramework)' == 'netstandard2.1'">7.3</LangVersion>
+		<LangVersion Condition="'$(TargetFramework)' == 'net6.0'">10</LangVersion>
 
 		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
 
@@ -23,7 +24,7 @@
 	<ItemGroup>
 		<InternalsVisibleTo Include="Competitive.IO.Test, PublicKey=0024000004800000940000000602000000240000525341310004000001000100d5cce749c6f1b0bfbac4d7fa63137536b0e097b12710dbb074cfbebc0e771d20e20881910c97c67fd7e49fab231b22c83467419e35b1fc95041635a111d287c5071953a88d8467cf1a541a18fdd8a983fe8fe67952cc5a7ffc35e5db7058fc3b1df28705b73509977858bf611669a797c1518431aa641a4554c7fc2f0df6c5ab" />
 		<None Include="Utf8ConsoleWriter.Span\Utf8ConsoleWriter.cs" />
-		<PackageReference Include="SourceExpander.Embedder" Version="5.2.0">
+		<PackageReference Include="SourceExpander.Embedder" Version="5.5.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
