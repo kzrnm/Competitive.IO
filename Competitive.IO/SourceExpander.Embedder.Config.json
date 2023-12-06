@@ -6,6 +6,7 @@
   },
   "exclude-attributes": [
     "System.Diagnostics.CodeAnalysis.SuppressMessage",
+    "System.ComponentModel.EditorBrowsable",
     "System.Diagnostics.DebuggerBrowsableAttribute",
     "System.Diagnostics.DebuggerDisplayAttribute",
     "System.Diagnostics.DebuggerHiddenAttribute",

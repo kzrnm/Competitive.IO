@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Kzrnm.Competitive.IO
@@ -136,9 +135,9 @@ namespace Kzrnm.Competitive.IO
             }
             else if (v is char[] charr)
                 return Write(charr.AsSpan());
-            else if (v is IUtf8ConsoleWriterFormatter f)
+            else if (v is IUtf8ConsoleWriterFormatter)
             {
-                f.Write(this);
+                ((IUtf8ConsoleWriterFormatter)v).Write(this);
                 return this;
             }
             else
@@ -188,88 +187,6 @@ namespace Kzrnm.Competitive.IO
         public W WriteLine(ReadOnlySpan<char> v) { Write(v); return Write('\n'); }
 
         /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin(params object[] col) => WriteMany(' ', col);
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(T[] col) => WriteMany(' ', col);
-        /// <summary>
-        /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2>(T1 v1, T2 v2)
-        { Write(v1); Write(' '); return WriteLine(v2); }
-        /// <summary>
-        /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2, T3>(T1 v1, T2 v2, T3 v3)
-        { Write(v1); Write(' '); Write(v2); Write(' '); return WriteLine(v3); }
-        /// <summary>
-        /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2, T3, T4>(T1 v1, T2 v2, T3 v3, T4 v4)
-        { Write(v1); Write(' '); Write(v2); Write(' '); Write(v3); Write(' '); return WriteLine(v4); }
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream with end of line.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(Span<T> col) => WriteMany(' ', (ReadOnlySpan<T>)col);
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream with end of line.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(ReadOnlySpan<T> col) => WriteMany(' ', col);
-
-        /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
-
-        /// <summary>
-        /// Write joined <paramref name="tuple"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2>((T1, T2) tuple) { Write(tuple.Item1); Write(' '); return WriteLine(tuple.Item2); }
-        /// <summary>
-        /// Write joined <paramref name="tuple"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) { Write(tuple.Item1); Write(' '); Write(tuple.Item2); Write(' '); return WriteLine(tuple.Item3); }
-        /// <summary>
-        /// Write joined <paramref name="tuple"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) { Write(tuple.Item1); Write(' '); Write(tuple.Item2); Write(' '); Write(tuple.Item3); Write(' '); return WriteLine(tuple.Item4); }
-        /// <summary>
-        /// Write joined <paramref name="tuple"/> to output stream.
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteLineJoin<TTuple>(TTuple tuple) where TTuple : ITuple
-        {
-            var col = new object[tuple.Length];
-            for (int i = 0; i < col.Length; i++)
-            {
-                if (i != 0) Write(' ');
-                Write(tuple[i]);
-            }
-            return WriteLine();
-        }
-
-        /// <summary>
         /// Write line each item of <paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
@@ -290,47 +207,6 @@ namespace Kzrnm.Competitive.IO
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLines<T>(ReadOnlySpan<T> col) => WriteMany('\n', col);
 
-
-        /// <summary>
-        /// Write lines separated by space
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteGrid<T>(IEnumerable<IEnumerable<T>> cols)
-        {
-            foreach (var col in cols)
-                WriteLineJoin(col);
-            return this;
-        }
-        /// <summary>
-        /// Write line each item of <paramref name="tuples"/>
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteGrid<TTuple>(IEnumerable<TTuple> tuples) where TTuple : ITuple
-        {
-            foreach (var tup in tuples)
-                WriteLineJoin(tup);
-            return this;
-        }
-        /// <summary>
-        /// Write lines separated by space
-        /// </summary>
-        /// <returns>this instance.</returns>
-        [M(256)]
-        public W WriteGrid<T>(T[,] cols)
-        {
-            var width = cols.GetLength(1);
-            for (var s = MemoryMarshal.CreateReadOnlySpan(ref cols[0, 0], cols.Length); !s.IsEmpty;
-#if NET6_0_OR_GREATER
-                s = s[width..])
-                WriteLineJoin(s[..width]);
-#else
-                s = s.Slice(width))
-                WriteLineJoin(s.Slice(0, width));
-#endif
-            return this;
-        }
         /// <summary>
         /// Write items separated by <paramref name="sep"/>
         /// </summary>
@@ -338,7 +214,8 @@ namespace Kzrnm.Competitive.IO
         /// <param name="col">output items</param>
         /// <returns></returns>
         [M(256)]
-        private W WriteMany<T>(char sep, IEnumerable<T> col)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public W WriteMany<T>(char sep, IEnumerable<T> col)
         {
             if (col is T[] a)
                 return WriteMany(sep, (ReadOnlySpan<T>)a);
@@ -362,7 +239,8 @@ namespace Kzrnm.Competitive.IO
         /// <param name="col">output items</param>
         /// <returns></returns>
         [M(256)]
-        private W WriteMany<T>(char sep, ReadOnlySpan<T> col)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public W WriteMany<T>(char sep, ReadOnlySpan<T> col)
         {
             if (col.Length > 0)
             {

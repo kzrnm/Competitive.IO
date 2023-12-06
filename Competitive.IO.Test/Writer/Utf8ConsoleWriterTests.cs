@@ -260,9 +260,9 @@ namespace Kzrnm.Competitive.IO.Writer
         {
             cw.WriteGrid(new int[][]
             {
-                new int[]{ 1, 2, 3, },
-                new int[]{ -1, -2, -3, },
-                new int[]{ 4, 5, 6, },
+                [ 1, 2, 3, ],
+                [ -1, -2, -3, ],
+                [ 4, 5, 6, ],
             });
             buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
@@ -324,13 +324,13 @@ namespace Kzrnm.Competitive.IO.Writer
             public long x;
             public long y;
 
-            public void Write(Utf8ConsoleWriter cw)
+            public readonly void Write(Utf8ConsoleWriter cw)
             {
                 cw.Write(x);
                 cw.Write(' ');
                 cw.Write(y);
             }
-            public override string ToString() => $"{x} {y}";
+            public override readonly string ToString() => $"{x} {y}";
         }
 
         [Fact]

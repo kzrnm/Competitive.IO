@@ -29,7 +29,8 @@ namespace Kzrnm.Competitive.IO
 
             embedded.SourceFiles.Select(s => s.CodeBody).Should()
                 .NotContain(
-                    "SuppressMessage"
+                    "SuppressMessage",
+                    "EditorBrowsable"
                 );
         }
     }
