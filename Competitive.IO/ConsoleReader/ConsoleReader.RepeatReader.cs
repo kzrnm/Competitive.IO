@@ -30,6 +30,9 @@ namespace Kzrnm.Competitive.IO
             this.cr = cr;
             Count = count;
         }
+
+        [M(256)] T[] Read<T>() => cr.Repeat<T>(Count);
+
         /// <summary>
         /// Read <see cref="ConsoleReader.Ascii"/> array
         /// </summary>
@@ -169,48 +172,37 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// implicit call <see cref="Read"/>
+        /// implicit call <see cref="Int"/>
         /// </summary>
         [M(256)] public static implicit operator int[](RepeatReader<R> rr) => rr.Int();
         /// <summary>
-        /// implicit call <see cref="Read"/>
+        /// implicit call <see cref="UInt"/>
         /// </summary>
         [M(256)] public static implicit operator uint[](RepeatReader<R> rr) => rr.UInt();
         /// <summary>
-        /// implicit call <see cref="Read"/>
+        /// implicit call <see cref="Long"/>
         /// </summary>
         [M(256)] public static implicit operator long[](RepeatReader<R> rr) => rr.Long();
         /// <summary>
-        /// implicit call <see cref="Read"/>
+        /// implicit call <see cref="ULong"/>
         /// </summary>
         [M(256)] public static implicit operator ulong[](RepeatReader<R> rr) => rr.ULong();
         /// <summary>
-        /// implicit call <see cref="Read"/>
+        /// implicit call <see cref="Double"/>
         /// </summary>
         [M(256)] public static implicit operator double[](RepeatReader<R> rr) => rr.Double();
         /// <summary>
-        /// implicit call <see cref="Read"/>
+        /// implicit call <see cref="Decimal"/>
         /// </summary>
         [M(256)] public static implicit operator decimal[](RepeatReader<R> rr) => rr.Decimal();
         /// <summary>
-        /// implicit call <see cref="Read"/>
+        /// implicit call <see cref="Ascii"/>
         /// </summary>
         [M(256)] public static implicit operator string[](RepeatReader<R> rr) => rr.Ascii();
         /// <summary>
-        /// implicit call <see cref="Read"/>
+        /// implicit call <see cref="AsciiChars"/>
         /// </summary>
         [M(256)] public static implicit operator char[][](RepeatReader<R> rr) => rr.AsciiChars();
-
-        /// <summary>
-        /// Get array of <typeparamref name="T"/>.
-        /// </summary>
-        public T[] Read<T>()
-        {
-            var a = new T[Count];
-            for (int i = 0; i < a.Length; i++)
-                a[i] = cr.Read<T>();
-            return a;
-        }
 
 #if NETSTANDARD2_0
         /// <summary>
@@ -282,6 +274,28 @@ namespace Kzrnm.Competitive.IO
         {
             for (var i = 0; i < dst.Length; i++)
                 dst[i] = factory(cr, i);
+        }
+#endif
+#if NET7_0_OR_GREATER
+        /// <summary>
+        /// Repeat read
+        /// </summary>
+        [M(256)]
+        public T[] Select<T>() where T : IConsoleReaderParser<T>
+        {
+            var a = new T[Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = T.Parse(cr);
+            return a;
+        }
+        /// <summary>
+        /// Read and write into <paramref name="dst"/>.
+        /// </summary>
+        [M(256)]
+        public void Select<T>(Span<T> dst) where T : IConsoleReaderParser<T>
+        {
+            for (var i = 0; i < dst.Length; i++)
+                dst[i] = T.Parse(cr);
         }
 #endif
     }

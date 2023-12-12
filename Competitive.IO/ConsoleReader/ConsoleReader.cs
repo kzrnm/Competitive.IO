@@ -145,10 +145,6 @@ namespace Kzrnm.Competitive.IO
             if (typeof(T) == typeof(char)) return (T)(object)Char();
             if (typeof(T) == typeof(string)) return (T)(object)Ascii();
             if (typeof(T) == typeof(char[])) return (T)(object)AsciiChars();
-#if NET7_0_OR_GREATER
-            if (typeof(T).IsAssignableTo(typeof(IConsoleReaderParser<T>)))
-                return Parser<T>.Parse(this);
-#endif
             return Throw<T>();
         }
         static T Throw<T>() => throw new NotSupportedException(typeof(T).Name);
@@ -506,26 +502,6 @@ namespace Kzrnm.Competitive.IO
 #endif
         }
 #endif
-
-#if NET7_0_OR_GREATER
-        interface IParser<T>
-        {
-            T Parse(R cr);
-        }
-        class Parser<T>
-        {
-            static IParser<T> Default;
-            public static T Parse(R cr)
-            {
-                Default ??= (IParser<T>)Activator.CreateInstance(typeof(ParserImpl<>).MakeGenericType(typeof(T)));
-                return Default.Parse(cr);
-            }
-        }
-        class ParserImpl<T> : IParser<T> where T : IConsoleReaderParser<T>
-        {
-            [M(256)] public T Parse(R cr) => T.Parse(cr);
-        }
-#endif
     }
 #if NET7_0_OR_GREATER
     /// <summary>
@@ -533,7 +509,7 @@ namespace Kzrnm.Competitive.IO
     /// </summary>
     public interface IConsoleReaderParser<T>
     {
-        /// <summary>
+        /// <summary> 
         /// Parse from <paramref name="cr"/>.
         /// </summary>
         static abstract T Parse(R cr);

@@ -5,6 +5,7 @@
 		<LangVersion Condition="'$(TargetFramework)' == 'netstandard2.0'">7</LangVersion>
 		<LangVersion Condition="'$(TargetFramework)' == 'netstandard2.1'">7.3</LangVersion>
 		<LangVersion Condition="'$(TargetFramework)' == 'net6.0'">10</LangVersion>
+		<LangVersion Condition="'$(TargetFramework)' == 'net7.0'">11</LangVersion>
 
 		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
 
