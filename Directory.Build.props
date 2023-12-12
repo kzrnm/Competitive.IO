@@ -7,8 +7,8 @@
 		<RepositoryUrl>https://github.com/kzrnm/Competitive.IO</RepositoryUrl>
 		<PackageReleaseNotes>https://github.com/kzrnm/Competitive.IO/blob/master/CHANGELOG.md</PackageReleaseNotes>
 
-		<Version>2.1.0</Version>
-		<AssemblyVersion>2.1.0.100</AssemblyVersion>
+		<Version>2.2.0-prev1</Version>
+		<AssemblyVersion>2.2.0.1</AssemblyVersion>
 
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)key.snk</AssemblyOriginatorKeyFile>

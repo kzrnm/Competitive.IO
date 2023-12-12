@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 using static Kzrnm.Competitive.IO.Reader.Helpers;
@@ -481,5 +482,31 @@ def
             cr.Ascii().Should().Be(str);
             cr.Long().Should().Be(12345);
         });
+
+#if NET7_0_OR_GREATER
+        [Fact(Timeout = 3000)]
+        public async Task ReadParser() => await Task.Run(() =>
+        {
+
+            var cr = GetConsoleReader(@"
+1 2 3
+-1 -2 -3
+");
+            cr.Repeat<AbsInt>(6).Should().Equal(
+                new(1),
+                new(2),
+                new(3),
+                new(1),
+                new(2),
+                new(3)
+            );
+        });
+
+        record struct AbsInt(int Value) : IConsoleReaderParser<AbsInt>
+        {
+            static AbsInt IConsoleReaderParser<AbsInt>.Parse(ConsoleReader cr)
+                => new(Math.Abs(cr.Int()));
+        }
+#endif
     }
 }
