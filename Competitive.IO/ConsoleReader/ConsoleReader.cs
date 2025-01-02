@@ -311,19 +311,18 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         (byte[], int) InnerBlock<T>() where T : struct, IBlock
         {
-            var bk = new T();
             var sb = new byte[32];
             int c = 0;
             byte b;
             do b = ReadByte();
-            while (b <= ' ');
+            while (!new T().Ok(b));
             do
             {
                 sb[c++] = b;
                 if (c >= sb.Length)
                     Array.Resize(ref sb, sb.Length << 1);
                 b = ReadByte();
-            } while (bk.Ok(b));
+            } while (new T().Ok(b));
             return (sb, c);
         }
 
@@ -372,19 +371,22 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [M(256)]
         public string Ascii()
-#if NET6_0_OR_GREATER
-            => new(AsciiChars());
-#else
+#if NETSTANDARD2_0
             => new string(AsciiChars());
+#elif !NET6_0_OR_GREATER
+            => new string(AsciiSpan());
+#else
+            => new(AsciiSpan());
 #endif
 
+#if NETSTANDARD2_0
         /// <summary>
         /// Read <see cref="T:char[]"/> from stdin as ascii
         /// </summary>
         [M(256)]
-        public char[] AsciiChars()
+        public char[] AsciiChars(int defaultBuf = 32)
         {
-            var sb = new char[32];
+            var sb = new char[defaultBuf];
             int c = 0;
             byte b;
             do b = ReadByte();
@@ -399,6 +401,34 @@ namespace Kzrnm.Competitive.IO
             Array.Resize(ref sb, c);
             return sb;
         }
+#else
+        /// <summary>
+        /// Read <see cref="T:char[]"/> from stdin as ascii
+        /// </summary>
+        [M(256)]
+        public char[] AsciiChars(int defaultBuf = 32) => AsciiSpan(defaultBuf).ToArray();
+
+        /// <summary>
+        /// Read <see cref="T:Span&lt;char&gt;"/> from stdin as ascii
+        /// </summary>
+        [M(256)]
+        public Span<char> AsciiSpan(int defaultBuf = 32)
+        {
+            var sb = new char[defaultBuf];
+            int c = 0;
+            byte b;
+            do b = ReadByte();
+            while (b <= ' ');
+            do
+            {
+                sb[c++] = (char)b;
+                if (c >= sb.Length)
+                    Array.Resize(ref sb, sb.Length << 1);
+                b = ReadByte();
+            } while (' ' < b);
+            return sb.AsSpan(0, c);
+        }
+#endif
 
         /// <summary>
         /// Read a <see cref="char"/> from stdin
@@ -468,7 +498,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)] public static implicit operator string(R cr) => cr.Ascii();
 
         /// <summary>
-        /// implicit call <see cref="AsciiChars()"/>
+        /// implicit call <see cref="AsciiChars(int)"/>
         /// </summary>
         [M(256)] public static implicit operator char[](R cr) => cr.AsciiChars();
 

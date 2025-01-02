@@ -118,6 +118,13 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [D(0)] public new char[] AsciiChars => AsciiChars();
 
+#if !NETSTANDARD2_0
+        /// <summary>
+        /// Read <see cref="T:Span&lt;char&gt;"/> from stdin as ascii
+        /// </summary>
+        [D(0)] public new Span<char> AsciiSpan => AsciiSpan();
+#endif
+
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
