@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 
 namespace Kzrnm.Competitive.IO
 {
-    using D = DebuggerBrowsableAttribute;
     /// <summary>
     /// Calls <see cref="PropertyConsoleReader"/> several times
     /// </summary>
@@ -18,69 +17,69 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Int"/> array
         /// </summary>
-        [D(0)] public new int[] Int => Int();
+        [DebuggerBrowsable(0)] public new int[] Int => Int();
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt"/> array
         /// </summary>
-        [D(0)] public new uint[] UInt => UInt();
+        [DebuggerBrowsable(0)] public new uint[] UInt => UInt();
         /// <summary>
         /// Read <see cref="ConsoleReader.Long"/> array
         /// </summary>
-        [D(0)] public new long[] Long => Long();
+        [DebuggerBrowsable(0)] public new long[] Long => Long();
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong"/> array
         /// </summary>
-        [D(0)] public new ulong[] ULong => ULong();
+        [DebuggerBrowsable(0)] public new ulong[] ULong => ULong();
         /// <summary>
         /// Read <see cref="ConsoleReader.Double"/> array
         /// </summary>
-        [D(0)] public new double[] Double => Double();
+        [DebuggerBrowsable(0)] public new double[] Double => Double();
         /// <summary>
         /// Read <see cref="ConsoleReader.Decimal"/> array
         /// </summary>
-        [D(0)] public new decimal[] Decimal => Decimal();
+        [DebuggerBrowsable(0)] public new decimal[] Decimal => Decimal();
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Ascii"/> array
         /// </summary>
-        [D(0)] public new string[] Ascii => Ascii();
+        [DebuggerBrowsable(0)] public new string[] Ascii => Ascii();
         /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
-        [D(0)] public new string[] Line => Line();
+        [DebuggerBrowsable(0)] public new string[] Line => Line();
         /// <summary>
         /// Read <see cref="ConsoleReader.String"/> array
         /// </summary>
-        [D(0)] public new string[] String => String();
+        [DebuggerBrowsable(0)] public new string[] String => String();
         /// <summary>
         /// Read <see cref="ConsoleReader.AsciiChars"/> array
         /// </summary>
-        [D(0)] public new char[][] AsciiChars => AsciiChars();
+        [DebuggerBrowsable(0)] public new char[][] AsciiChars => AsciiChars();
         /// <summary>
         /// Read <see cref="ConsoleReader.LineChars"/> array
         /// </summary>
-        [D(0)] public new char[][] LineChars => LineChars();
+        [DebuggerBrowsable(0)] public new char[][] LineChars => LineChars();
         /// <summary>
         /// Read <see cref="ConsoleReader.StringChars"/> array
         /// </summary>
-        [D(0)] public new char[][] StringChars => StringChars();
+        [DebuggerBrowsable(0)] public new char[][] StringChars => StringChars();
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Int0"/> array
         /// </summary>
-        [D(0)] public new int[] Int0 => Int0();
+        [DebuggerBrowsable(0)] public new int[] Int0 => Int0();
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt0"/> array
         /// </summary>
-        [D(0)] public new uint[] UInt0 => UInt0();
+        [DebuggerBrowsable(0)] public new uint[] UInt0 => UInt0();
         /// <summary>
         /// Read <see cref="ConsoleReader.Long0"/> array
         /// </summary>
-        [D(0)] public new long[] Long0 => Long0();
+        [DebuggerBrowsable(0)] public new long[] Long0 => Long0();
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong0"/> array
         /// </summary>
-        [D(0)] public new ulong[] ULong0 => ULong0();
+        [DebuggerBrowsable(0)] public new ulong[] ULong0 => ULong0();
     }
 
     /// <summary>

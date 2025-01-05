@@ -21,7 +21,7 @@ namespace Kzrnm.Competitive.IO
             var a1 = new T1[c];
             var a2 = new T2[c];
             for (var i = 0; i < c; i++)
-                (a1[i], a2[i]) = factory(cr);
+                (a1[i], a2[i]) = factory((R)cr);
             return (a1, a2);
         }
         /// <summary>
@@ -36,7 +36,7 @@ namespace Kzrnm.Competitive.IO
             var a1 = new T1[c];
             var a2 = new T2[c];
             for (var i = 0; i < c; i++)
-                (a1[i], a2[i]) = factory(cr, i);
+                (a1[i], a2[i]) = factory((R)cr, i);
             return (a1, a2);
         }
 
@@ -53,7 +53,7 @@ namespace Kzrnm.Competitive.IO
             var a2 = new T2[c];
             var a3 = new T3[c];
             for (var i = 0; i < c; i++)
-                (a1[i], a2[i], a3[i]) = factory(cr);
+                (a1[i], a2[i], a3[i]) = factory((R)cr);
             return (a1, a2, a3);
         }
         /// <summary>
@@ -69,7 +69,7 @@ namespace Kzrnm.Competitive.IO
             var a2 = new T2[c];
             var a3 = new T3[c];
             for (var i = 0; i < c; i++)
-                (a1[i], a2[i], a3[i]) = factory(cr, i);
+                (a1[i], a2[i], a3[i]) = factory((R)cr, i);
             return (a1, a2, a3);
         }
 
@@ -87,7 +87,7 @@ namespace Kzrnm.Competitive.IO
             var a3 = new T3[c];
             var a4 = new T4[c];
             for (var i = 0; i < c; i++)
-                (a1[i], a2[i], a3[i], a4[i]) = factory(cr);
+                (a1[i], a2[i], a3[i], a4[i]) = factory((R)cr);
             return (a1, a2, a3, a4);
         }
         /// <summary>
@@ -104,7 +104,7 @@ namespace Kzrnm.Competitive.IO
             var a3 = new T3[c];
             var a4 = new T4[c];
             for (var i = 0; i < c; i++)
-                (a1[i], a2[i], a3[i], a4[i]) = factory(cr, i);
+                (a1[i], a2[i], a3[i], a4[i]) = factory((R)cr, i);
             return (a1, a2, a3, a4);
         }
     }
