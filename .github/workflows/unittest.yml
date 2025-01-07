@@ -17,6 +17,7 @@ jobs:
     with:
       target: Competitive.IO.sln
       dotnet-version: |
+        9.0.x
         8.0.x
         6.0.x
         3.1.x
@@ -26,6 +27,7 @@ jobs:
       target: Competitive.IO.sln
       os: windows-latest
       dotnet-version: |
+        9.0.x
         8.0.x
         6.0.x
         3.1.x

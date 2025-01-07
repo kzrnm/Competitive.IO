@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `Utf8ConsoleWriter.Write(char v, int count)`
 - Add `Utf8ConsoleWriter.Write(ReadOnlySpan<byte>)`
 ### Changed
+- Support .NET 9.
 - Fix logic
 - Fix document
 

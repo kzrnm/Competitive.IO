@@ -28,7 +28,7 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
-        public static W WriteGrid<TTuple>(this W w, IEnumerable<TTuple> tuples) where TTuple : ITuple
+        public static W WriteGrid<Tp>(this W w, IEnumerable<Tp> tuples) where Tp : ITuple
         {
             foreach (var tup in tuples)
                 w.WriteLineJoin(tup);

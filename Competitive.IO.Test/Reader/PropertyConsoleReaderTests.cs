@@ -456,7 +456,7 @@ abc def
         [InlineData(8)]
         public async Task FillEntireNumber(int remaining) => await Task.Run(() =>
         {
-            var str = new string('a', ConsoleReader.BufSize - remaining);
+            var str = new string('a', (1 << 12) - remaining);
             var cr = GetPropertyConsoleReader(str + " 12345");
             cr.Ascii.Should().Be(str);
             cr.Long.Should().Be(12345);

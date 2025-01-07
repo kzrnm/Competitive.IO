@@ -465,7 +465,7 @@ def
             cr.Read<char>().Should().Be('5');
             cr.Read<double>().Should().Be(6);
             cr.Read<string>().Should().Be("abc");
-            cr.Read<char[]>().Should().Equal(new[] { 'd', 'e', 'f' });
+            cr.Read<char[]>().Should().Equal(['d', 'e', 'f']);
         });
 
         [Theory(Timeout = 1000)]
@@ -476,7 +476,7 @@ def
         [InlineData(8)]
         public async Task FillEntireNumber(int remaining) => await Task.Run(() =>
         {
-            var str = new string('a', ConsoleReader.BufSize - remaining);
+            var str = new string('a', (1 << 12) - remaining);
             var cr = GetConsoleReader(str + " 12345");
             cr.Ascii().Should().Be(str);
             cr.Long().Should().Be(12345);
