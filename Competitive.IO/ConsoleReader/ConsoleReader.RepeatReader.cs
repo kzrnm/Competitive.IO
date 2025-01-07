@@ -257,8 +257,7 @@ namespace Kzrnm.Competitive.IO
         public T[] Select<T>(Func<R, T> factory)
         {
             var a = new T[Count];
-            for (var i = 0; i < a.Length; i++)
-                a[i] = factory((R)cr);
+            Select(a, factory);
             return a;
         }
 
@@ -308,11 +307,11 @@ namespace Kzrnm.Competitive.IO
         /// Get <see cref="RepeatReader{R}"/>
         /// </summary>
         [M(256)]
-        public static RepeatReader<ConsoleReader> Repeat(this ConsoleReader cr, int count)
+        public static RepeatReader<C> Repeat(this C cr, int count)
 #if NET6_0_OR_GREATER
             => new(cr, count);
 #else
-            => new RepeatReader<ConsoleReader>(cr, count);
+            => new RepeatReader<C>(cr, count);
 #endif
     }
 }
