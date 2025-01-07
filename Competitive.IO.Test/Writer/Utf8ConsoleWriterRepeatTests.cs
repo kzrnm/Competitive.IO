@@ -11,7 +11,7 @@ namespace Kzrnm.Competitive.IO.Writer
 {
     public class Utf8ConsoleWriterRepeatTests
     {
-        private const int BufSize = 64;
+        private const int BufSize = 1 << 10;
         private readonly byte[] buffer = new byte[BufSize];
         private readonly MemoryStream stream;
         private readonly Utf8ConsoleWriter cw;
@@ -36,60 +36,60 @@ namespace Kzrnm.Competitive.IO.Writer
         }
 
         [Theory]
-        [MemberData(nameof(WriteRepeat_Data), 64)]
+        [MemberData(nameof(WriteRepeat_Data), 100)]
         public void WriteRepeatAscii(int len)
         {
             cw.Write('a', len);
-            cw.Flush();
-            buffer.Should().Equal(ToBytes(new string('a', len)));
+            cw.Write('$').Flush();
+            buffer.Should().Equal(ToBytes(new string('a', len) + "$"));
         }
 
         [Theory]
-        [MemberData(nameof(WriteRepeat_Data), 61)]
+        [MemberData(nameof(WriteRepeat_Data), 100)]
         public void WriteRepeatAscii2(int len)
         {
             cw.Write("012");
             cw.Write('a', len);
-            cw.Flush();
-            buffer.Should().Equal(ToBytes("012" + new string('a', len)));
+            cw.Write('$').Flush();
+            buffer.Should().Equal(ToBytes("012" + new string('a', len) + "$"));
         }
 
         [Theory]
-        [MemberData(nameof(WriteRepeat_Data), 32)]
+        [MemberData(nameof(WriteRepeat_Data), 100)]
         public void WriteRepeatGreek(int len)
         {
             cw.Write('ψ', len);
-            cw.Flush();
-            buffer.Should().Equal(ToBytes(new string('ψ', len)));
+            cw.Write('$').Flush();
+            buffer.Should().Equal(ToBytes(new string('ψ', len) + "$"));
         }
 
         [Theory]
-        [MemberData(nameof(WriteRepeat_Data), 30)]
+        [MemberData(nameof(WriteRepeat_Data), 100)]
         public void WriteRepeatGreek2(int len)
         {
             cw.Write("012");
             cw.Write('ψ', len);
-            cw.Flush();
-            buffer.Should().Equal(ToBytes("012" + new string('ψ', len)));
+            cw.Write('$').Flush();
+            buffer.Should().Equal(ToBytes("012" + new string('ψ', len) + "$"));
         }
 
         [Theory]
-        [MemberData(nameof(WriteRepeat_Data), 21)]
+        [MemberData(nameof(WriteRepeat_Data), 100)]
         public void WriteRepeatHiragana(int len)
         {
             cw.Write('こ', len);
-            cw.Flush();
-            buffer.Should().Equal(ToBytes(new string('こ', len)));
+            cw.Write('$').Flush();
+            buffer.Should().Equal(ToBytes(new string('こ', len) + "$"));
         }
 
         [Theory]
-        [MemberData(nameof(WriteRepeat_Data), 20)]
+        [MemberData(nameof(WriteRepeat_Data), 100)]
         public void WriteRepeatHiragana2(int len)
         {
             cw.Write("012");
             cw.Write('こ', len);
-            cw.Flush();
-            buffer.Should().Equal(ToBytes("012" + new string('こ', len)));
+            cw.Write('$').Flush();
+            buffer.Should().Equal(ToBytes("012" + new string('こ', len) + "$"));
         }
     }
 }

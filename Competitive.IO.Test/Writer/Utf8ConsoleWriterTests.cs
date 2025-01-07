@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -42,9 +43,10 @@ namespace Kzrnm.Competitive.IO.Writer
         {
             cw.Write('A');
             cw.Write(-123456);
+            cw.Write('あ');
             buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes("A-123456"));
+            buffer.Should().Equal(ToBytes("A-123456あ"));
         }
 
         [Fact]
@@ -158,10 +160,29 @@ namespace Kzrnm.Competitive.IO.Writer
         [Fact]
         public void WriteLineSpan()
         {
-            cw.WriteLine("foobar".AsSpan());
+            cw.WriteLine("foobarテスト".AsSpan());
             buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes("foobar" + newLine));
+            buffer.Should().Equal(ToBytes("foobarテスト" + newLine));
+
+            cw.Write("λόγος".AsSpan());
+            cw.Write("ゆく河の流れは絶えずしてしかももとの水にあらず".AsSpan());
+            cw.Flush();
+            buffer.Should().Equal(ToBytes("foobarテスト" + newLine + "λόγοςゆく河の流れは絶えずしてしかももとの水にあらず"));
+        }
+
+        [Fact]
+        public void WriteLineU8()
+        {
+            cw.WriteLine("foobarテスト"u8);
+            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            cw.Flush();
+            buffer.Should().Equal(ToBytes("foobarテスト" + newLine));
+
+            cw.Write("λόγος"u8);
+            cw.Write("ゆく河の流れは絶えずしてしかももとの水にあらず"u8);
+            cw.Flush();
+            buffer.Should().Equal(ToBytes("foobarテスト" + newLine + "λόγοςゆく河の流れは絶えずしてしかももとの水にあらず"));
         }
 
         [Fact]
@@ -336,7 +357,7 @@ namespace Kzrnm.Competitive.IO.Writer
         [Fact]
         public void EnsureLong()
         {
-            var len = Utf8ConsoleWriter.BufSize - long.MinValue.ToString().Length + 1;
+            var len = cw.buf.Length - long.MinValue.ToString().Length + 1;
             for (int i = 0; i < len; i++)
                 cw.Write('1');
             cw.Write(long.MinValue);
@@ -347,7 +368,7 @@ namespace Kzrnm.Competitive.IO.Writer
         [Fact]
         public void EnsureDouble()
         {
-            var len = Utf8ConsoleWriter.BufSize - double.MinValue.ToString("F20").Length + 1;
+            var len = cw.buf.Length - double.MinValue.ToString("F20").Length + 1;
             for (int i = 0; i < len; i++)
                 cw.Write('1');
             cw.Write(double.MinValue);
@@ -358,7 +379,7 @@ namespace Kzrnm.Competitive.IO.Writer
         [Fact]
         public void EnsureDecimal()
         {
-            var len = Utf8ConsoleWriter.BufSize - decimal.MinValue.ToString("F20").Length + 1;
+            var len = cw.buf.Length - decimal.MinValue.ToString("F20").Length + 1;
             for (int i = 0; i < len; i++)
                 cw.Write('1');
             cw.Write(decimal.MinValue);

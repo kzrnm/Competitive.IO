@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - 2025-01-08
 ### Added
-- Add `Write(char v, int count)`
+- Add `Utf8ConsoleWriter.Write(char v, int count)`
+- Add `Utf8ConsoleWriter.Write(ReadOnlySpan<byte>)`
 ### Changed
 - Fix logic
 - Fix document

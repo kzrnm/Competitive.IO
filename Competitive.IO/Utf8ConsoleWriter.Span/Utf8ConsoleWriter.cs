@@ -23,7 +23,6 @@ namespace Kzrnm.Competitive.IO
 #else
             new UTF8Encoding(false);
 #endif
-        internal const int BufSize = 1 << 12;
         /// <summary>
         /// The desination stream.
         /// </summary>
@@ -36,14 +35,14 @@ namespace Kzrnm.Competitive.IO
         /// <para>Wrapper of stdout</para>
         /// <para>Output stream: <see cref="Console.OpenStandardOutput()"/></para>
         /// <para>Output encoding: <see cref="Console.OutputEncoding"/></para>
-        /// </summary>
+        /// </summary>R
         public Utf8ConsoleWriter() : this(Console.OpenStandardOutput()) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
         /// </summary>
         /// <param name="output">Output stream</param>
-        public Utf8ConsoleWriter(Stream output) : this(output, BufSize) { }
+        public Utf8ConsoleWriter(Stream output) : this(output, 1 << 12) { }
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
@@ -129,8 +128,12 @@ namespace Kzrnm.Competitive.IO
                 }
                 else
                 {
+#if NET8_0_OR_GREATER
+                    bw = Utf8NoBom.GetBytes([c], dst);
+#else
                     Span<char> s = stackalloc char[1] { c };
                     bw = Utf8NoBom.GetBytes(s, dst);
+#endif
                 }
             }
             else if (v is char[] charr)
@@ -167,6 +170,29 @@ namespace Kzrnm.Competitive.IO
             return this;
         }
         /// <summary>
+        /// Write <paramref name="v"/> to the output stream.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)]
+        public W Write(ReadOnlySpan<byte> v)
+        {
+            if (v.Length <= 16)
+            {
+                if (v.Length > buf.Length - len)
+                {
+                    Flush();
+                }
+                v.CopyTo(buf.AsSpan(len));
+                len += v.Length;
+            }
+            else
+            {
+                Flush();
+                Output.Write(v);
+            }
+            return this;
+        }
+        /// <summary>
         /// Write empty line to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
@@ -185,6 +211,13 @@ namespace Kzrnm.Competitive.IO
         /// <returns>this instance.</returns>
         [M(256)]
         public W WriteLine(ReadOnlySpan<char> v) { Write(v); return Write('\n'); }
+
+        /// <summary>
+        /// Write <paramref name="v"/> to the output stream with end of line.
+        /// </summary>
+        /// <returns>this instance.</returns>
+        [M(256)]
+        public W WriteLine(ReadOnlySpan<byte> v) { Write(v); return Write('\n'); }
 
         /// <summary>
         /// Write line each item of <paramref name="col"/>
