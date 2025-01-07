@@ -15,15 +15,47 @@ namespace Kzrnm.Competitive.IO
     using M = MethodImplAttribute;
     using R = ConsoleReader;
 
+#if NET8_0_OR_GREATER
+    /// <summary>
+    /// Input Reader
+    /// </summary>
+    /// <remarks>
+    /// <para>Wrapper of stdin</para>
+    /// </remarks>
+    /// <param name="input">Input stream</param>
+    /// <param name="encoding">Input encoding</param>
+    /// <param name="bufferSize">Input buffer size</param>
+    public class ConsoleReader(Stream input, Encoding encoding, int bufferSize)
+    {
+        /// <summary>
+        /// The source stream.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Stream Input { get; } = input;
+        /// <summary>
+        /// The encoding of <see cref="Input"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Encoding Encoding { get; } = encoding;
+        internal readonly byte[] buf = new byte[bufferSize];
+#else
     /// <summary>
     /// Input Reader
     /// </summary>
     public class ConsoleReader
     {
         /// <summary>
-        /// The size of buffer.
+        /// <para>Wrapper of stdin</para>
         /// </summary>
-        protected internal const int BufSize = 1 << 12;
+        /// <param name="input">Input stream</param>
+        /// <param name="encoding">Input encoding</param>
+        /// <param name="bufferSize">Input buffer size</param>
+        public ConsoleReader(Stream input, Encoding encoding, int bufferSize)
+        {
+            Input = input;
+            Encoding = encoding;
+            buf = new byte[bufferSize];
+        }
         /// <summary>
         /// The source stream.
         /// </summary>
@@ -35,6 +67,7 @@ namespace Kzrnm.Competitive.IO
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Encoding Encoding { get; }
         internal readonly byte[] buf;
+#endif
         internal int pos;
         internal int len;
 
@@ -43,28 +76,14 @@ namespace Kzrnm.Competitive.IO
         /// <para>Input stream: <see cref="Console.OpenStandardInput()"/></para>
         /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
         /// </summary>
-        [M(256)] public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, BufSize) { }
+        [M(256)] public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, 1 << 12) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
         /// </summary>
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
-        [M(256)] public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, BufSize) { }
-
-        /// <summary>
-        /// <para>Wrapper of stdin</para>
-        /// </summary>
-        /// <param name="input">Input stream</param>
-        /// <param name="encoding">Input encoding</param>
-        /// <param name="bufferSize">Input buffer size</param>
-        [M(256)]
-        public ConsoleReader(Stream input, Encoding encoding, int bufferSize)
-        {
-            Input = input;
-            Encoding = encoding;
-            buf = new byte[bufferSize];
-        }
+        [M(256)] public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, 1 << 12) { }
 
 #if !NETSTANDARD2_0
         /// <summary>
@@ -298,12 +317,12 @@ namespace Kzrnm.Competitive.IO
         {
             bool Ok(byte b);
         }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0079")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0251")]
+#pragma warning disable IDE0079
+#pragma warning disable IDE0251
         struct AC : IBlock { [M(256)] public bool Ok(byte b) => ' ' < b; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0079")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0251")]
         struct LB : IBlock { [M(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
+#pragma warning restore IDE0251
+#pragma warning restore IDE0079
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding

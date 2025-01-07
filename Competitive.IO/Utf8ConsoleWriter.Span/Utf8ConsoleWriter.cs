@@ -12,10 +12,26 @@ namespace Kzrnm.Competitive.IO
     using static Utf8Formatter;
     using M = MethodImplAttribute;
     using W = Utf8ConsoleWriter;
+#if NET9_0_OR_GREATER
+    using O = OverloadResolutionPriorityAttribute;
+#endif
+
+#if NET8_0_OR_GREATER
+    /// <summary>
+    /// Output Writer
+    /// </summary>
+    /// <remarks>
+    /// <para>Wrapper of stdin</para>
+    /// </remarks>
+    /// <param name="output">Output stream</param>
+    /// <param name="bufferSize">Output buffer size</param>
+    public sealed class Utf8ConsoleWriter(Stream output, int bufferSize) : IDisposable
+#else
     /// <summary>
     /// Output Writer
     /// </summary>
     public sealed class Utf8ConsoleWriter : IDisposable
+#endif
     {
         internal static readonly UTF8Encoding Utf8NoBom =
 #if NET6_0_OR_GREATER
@@ -23,13 +39,34 @@ namespace Kzrnm.Competitive.IO
 #else
             new UTF8Encoding(false);
 #endif
+        internal int len;
+
+#if NET8_0_OR_GREATER
+        /// <summary>
+        /// The desination stream.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Stream Output { get; } = output;
+        internal byte[] buf = new byte[bufferSize];
+#else
         /// <summary>
         /// The desination stream.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Stream Output { get; }
         internal byte[] buf;
-        internal int len;
+
+        /// <summary>
+        /// <para>Wrapper of stdout</para>
+        /// </summary>
+        /// <param name="output">Output stream</param>
+        /// <param name="bufferSize">Output buffer size</param>
+        public Utf8ConsoleWriter(Stream output, int bufferSize)
+        {
+            Output = output;
+            buf = new byte[bufferSize];
+        }
+#endif
 
         /// <summary>
         /// <para>Wrapper of stdout</para>
@@ -43,17 +80,6 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <param name="output">Output stream</param>
         public Utf8ConsoleWriter(Stream output) : this(output, 1 << 12) { }
-
-        /// <summary>
-        /// <para>Wrapper of stdout</para>
-        /// </summary>
-        /// <param name="output">Output stream</param>
-        /// <param name="bufferSize">Output buffer size</param>
-        public Utf8ConsoleWriter(Stream output, int bufferSize)
-        {
-            Output = output;
-            buf = new byte[bufferSize];
-        }
 
         /// <summary>
         /// Create <see cref="StreamWriter"/> instance.

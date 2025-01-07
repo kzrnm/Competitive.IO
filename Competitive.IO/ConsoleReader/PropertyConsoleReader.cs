@@ -5,7 +5,6 @@ using System.Text;
 
 namespace Kzrnm.Competitive.IO
 {
-    using D = DebuggerBrowsableAttribute;
     /// <summary>
     /// Input Reader
     /// </summary>
@@ -36,12 +35,12 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin
         /// </summary>
-        [D(0)] public new int Int => Int();
+        [DebuggerBrowsable(0)] public new int Int => Int();
 
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
-        [D(0)] public new int Int0 => Int0();
+        [DebuggerBrowsable(0)] public new int Int0 => Int0();
 
         /// <summary>
         /// Parse <see cref="uint"/> from stdin
@@ -50,84 +49,84 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [D(0)] public new uint UInt => UInt();
+        [DebuggerBrowsable(0)] public new uint UInt => UInt();
 
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [D(0)] public new uint UInt0 => UInt0();
+        [DebuggerBrowsable(0)] public new uint UInt0 => UInt0();
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
-        [D(0)] public new long Long => Long();
+        [DebuggerBrowsable(0)] public new long Long => Long();
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin and decrement
         /// </summary>
-        [D(0)] public new long Long0 => Long0();
+        [DebuggerBrowsable(0)] public new long Long0 => Long0();
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
         /// </summary>
-        [D(0)] public new ulong ULong => ULong();
+        [DebuggerBrowsable(0)] public new ulong ULong => ULong();
 
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
-        [D(0)] public new ulong ULong0 => ULong0();
+        [DebuggerBrowsable(0)] public new ulong ULong0 => ULong0();
 
         /// <summary>
         /// Read a <see cref="double"/> from stdin
         /// </summary>
-        [D(0)] public new double Double => Double();
+        [DebuggerBrowsable(0)] public new double Double => Double();
 
         /// <summary>
         /// Read a <see cref="decimal"/> from stdin
         /// </summary>
-        [D(0)] public new decimal Decimal => Decimal();
+        [DebuggerBrowsable(0)] public new decimal Decimal => Decimal();
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
-        [D(0)] public new string String => String();
+        [DebuggerBrowsable(0)] public new string String => String();
 
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [D(0)] public new string Line => Line();
+        [DebuggerBrowsable(0)] public new string Line => Line();
 
         /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
-        [D(0)] public new string Ascii => Ascii();
+        [DebuggerBrowsable(0)] public new string Ascii => Ascii();
 
 
         /// <summary>
         /// Read <see cref="T:char[]"/> from stdin with encoding
         /// </summary>
-        [D(0)] public new char[] StringChars => StringChars();
+        [DebuggerBrowsable(0)] public new char[] StringChars => StringChars();
 
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [D(0)] public new char[] LineChars => LineChars();
+        [DebuggerBrowsable(0)] public new char[] LineChars => LineChars();
 
         /// <summary>
         /// Read <see cref="T:char[]"/> from stdin as ascii
         /// </summary>
-        [D(0)] public new char[] AsciiChars => AsciiChars();
+        [DebuggerBrowsable(0)] public new char[] AsciiChars => AsciiChars();
 
 #if !NETSTANDARD2_0
         /// <summary>
         /// Read <see cref="T:Span&lt;char&gt;"/> from stdin as ascii
         /// </summary>
-        [D(0)] public new Span<char> AsciiSpan => AsciiSpan();
+        [DebuggerBrowsable(0)] public new Span<char> AsciiSpan => AsciiSpan();
 #endif
 
         /// <summary>
         /// Read a <see cref="char"/> from stdin
         /// </summary>
-        [D(0)] public new char Char => Char();
+        [DebuggerBrowsable(0)] public new char Char => Char();
     }
 }
