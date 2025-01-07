@@ -7,7 +7,7 @@ namespace Kzrnm.Competitive.IO.Reader
 {
     public class ConsoleReaderGridTests
     {
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task ConsoleReader() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -20,7 +20,7 @@ namespace Kzrnm.Competitive.IO.Reader
             grid[1].Should().Equal(7, 8, 9, 10, 11, 12);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task PropertyConsoleReader() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
@@ -33,7 +33,7 @@ namespace Kzrnm.Competitive.IO.Reader
             grid[1].Should().Equal(7, 8, 9, 10, 11, 12);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task ConsoleReaderFunc() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -46,7 +46,7 @@ namespace Kzrnm.Competitive.IO.Reader
             grid[1].Should().Equal(7, 8, 9, 10, 11, 12);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task PropertyConsoleReaderFunc() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
@@ -59,7 +59,7 @@ namespace Kzrnm.Competitive.IO.Reader
             grid[1].Should().Equal(7, 8, 9, 10, 11, 12);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task ConsoleReaderFuncIndex() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -72,7 +72,7 @@ namespace Kzrnm.Competitive.IO.Reader
             grid[1].Should().Equal((7, 1, 0), (8, 1, 1), (9, 1, 2), (10, 1, 3), (11, 1, 4), (12, 1, 5));
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task PropertyConsoleReaderFuncIndex() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"

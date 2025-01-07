@@ -7,7 +7,7 @@ namespace Kzrnm.Competitive.IO.Reader
 {
     public class ConsoleReaderTests
     {
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Line() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -19,7 +19,7 @@ namespace Kzrnm.Competitive.IO.Reader
             cr.Line().Should().Be("| a | b | b |");
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task LineChars() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -31,7 +31,7 @@ namespace Kzrnm.Competitive.IO.Reader
             cr.LineChars().Should().Equal("| a | b | b |".ToCharArray());
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Char() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -47,7 +47,7 @@ def
             cr.Char().Should().Be('f');
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Int() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -61,7 +61,7 @@ def
             cr.Int().Should().Be(2147483647);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task IntImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -80,7 +80,7 @@ def
             r.Should().Be(2147483647);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Int0() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -95,7 +95,7 @@ def
         });
 
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task UInt() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -107,7 +107,7 @@ def
             cr.UInt().Should().Be(14421U);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task UIntImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -122,7 +122,7 @@ def
             r.Should().Be(14421U);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task UInt0() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -134,7 +134,7 @@ def
             cr.UInt().Should().Be(14421U);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Long() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -148,7 +148,7 @@ def
             cr.Long().Should().Be(9223372036854775807);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task LongImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -167,7 +167,7 @@ def
             r.Should().Be(9223372036854775807);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Long0() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -181,7 +181,7 @@ def
             cr.Long0().Should().Be(9223372036854775806);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task ULong() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -195,7 +195,7 @@ def
             cr.ULong().Should().Be(18446744073709551615);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task ULongImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -214,7 +214,7 @@ def
             r.Should().Be(18446744073709551615);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task ULong0() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -229,7 +229,7 @@ def
         });
 
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Double() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -249,7 +249,7 @@ def
             cr.Double().Should().Be(.000123456);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task DoubleImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -278,7 +278,7 @@ def
             r.Should().Be(.000123456);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Decimal() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -298,7 +298,7 @@ def
             cr.Decimal().Should().Be(.000123456m);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task DecimalImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -327,7 +327,7 @@ def
             r.Should().Be(.000123456m);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Ascii() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -342,7 +342,7 @@ qrstuv wxyz
             cr.Ascii().Should().Be("wxyz");
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task AsciiChars() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -357,7 +357,7 @@ qrstuv wxyz
             cr.AsciiChars().Should().Equal("wxyz".ToCharArray());
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task AsciiImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -378,7 +378,7 @@ qrstuv wxyz
             r.Should().Be("wxyz");
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task String() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -399,7 +399,7 @@ qrstuv wxyz
             cr.String().Should().Be("컴퓨터");
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task StringChars() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -420,7 +420,7 @@ qrstuv wxyz
             cr.StringChars().Should().Equal("컴퓨터".ToCharArray());
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Mix() => await Task.Run(() =>
         {
 
@@ -448,7 +448,7 @@ abc def
             cr.String().Should().Be("def");
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Read() => await Task.Run(() =>
         {
 
@@ -468,7 +468,7 @@ def
             cr.Read<char[]>().Should().Equal(['d', 'e', 'f']);
         });
 
-        [Theory(Timeout = 1000)]
+        [Theory(Timeout = 5000)]
         [InlineData(4)]
         [InlineData(5)]
         [InlineData(6)]

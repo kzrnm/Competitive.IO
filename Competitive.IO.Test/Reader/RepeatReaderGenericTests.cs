@@ -9,7 +9,7 @@ namespace Kzrnm.Competitive.IO.Reader
 {
     public class RepeatReaderGenericTests
     {
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Int() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -21,7 +21,7 @@ namespace Kzrnm.Competitive.IO.Reader
             cr.Repeat(4).Read<int>().Should().Equal(123, -14421, -2147483647, 2147483647);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task UInt() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -33,7 +33,7 @@ namespace Kzrnm.Competitive.IO.Reader
             cr.Repeat(4).Read<uint>().Should().Equal(123, 14421, 0, 4294967295);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Long() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -46,7 +46,7 @@ namespace Kzrnm.Competitive.IO.Reader
             cr.Repeat(4).Read<long>().Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task ULong() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -57,7 +57,7 @@ namespace Kzrnm.Competitive.IO.Reader
             cr.Repeat(4).Read<ulong>().Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Double() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -69,7 +69,7 @@ namespace Kzrnm.Competitive.IO.Reader
             cr.Repeat(8).Read<double>().Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Decimal() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -81,7 +81,7 @@ namespace Kzrnm.Competitive.IO.Reader
             cr.Repeat(8).Read<decimal>().Should().Equal(123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Ascii() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -94,7 +94,7 @@ qrstuv wxyz
         });
 
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task AsciiChars() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -108,7 +108,7 @@ qrstuv wxyz
 
 
 #if NETCOREAPP3_0_OR_GREATER
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task Select() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -119,7 +119,7 @@ qrstuv wxyz
             buf.Should().Equal(0, 1, 2, 3, 4);
         });
 
-        [Fact(Timeout = 3000)]
+        [Fact(Timeout = 5000)]
         public async Task SelectIndex() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"

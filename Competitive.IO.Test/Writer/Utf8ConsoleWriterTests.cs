@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml.Linq;
 using FluentAssertions;
@@ -41,12 +42,41 @@ namespace Kzrnm.Competitive.IO.Writer
         [Fact]
         public void Write()
         {
+            cw.Write(int.MaxValue).Write("int".ToCharArray()).Write(int.MinValue);
+            cw.Write(long.MaxValue).Write("long".ToCharArray()).Write(long.MinValue);
+            cw.Write(uint.MaxValue).Write("uint".ToCharArray()).Write(uint.MinValue);
+            cw.Write(ulong.MaxValue).Write("ulong".ToCharArray()).Write(ulong.MinValue);
+            cw.Write(short.MaxValue).Write("short".ToCharArray()).Write(short.MinValue);
+            cw.Write(ushort.MaxValue).Write("ushort".ToCharArray()).Write(ushort.MinValue);
+            cw.Write(byte.MaxValue).Write("byte".ToCharArray()).Write(byte.MinValue);
+            cw.Write(sbyte.MaxValue).Write("sbyte".ToCharArray()).Write(sbyte.MinValue);
+            cw.Write(float.MaxValue).Write("float".ToCharArray()).Write(float.MinValue);
+            cw.Write(double.MaxValue).Write("double".ToCharArray()).Write(double.MinValue);
+            cw.Write(decimal.MaxValue).Write("decimal".ToCharArray()).Write(decimal.MinValue);
             cw.Write('A');
-            cw.Write(-123456);
             cw.Write('あ');
+            cw.Write("λόγος");
+            cw.Write("ιδέα".AsSpan());
+            cw.Write("φύσις"u8);
+            cw.Write(new Utf8ConsoleWriterFormatter());
             buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes("A-123456あ"));
+            buffer.Should().Equal(ToBytes("2147483647int-2147483648" +
+                "9223372036854775807long-9223372036854775808" +
+                "4294967295uint0" +
+                "18446744073709551615ulong0" +
+                "32767short-32768" +
+                "65535ushort0" +
+                "255byte0" +
+                "127sbyte-128" +
+                "340282346638528859811704183484516925440.00000000000000000000float-340282346638528859811704183484516925440.00000000000000000000" +
+             "179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.00000000000000000000double-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.00000000000000000000" +
+                "79228162514264337593543950335.00000000000000000000decimal-79228162514264337593543950335.00000000000000000000" +
+                "AあλόγοςιδέαφύσιςUtf8ConsoleWriterFormatter"));
+        }
+        readonly struct Utf8ConsoleWriterFormatter : IUtf8ConsoleWriterFormatter
+        {
+            public void Write(Utf8ConsoleWriter cw) => cw.Write("Utf8ConsoleWriterFormatter");
         }
 
         [Fact]
@@ -279,12 +309,12 @@ namespace Kzrnm.Competitive.IO.Writer
         [Fact]
         public void WriteGridJaggedArray()
         {
-            cw.WriteGrid(new int[][]
-            {
+            cw.WriteGrid(
+            [
                 [ 1, 2, 3, ],
                 [ -1, -2, -3, ],
                 [ 4, 5, 6, ],
-            });
+            ]);
             buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().Equal(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
@@ -293,12 +323,12 @@ namespace Kzrnm.Competitive.IO.Writer
         [Fact]
         public void WriteGridTuple()
         {
-            cw.WriteGrid(new (int, int, int)[]
-            {
+            cw.WriteGrid(
+            [
                 (1, 2, 3),
                 (-1, -2, -3),
                 (4, 5, 6),
-            });
+            ]);
             buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
             buffer.Should().Equal(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
