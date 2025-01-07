@@ -10,7 +10,21 @@ namespace Kzrnm.Competitive.IO
         [Fact]
         public async Task Embedded()
         {
+
+            const string expectedEmbeddedLanguageVersion =
+#if NETFRAMEWORK
+                "7.0"
+#elif NETCOREAPP3_1
+                "7.3"
+#elif NET6_0
+                "10.0"
+#elif NET8_0
+                "12.0"
+#endif
+                ;
+
             var embedded = await SourceExpander.EmbeddedData.LoadFromAssembly(typeof(ConsoleReader));
+            embedded.EmbeddedLanguageVersion.Should().Be(expectedEmbeddedLanguageVersion);
             embedded.AssemblyMetadatas.Should().NotContainKey("SourceExpander.EmbeddedAllowUnsafe");
             embedded.AssemblyMetadatas.Should().ContainKey("SourceExpander.EmbedderVersion");
             embedded.AssemblyMetadatas.Keys.Should().ContainSingle(key => key.StartsWith("SourceExpander.EmbeddedSourceCode"));

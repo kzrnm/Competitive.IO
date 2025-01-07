@@ -13,14 +13,12 @@ namespace Kzrnm.Competitive.IO.Writer
     {
         private const int BufSize = 64;
         private readonly byte[] buffer = new byte[BufSize];
-        private readonly string newLine;
         private readonly MemoryStream stream;
         private readonly Utf8ConsoleWriter cw;
         public Utf8ConsoleWriterRepeatTests()
         {
             stream = new MemoryStream(buffer);
             cw = new Utf8ConsoleWriter(stream, 8);
-            newLine = "\n";
         }
         private static byte[] ToBytes(string str)
         {
