@@ -57,7 +57,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)] public void Dispose() => Flush();
 
         /// <summary>
-        /// Write <paramref name="v"/> to output stream.
+        /// Write <paramref name="v"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
@@ -68,7 +68,7 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// Write empty line to output stream.
+        /// Write empty line to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
@@ -79,7 +79,7 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// Write <paramref name="v"/> to output stream with end of line.
+        /// Write <paramref name="v"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
@@ -89,12 +89,12 @@ namespace Kzrnm.Competitive.IO
             return this;
         }
         /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
+        /// Write joined <paramref name="col"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin(params object[] col) => WriteMany(' ', col);
         /// <summary>
-        /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to output stream.
+        /// Write joined <paramref name="v1"/> and <paramref name="v2"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
@@ -104,7 +104,7 @@ namespace Kzrnm.Competitive.IO
             sw.WriteLine(v2.ToString()); return this;
         }
         /// <summary>
-        /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to output stream.
+        /// Write joined <paramref name="v1"/>, <paramref name="v2"/> and <paramref name="v3"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
@@ -115,7 +115,7 @@ namespace Kzrnm.Competitive.IO
             sw.WriteLine(v3.ToString()); return this;
         }
         /// <summary>
-        /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to output stream.
+        /// Write joined <paramref name="v1"/>, <paramref name="v2"/>, <paramref name="v3"/> and <paramref name="v4"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
@@ -127,34 +127,34 @@ namespace Kzrnm.Competitive.IO
             sw.WriteLine(v4.ToString()); return this;
         }
         /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
+        /// Write joined <paramref name="col"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T>(T[] col) => WriteMany(' ', col);
         /// <summary>
-        /// Write joined <paramref name="col"/> to output stream.
+        /// Write joined <paramref name="col"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T>(IEnumerable<T> col) => WriteMany(' ', col);
 
         /// <summary>
-        /// Write joined <paramref name="tuple"/> to output stream.
+        /// Write joined <paramref name="tuple"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T1, T2>((T1, T2) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2);
         /// <summary>
-        /// Write joined <paramref name="tuple"/> to output stream.
+        /// Write joined <paramref name="tuple"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T1, T2, T3>((T1, T2, T3) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3);
         /// <summary>
-        /// Write joined <paramref name="tuple"/> to output stream.
+        /// Write joined <paramref name="tuple"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T1, T2, T3, T4>((T1, T2, T3, T4) tuple) => WriteLineJoin(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
 #if !NETSTANDARD2_0
         /// <summary>
-        /// Write joined <paramref name="tuple"/> to output stream.
+        /// Write joined <paramref name="tuple"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]

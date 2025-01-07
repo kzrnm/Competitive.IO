@@ -10,17 +10,17 @@ namespace Kzrnm.Competitive.IO
     public partial class ConsoleWriter
     {
         /// <summary>
-        /// Write <paramref name="v"/> to output stream with end of line.
+        /// Write <paramref name="v"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLine(ReadOnlySpan<char> v) { sw.WriteLine(v); return this; }
         /// <summary>
-        /// Write joined <paramref name="col"/> to output stream with end of line.
+        /// Write joined <paramref name="col"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T>(Span<T> col) => WriteMany(' ', (ReadOnlySpan<T>)col);
         /// <summary>
-        /// Write joined <paramref name="col"/> to output stream with end of line.
+        /// Write joined <paramref name="col"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)] public W WriteLineJoin<T>(ReadOnlySpan<T> col) => WriteMany(' ', col);

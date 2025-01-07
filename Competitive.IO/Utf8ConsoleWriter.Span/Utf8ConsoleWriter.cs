@@ -94,7 +94,7 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// Write <paramref name="v"/> to output stream.
+        /// Write <paramref name="v"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256 | 512)]
@@ -146,7 +146,7 @@ namespace Kzrnm.Competitive.IO
             return this;
         }
         /// <summary>
-        /// Write <paramref name="v"/> to output stream.
+        /// Write <paramref name="v"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256 | 512)]
@@ -167,20 +167,20 @@ namespace Kzrnm.Competitive.IO
             return this;
         }
         /// <summary>
-        /// Write empty line to output stream.
+        /// Write empty line to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
         public W WriteLine() => Write('\n');
         /// <summary>
-        /// Write <paramref name="v"/> to output stream with end of line.
+        /// Write <paramref name="v"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
         public W WriteLine<T>(T v) { Write(v); return Write('\n'); }
 
         /// <summary>
-        /// Write <paramref name="v"/> to output stream with end of line.
+        /// Write <paramref name="v"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
         [M(256)]
