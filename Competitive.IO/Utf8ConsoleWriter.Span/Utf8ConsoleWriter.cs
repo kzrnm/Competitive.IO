@@ -81,10 +81,10 @@ namespace Kzrnm.Competitive.IO
         void IDisposable.Dispose() => Flush();
 
         /// <summary>
-        /// Ensure buffer span
+        /// Ensure buffer span. <paramref name="size"/> must be less than or equal to buf.Length.
         /// </summary>
         [M(256)]
-        private Span<byte> EnsureBuf(int size)
+        internal Span<byte> EnsureBuf(int size)
         {
             if (buf.Length - len < size)
             {

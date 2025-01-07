@@ -23,9 +23,9 @@ namespace Kzrnm.Competitive.IO.Writer
         }
         private static byte[] ToBytes(string str)
         {
-            var res = new byte[BufSize];
-            for (int i = 0; i < str.Length; i++) res[i] = (byte)str[i];
-            return res;
+            var rt = new byte[BufSize];
+            Encoding.UTF8.GetBytes(str, rt);
+            return rt;
         }
 
         [Fact]
