@@ -27,7 +27,7 @@ namespace Kzrnm.Competitive.IO
 
             var embedded = await SourceExpander.EmbeddedData.LoadFromAssembly(typeof(ConsoleReader));
             embedded.EmbeddedLanguageVersion.Should().Be(expectedEmbeddedLanguageVersion);
-            embedded.AssemblyMetadatas.Should().NotContainKey("SourceExpander.EmbeddedAllowUnsafe");
+            embedded.AssemblyMetadatas.Should().ContainKey("SourceExpander.EmbeddedAllowUnsafe");
             embedded.AssemblyMetadatas.Should().ContainKey("SourceExpander.EmbedderVersion");
             embedded.AssemblyMetadatas.Keys.Should().ContainSingle(key => key.StartsWith("SourceExpander.EmbeddedSourceCode"));
             embedded.EmbeddedNamespaces.Should().BeEquivalentTo("Kzrnm.Competitive.IO");

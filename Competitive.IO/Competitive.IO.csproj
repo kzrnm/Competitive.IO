@@ -8,6 +8,7 @@
 		<LangVersion Condition="'$(DotnetVersion)' != ''">$([MSBuild]::Add($(DotnetVersion), 4))</LangVersion>
 
 		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
 		<NoWarn>$(NoWarn);CA1063;CA1806</NoWarn>
 
@@ -20,6 +21,9 @@
 
 	<ItemGroup>
 		<Compile Condition="'$(TargetFramework)' == 'netstandard2.0'" Remove="Utf8ConsoleWriter.Span\*.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Condition="('$(DotnetVersion)' == '') Or ($(DotnetVersion) &lt; 7)" Remove="UnixUtf8\**\*.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
