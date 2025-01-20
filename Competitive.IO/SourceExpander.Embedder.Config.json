@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/kzrnm/SourceExpander/master/schema/embedder.schema.json",
   "minify-level": "full",
   "exclude-attributes": [
-    "System.Diagnostics.CodeAnalysis.SuppressMessage",
-    "System.ComponentModel.EditorBrowsable",
+    "System.Diagnostics.CodeAnalysis.SuppressMessageAttribute",
+    "System.ComponentModel.EditorBrowsableAttribute",
     "System.Diagnostics.DebuggerBrowsableAttribute",
     "System.Diagnostics.DebuggerDisplayAttribute",
     "System.Diagnostics.DebuggerHiddenAttribute",

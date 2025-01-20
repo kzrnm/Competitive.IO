@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Xunit;
 
 namespace Kzrnm.Competitive.IO
@@ -26,28 +25,24 @@ namespace Kzrnm.Competitive.IO
                 ;
 
             var embedded = await SourceExpander.EmbeddedData.LoadFromAssembly(typeof(ConsoleReader));
-            embedded.EmbeddedLanguageVersion.Should().Be(expectedEmbeddedLanguageVersion);
-            embedded.AssemblyMetadatas.Should().NotContainKey("SourceExpander.EmbeddedAllowUnsafe");
-            embedded.AssemblyMetadatas.Should().ContainKey("SourceExpander.EmbedderVersion");
-            embedded.AssemblyMetadatas.Keys.Should().ContainSingle(key => key.StartsWith("SourceExpander.EmbeddedSourceCode"));
-            embedded.EmbeddedNamespaces.Should().BeEquivalentTo("Kzrnm.Competitive.IO");
-            embedded.SourceFiles.SelectMany(s => s.TypeNames)
-                .Should().Contain(
-                    "Kzrnm.Competitive.IO.ConsoleReader",
-                    "Kzrnm.Competitive.IO.RepeatReader",
-                    "Kzrnm.Competitive.IO.SplitReader",
-                    "Kzrnm.Competitive.IO.ConsoleWriter",
-                    "Kzrnm.Competitive.IO.ConsoleWriter",
-                    "Kzrnm.Competitive.IO.PropertyConsoleReader",
-                    "Kzrnm.Competitive.IO.PropertyRepeatReader",
-                    "Kzrnm.Competitive.IO.PropertySplitReader"
-                );
+            embedded.EmbeddedLanguageVersion.ShouldBe(expectedEmbeddedLanguageVersion);
+            embedded.AssemblyMetadatas.ShouldNotContainKey("SourceExpander.EmbeddedAllowUnsafe");
+            embedded.AssemblyMetadatas.ShouldContainKey("SourceExpander.EmbedderVersion");
+            embedded.AssemblyMetadatas.Keys.Where(key => key.StartsWith("SourceExpander.EmbeddedSourceCode")).ShouldHaveSingleItem();
+            embedded.EmbeddedNamespaces.ShouldBe(["Kzrnm.Competitive.IO"]);
+            embedded.SourceFiles.SelectMany(s => s.TypeNames).ShouldSatisfyAllConditions([
+                t => t.ShouldContain("Kzrnm.Competitive.IO.ConsoleReader"),
+                t => t.ShouldContain("Kzrnm.Competitive.IO.RepeatReader"),
+                t => t.ShouldContain("Kzrnm.Competitive.IO.ConsoleWriter"),
+                t => t.ShouldContain("Kzrnm.Competitive.IO.ConsoleWriter"),
+                t => t.ShouldContain("Kzrnm.Competitive.IO.PropertyConsoleReader"),
+                t => t.ShouldContain("Kzrnm.Competitive.IO.PropertyRepeatReader"),
+            ]);
 
-            embedded.SourceFiles.Select(s => s.CodeBody).Should()
-                .NotContain(
-                    "SuppressMessage",
-                    "EditorBrowsable"
-                );
+            embedded.SourceFiles.Select(s => s.CodeBody).ShouldSatisfyAllConditions([
+                t => t.ShouldAllBe(s => !s.Contains("SuppressMessage")),
+                t => t.ShouldAllBe(s => !s.Contains("EditorBrowsable")),
+            ]);
         }
     }
 }

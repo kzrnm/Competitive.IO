@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Kzrnm.Competitive.IO.Reader;
 using Xunit;
 using static Kzrnm.Competitive.IO.Reader.Helpers;
@@ -18,7 +18,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -2147483647 2147483647
 1
 ");
-            cr.Repeat(4).Read<int>().Should().Equal(123, -14421, -2147483647, 2147483647);
+            cr.Repeat(4).Read<int>().ShouldBe([123, -14421, -2147483647, 2147483647]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -30,7 +30,7 @@ namespace Kzrnm.Competitive.IO.Reader
 0 4294967295
 1
 ");
-            cr.Repeat(4).Read<uint>().Should().Equal(123, 14421, 0, 4294967295);
+            cr.Repeat(4).Read<uint>().ShouldBe([123, 14421, 0, 4294967295]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -43,7 +43,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -9223372036854775808 9223372036854775807
 1
 ");
-            cr.Repeat(4).Read<long>().Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
+            cr.Repeat(4).Read<long>().ShouldBe([123L, -14421L, -9223372036854775808L, 9223372036854775807L]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -54,7 +54,7 @@ namespace Kzrnm.Competitive.IO.Reader
 123 14421
 9223372036854775808 18446744073709551615 456789
 ");
-            cr.Repeat(4).Read<ulong>().Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
+            cr.Repeat(4).Read<ulong>().ShouldBe([123, 14421, 9223372036854775808, 18446744073709551615]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -66,7 +66,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -0.000123456 -.000123456 0.000123456 .000123456
 1.0
 ");
-            cr.Repeat(8).Read<double>().Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
+            cr.Repeat(8).Read<double>().ShouldBe([123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -78,7 +78,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -0.000123456 -.000123456 0.000123456 .000123456
 1.0
 ");
-            cr.Repeat(8).Read<decimal>().Should().Equal(123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m);
+            cr.Repeat(8).Read<decimal>().ShouldBe([123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -90,7 +90,7 @@ abcdefg hijklmnop 123
 qrstuv wxyz
 -----
 ");
-            cr.Repeat(5).Read<string>().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+            cr.Repeat(5).Read<string>().ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
         }, TestContext.Current.CancellationToken);
 
 
@@ -103,7 +103,7 @@ abcdefg hijklmnop 123
 qrstuv wxyz
 -----
 ");
-            cr.Repeat(5).Read<char[]>().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+            cr.Repeat(5).Read<char[]>().Select(c => new string(c)).ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
         }, TestContext.Current.CancellationToken);
 
 
@@ -116,7 +116,7 @@ qrstuv wxyz
 ");
             var buf = new int[5];
             cr.Repeat(5).Select(buf.AsSpan(1), cr => cr.Int());
-            buf.Should().Equal(0, 1, 2, 3, 4);
+            buf.ShouldBe([0, 1, 2, 3, 4]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -127,7 +127,7 @@ qrstuv wxyz
 ");
             var buf = new int[5];
             cr.Repeat(5).Select(buf.AsSpan(1), (cr, i) => cr.Int() * i);
-            buf.Should().Equal(0, 0, 2, 6, 12);
+            buf.ShouldBe([0, 0, 2, 6, 12]);
         }, TestContext.Current.CancellationToken);
 #endif
     }

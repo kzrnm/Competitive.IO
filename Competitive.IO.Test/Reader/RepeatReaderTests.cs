@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Kzrnm.Competitive.IO.Reader;
 using Xunit;
 using static Kzrnm.Competitive.IO.Reader.Helpers;
@@ -18,7 +18,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1 2
 ");
             cr.Repeat(3).Select<(int, int)>(c => (c.Int(), c))
-            .Should().Equal((123, -14421), (-2147483647, 2147483647), (1, 2));
+            .ShouldBe([(123, -14421), (-2147483647, 2147483647), (1, 2)]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -31,7 +31,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1 2
 ");
             cr.Repeat(3).Select<(int, int, int)>((c, i) => (i, c.Int(), c))
-            .Should().Equal((0, 123, -14421), (1, -2147483647, 2147483647), (2, 1, 2));
+            .ShouldBe([(0, 123, -14421), (1, -2147483647, 2147483647), (2, 1, 2)]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -44,9 +44,9 @@ namespace Kzrnm.Competitive.IO.Reader
 1 2
 ");
             var grid = cr.Grid(3, 2, c => c.Int());
-            grid[0].Should().Equal(123, -14421);
-            grid[1].Should().Equal(-2147483647, 2147483647);
-            grid[2].Should().Equal(1, 2);
+            grid[0].ShouldBe([123, -14421]);
+            grid[1].ShouldBe([-2147483647, 2147483647]);
+            grid[2].ShouldBe([1, 2]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -59,9 +59,9 @@ namespace Kzrnm.Competitive.IO.Reader
 1 2
 ");
             var grid = cr.Grid(3, 2, (c, i, j) => (i, j, c.Int()));
-            grid[0].Should().Equal((0, 0, 123), (0, 1, -14421));
-            grid[1].Should().Equal((1, 0, -2147483647), (1, 1, 2147483647));
-            grid[2].Should().Equal((2, 0, 1), (2, 1, 2));
+            grid[0].ShouldBe([(0, 0, 123), (0, 1, -14421)]);
+            grid[1].ShouldBe([(1, 0, -2147483647), (1, 1, 2147483647)]);
+            grid[2].ShouldBe([(2, 0, 1), (2, 1, 2)]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -73,8 +73,8 @@ namespace Kzrnm.Competitive.IO.Reader
 -3 3
 ");
             var (a, b) = cr.Repeat(3).SelectArray(c => (c.Int(), c.Int()));
-            a.Should().Equal(-1, -2, -3);
-            b.Should().Equal(1, 2, 3);
+            a.ShouldBe([-1, -2, -3]);
+            b.ShouldBe([1, 2, 3]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -86,9 +86,9 @@ namespace Kzrnm.Competitive.IO.Reader
 -3 3 c
 ");
             var (a, b, c) = cr.Repeat(3).SelectArray(cc => (cc.Int(), cc.Int(), cr.Char()));
-            a.Should().Equal(-1, -2, -3);
-            b.Should().Equal(1, 2, 3);
-            c.Should().Equal('a', 'b', 'c');
+            a.ShouldBe([-1, -2, -3]);
+            b.ShouldBe([1, 2, 3]);
+            c.ShouldBe(['a', 'b', 'c']);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -100,10 +100,10 @@ namespace Kzrnm.Competitive.IO.Reader
 -3 3 c 1e8
 ");
             var (a, b, c, d) = cr.Repeat(3).SelectArray(cc => (cc.Int(), cc.Int(), cr.Char(), cr.Double()));
-            a.Should().Equal(-1, -2, -3);
-            b.Should().Equal(1, 2, 3);
-            c.Should().Equal('a', 'b', 'c');
-            d.Should().Equal(0.5, 1.5, 1e8);
+            a.ShouldBe([-1, -2, -3]);
+            b.ShouldBe([1, 2, 3]);
+            c.ShouldBe(['a', 'b', 'c']);
+            d.ShouldBe([0.5, 1.5, 1e8]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -115,7 +115,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -2147483647 2147483647
 1
 ");
-            cr.Repeat(4).Int().Should().Equal(123, -14421, -2147483647, 2147483647);
+            cr.Repeat(4).Int().ShouldBe([123, -14421, -2147483647, 2147483647]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -128,7 +128,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             int[] r = cr.Repeat(4);
-            r.Should().Equal(123, -14421, -2147483647, 2147483647);
+            r.ShouldBe([123, -14421, -2147483647, 2147483647]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -140,7 +140,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -2147483647 2147483647
 1
 ");
-            cr.Repeat(4).Int0().Should().Equal(122, -14422, -2147483648, 2147483646);
+            cr.Repeat(4).Int0().ShouldBe([122, -14422, -2147483648, 2147483646]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -152,7 +152,7 @@ namespace Kzrnm.Competitive.IO.Reader
 0 4294967295
 1
 ");
-            cr.Repeat(4).UInt().Should().Equal(123, 14421, 0, 4294967295);
+            cr.Repeat(4).UInt().ShouldBe([123, 14421, 0, 4294967295]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -165,7 +165,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             uint[] r = cr.Repeat(4);
-            r.Should().Equal(123, 14421, 0, 4294967295);
+            r.ShouldBe([123, 14421, 0, 4294967295]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -177,7 +177,7 @@ namespace Kzrnm.Competitive.IO.Reader
 0 4294967295
 1
 ");
-            cr.Repeat(4).UInt0().Should().Equal(122, 14420, 4294967295, 4294967294);
+            cr.Repeat(4).UInt0().ShouldBe([122, 14420, 4294967295, 4294967294]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -190,7 +190,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -9223372036854775808 9223372036854775807
 1
 ");
-            cr.Repeat(4).Long().Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
+            cr.Repeat(4).Long().ShouldBe([123L, -14421L, -9223372036854775808L, 9223372036854775807L]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -204,7 +204,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             long[] r = cr.Repeat(4);
-            r.Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
+            r.ShouldBe([123L, -14421L, -9223372036854775808L, 9223372036854775807L]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -217,7 +217,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -9223372036854775808 9223372036854775807
 1
 ");
-            cr.Repeat(4).Long0().Should().Equal(122L, -14422L, 9223372036854775807L, 9223372036854775806L);
+            cr.Repeat(4).Long0().ShouldBe([122L, -14422L, 9223372036854775807L, 9223372036854775806L]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -228,7 +228,7 @@ namespace Kzrnm.Competitive.IO.Reader
 123 14421
 9223372036854775808 18446744073709551615 456789
 ");
-            cr.Repeat(4).ULong().Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
+            cr.Repeat(4).ULong().ShouldBe([123, 14421, 9223372036854775808, 18446744073709551615]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -240,7 +240,7 @@ namespace Kzrnm.Competitive.IO.Reader
 9223372036854775808 18446744073709551615 456789
 ");
             ulong[] r = cr.Repeat(4);
-            r.Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
+            r.ShouldBe([123, 14421, 9223372036854775808, 18446744073709551615]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -251,7 +251,7 @@ namespace Kzrnm.Competitive.IO.Reader
 123 14421
 9223372036854775808 18446744073709551615 456789
 ");
-            cr.Repeat(4).ULong0().Should().Equal(122, 14420, 9223372036854775807, 18446744073709551614);
+            cr.Repeat(4).ULong0().ShouldBe([122, 14420, 9223372036854775807, 18446744073709551614]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -263,7 +263,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -0.000123456 -.000123456 0.000123456 .000123456
 1.0
 ");
-            cr.Repeat(8).Double().Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
+            cr.Repeat(8).Double().ShouldBe([123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -276,7 +276,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1.0
 ");
             double[] r = cr.Repeat(8);
-            r.Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
+            r.ShouldBe([123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -288,7 +288,7 @@ namespace Kzrnm.Competitive.IO.Reader
 -0.000123456 -.000123456 0.000123456 .000123456
 1.0
 ");
-            cr.Repeat(8).Decimal().Should().Equal(123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m);
+            cr.Repeat(8).Decimal().ShouldBe([123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -301,7 +301,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1.0
 ");
             decimal[] r = cr.Repeat(8);
-            r.Should().Equal(123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m);
+            r.ShouldBe([123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -313,7 +313,7 @@ abcdefg hijklmnop 123
 qrstuv wxyz
 -----
 ");
-            cr.Repeat(5).Ascii().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+            cr.Repeat(5).Ascii().ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -326,7 +326,7 @@ qrstuv wxyz
 
 ");
             string[] r = cr.Repeat(5);
-            r.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+            r.ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -339,7 +339,7 @@ qrstuv wxyz
 コンピュータ 电脑😀 컴퓨터
 -------
 ");
-            cr.Repeat(8).String().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터");
+            cr.Repeat(8).String().ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터"]);
         }, TestContext.Current.CancellationToken);
 
 
@@ -352,7 +352,7 @@ qrstuv wxyz
 コンピュータ 电脑😀 컴퓨터
 -------
 ");
-            cr.Repeat(4).Line().Should().Equal("abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------");
+            cr.Repeat(4).Line().ShouldBe(["abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------"]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -364,7 +364,7 @@ abcdefg hijklmnop 123
 qrstuv wxyz
 -----
 ");
-            cr.Repeat(5).AsciiChars().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+            cr.Repeat(5).AsciiChars().Select(c => new string(c)).ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -377,7 +377,7 @@ qrstuv wxyz
 
 ");
             char[][] r = cr.Repeat(5);
-            r.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
+            r.Select(c => new string(c)).ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -390,7 +390,7 @@ qrstuv wxyz
 コンピュータ 电脑😀 컴퓨터
 -------
 ");
-            cr.Repeat(8).StringChars().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터");
+            cr.Repeat(8).StringChars().Select(c => new string(c)).ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터"]);
         }, TestContext.Current.CancellationToken);
 
 
@@ -403,7 +403,7 @@ qrstuv wxyz
 コンピュータ 电脑😀 컴퓨터
 -------
 ");
-            cr.Repeat(4).LineChars().Should().Equal("abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------");
+            cr.Repeat(4).LineChars().Select(c => new string(c)).ShouldBe(["abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------"]);
         }, TestContext.Current.CancellationToken);
     }
 }

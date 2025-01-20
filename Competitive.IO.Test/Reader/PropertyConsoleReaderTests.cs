@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using FluentAssertions;
 using Xunit;
 using static Kzrnm.Competitive.IO.Reader.Helpers;
 
@@ -15,8 +14,8 @@ namespace Kzrnm.Competitive.IO.Reader
 1 2 3 4 5 6
 | a | b | b |
 ");
-            cr.Line.Should().Be("1 2 3 4 5 6");
-            cr.Line.Should().Be("| a | b | b |");
+            cr.Line.ShouldBe("1 2 3 4 5 6");
+            cr.Line.ShouldBe("| a | b | b |");
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -27,8 +26,8 @@ namespace Kzrnm.Competitive.IO.Reader
 1 2 3 4 5 6
 | a | b | b |
 ");
-            cr.LineChars.Should().Equal("1 2 3 4 5 6".ToCharArray());
-            cr.LineChars.Should().Equal("| a | b | b |".ToCharArray());
+            cr.LineChars.ShouldBe("1 2 3 4 5 6".ToCharArray());
+            cr.LineChars.ShouldBe("| a | b | b |".ToCharArray());
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -39,12 +38,12 @@ namespace Kzrnm.Competitive.IO.Reader
 a b c
 def
 ");
-            cr.Char.Should().Be('a');
-            cr.Char.Should().Be('b');
-            cr.Char.Should().Be('c');
-            cr.Char.Should().Be('d');
-            cr.Char.Should().Be('e');
-            cr.Char.Should().Be('f');
+            cr.Char.ShouldBe('a');
+            cr.Char.ShouldBe('b');
+            cr.Char.ShouldBe('c');
+            cr.Char.ShouldBe('d');
+            cr.Char.ShouldBe('e');
+            cr.Char.ShouldBe('f');
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -55,10 +54,10 @@ def
 123 -14421
 -2147483647 2147483647
 ");
-            cr.Int.Should().Be(123);
-            cr.Int.Should().Be(-14421);
-            cr.Int.Should().Be(-2147483647);
-            cr.Int.Should().Be(2147483647);
+            cr.Int.ShouldBe(123);
+            cr.Int.ShouldBe(-14421);
+            cr.Int.ShouldBe(-2147483647);
+            cr.Int.ShouldBe(2147483647);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -71,13 +70,13 @@ def
 ");
             int r;
             r = cr;
-            r.Should().Be(123);
+            r.ShouldBe(123);
             r = cr;
-            r.Should().Be(-14421);
+            r.ShouldBe(-14421);
             r = cr;
-            r.Should().Be(-2147483647);
+            r.ShouldBe(-2147483647);
             r = cr;
-            r.Should().Be(2147483647);
+            r.ShouldBe(2147483647);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -88,10 +87,10 @@ def
 123 -14421
 -2147483647 2147483647
 ");
-            cr.Int0.Should().Be(122);
-            cr.Int0.Should().Be(-14422);
-            cr.Int0.Should().Be(-2147483648);
-            cr.Int0.Should().Be(2147483646);
+            cr.Int0.ShouldBe(122);
+            cr.Int0.ShouldBe(-14422);
+            cr.Int0.ShouldBe(-2147483648);
+            cr.Int0.ShouldBe(2147483646);
         }, TestContext.Current.CancellationToken);
 
 
@@ -103,8 +102,8 @@ def
 123 14421
 9223372036854775808 18446744073709551615
 ");
-            cr.UInt.Should().Be(123U);
-            cr.UInt.Should().Be(14421U);
+            cr.UInt.ShouldBe(123U);
+            cr.UInt.ShouldBe(14421U);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -117,9 +116,9 @@ def
 ");
             uint r;
             r = cr;
-            r.Should().Be(123U);
+            r.ShouldBe(123U);
             r = cr;
-            r.Should().Be(14421U);
+            r.ShouldBe(14421U);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -130,8 +129,8 @@ def
 123 14421
 9223372036854775808 18446744073709551615
 ");
-            cr.UInt.Should().Be(123U);
-            cr.UInt.Should().Be(14421U);
+            cr.UInt.ShouldBe(123U);
+            cr.UInt.ShouldBe(14421U);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -142,10 +141,10 @@ def
 123 -14421
 -9223372036854775808 9223372036854775807
 ");
-            cr.Long.Should().Be(123);
-            cr.Long.Should().Be(-14421);
-            cr.Long.Should().Be(-9223372036854775808);
-            cr.Long.Should().Be(9223372036854775807);
+            cr.Long.ShouldBe(123);
+            cr.Long.ShouldBe(-14421);
+            cr.Long.ShouldBe(-9223372036854775808);
+            cr.Long.ShouldBe(9223372036854775807);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -158,13 +157,13 @@ def
 ");
             long r;
             r = cr;
-            r.Should().Be(123);
+            r.ShouldBe(123);
             r = cr;
-            r.Should().Be(-14421);
+            r.ShouldBe(-14421);
             r = cr;
-            r.Should().Be(-9223372036854775808);
+            r.ShouldBe(-9223372036854775808);
             r = cr;
-            r.Should().Be(9223372036854775807);
+            r.ShouldBe(9223372036854775807);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -175,10 +174,10 @@ def
 123 -14421
 -9223372036854775808 9223372036854775807
 ");
-            cr.Long0.Should().Be(122);
-            cr.Long0.Should().Be(-14422);
-            cr.Long0.Should().Be(9223372036854775807);
-            cr.Long0.Should().Be(9223372036854775806);
+            cr.Long0.ShouldBe(122);
+            cr.Long0.ShouldBe(-14422);
+            cr.Long0.ShouldBe(9223372036854775807);
+            cr.Long0.ShouldBe(9223372036854775806);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -189,10 +188,10 @@ def
 123 14421
 9223372036854775808 18446744073709551615
 ");
-            cr.ULong.Should().Be(123);
-            cr.ULong.Should().Be(14421);
-            cr.ULong.Should().Be(9223372036854775808);
-            cr.ULong.Should().Be(18446744073709551615);
+            cr.ULong.ShouldBe(123u);
+            cr.ULong.ShouldBe(14421u);
+            cr.ULong.ShouldBe(9223372036854775808u);
+            cr.ULong.ShouldBe(18446744073709551615u);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -205,13 +204,13 @@ def
 ");
             ulong r;
             r = cr;
-            r.Should().Be(123);
+            r.ShouldBe(123u);
             r = cr;
-            r.Should().Be(14421);
+            r.ShouldBe(14421u);
             r = cr;
-            r.Should().Be(9223372036854775808);
+            r.ShouldBe(9223372036854775808u);
             r = cr;
-            r.Should().Be(18446744073709551615);
+            r.ShouldBe(18446744073709551615u);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -222,10 +221,10 @@ def
 123 14421
 9223372036854775808 18446744073709551615
 ");
-            cr.ULong.Should().Be(123);
-            cr.ULong.Should().Be(14421);
-            cr.ULong.Should().Be(9223372036854775808);
-            cr.ULong.Should().Be(18446744073709551615);
+            cr.ULong.ShouldBe(123u);
+            cr.ULong.ShouldBe(14421u);
+            cr.ULong.ShouldBe(9223372036854775808u);
+            cr.ULong.ShouldBe(18446744073709551615u);
         }, TestContext.Current.CancellationToken);
 
 
@@ -239,14 +238,14 @@ def
 -0.000123456 -.000123456
 0.000123456 .000123456
 ");
-            cr.Double.Should().Be(123.0);
-            cr.Double.Should().Be(-14421.0);
-            cr.Double.Should().Be(-123456789123456789123456789.0);
-            cr.Double.Should().Be(123456789123456789123456789.0);
-            cr.Double.Should().Be(-0.000123456);
-            cr.Double.Should().Be(-.000123456);
-            cr.Double.Should().Be(0.000123456);
-            cr.Double.Should().Be(.000123456);
+            cr.Double.ShouldBe(123.0);
+            cr.Double.ShouldBe(-14421.0);
+            cr.Double.ShouldBe(-123456789123456789123456789.0);
+            cr.Double.ShouldBe(123456789123456789123456789.0);
+            cr.Double.ShouldBe(-0.000123456);
+            cr.Double.ShouldBe(-.000123456);
+            cr.Double.ShouldBe(0.000123456);
+            cr.Double.ShouldBe(.000123456);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -261,21 +260,21 @@ def
 ");
             double r;
             r = cr;
-            r.Should().Be(123.0);
+            r.ShouldBe(123.0);
             r = cr;
-            r.Should().Be(-14421.0);
+            r.ShouldBe(-14421.0);
             r = cr;
-            r.Should().Be(-123456789123456789123456789.0);
+            r.ShouldBe(-123456789123456789123456789.0);
             r = cr;
-            r.Should().Be(123456789123456789123456789.0);
+            r.ShouldBe(123456789123456789123456789.0);
             r = cr;
-            r.Should().Be(-0.000123456);
+            r.ShouldBe(-0.000123456);
             r = cr;
-            r.Should().Be(-.000123456);
+            r.ShouldBe(-.000123456);
             r = cr;
-            r.Should().Be(0.000123456);
+            r.ShouldBe(0.000123456);
             r = cr;
-            r.Should().Be(.000123456);
+            r.ShouldBe(.000123456);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -288,14 +287,14 @@ def
 -0.000123456 -.000123456
 0.000123456 .000123456
 ");
-            cr.Decimal.Should().Be(123.0m);
-            cr.Decimal.Should().Be(-14421.0m);
-            cr.Decimal.Should().Be(-123456789123456789123456789.0m);
-            cr.Decimal.Should().Be(123456789123456789123456789.0m);
-            cr.Decimal.Should().Be(-0.000123456m);
-            cr.Decimal.Should().Be(-.000123456m);
-            cr.Decimal.Should().Be(0.000123456m);
-            cr.Decimal.Should().Be(.000123456m);
+            cr.Decimal.ShouldBe(123.0m);
+            cr.Decimal.ShouldBe(-14421.0m);
+            cr.Decimal.ShouldBe(-123456789123456789123456789.0m);
+            cr.Decimal.ShouldBe(123456789123456789123456789.0m);
+            cr.Decimal.ShouldBe(-0.000123456m);
+            cr.Decimal.ShouldBe(-.000123456m);
+            cr.Decimal.ShouldBe(0.000123456m);
+            cr.Decimal.ShouldBe(.000123456m);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -310,21 +309,21 @@ def
 ");
             decimal r;
             r = cr;
-            r.Should().Be(123.0m);
+            r.ShouldBe(123.0m);
             r = cr;
-            r.Should().Be(-14421.0m);
+            r.ShouldBe(-14421.0m);
             r = cr;
-            r.Should().Be(-123456789123456789123456789.0m);
+            r.ShouldBe(-123456789123456789123456789.0m);
             r = cr;
-            r.Should().Be(123456789123456789123456789.0m);
+            r.ShouldBe(123456789123456789123456789.0m);
             r = cr;
-            r.Should().Be(-0.000123456m);
+            r.ShouldBe(-0.000123456m);
             r = cr;
-            r.Should().Be(-.000123456m);
+            r.ShouldBe(-.000123456m);
             r = cr;
-            r.Should().Be(0.000123456m);
+            r.ShouldBe(0.000123456m);
             r = cr;
-            r.Should().Be(.000123456m);
+            r.ShouldBe(.000123456m);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -335,11 +334,11 @@ def
 abcdefg hijklmnop 123
 qrstuv wxyz
 ");
-            cr.Ascii.Should().Be("abcdefg");
-            cr.Ascii.Should().Be("hijklmnop");
-            cr.Ascii.Should().Be("123");
-            cr.Ascii.Should().Be("qrstuv");
-            cr.Ascii.Should().Be("wxyz");
+            cr.Ascii.ShouldBe("abcdefg");
+            cr.Ascii.ShouldBe("hijklmnop");
+            cr.Ascii.ShouldBe("123");
+            cr.Ascii.ShouldBe("qrstuv");
+            cr.Ascii.ShouldBe("wxyz");
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -350,11 +349,11 @@ qrstuv wxyz
 abcdefg hijklmnop 123
 qrstuv wxyz
 ");
-            cr.AsciiChars.Should().Equal("abcdefg".ToCharArray());
-            cr.AsciiChars.Should().Equal("hijklmnop".ToCharArray());
-            cr.AsciiChars.Should().Equal("123".ToCharArray());
-            cr.AsciiChars.Should().Equal("qrstuv".ToCharArray());
-            cr.AsciiChars.Should().Equal("wxyz".ToCharArray());
+            cr.AsciiChars.ShouldBe("abcdefg".ToCharArray());
+            cr.AsciiChars.ShouldBe("hijklmnop".ToCharArray());
+            cr.AsciiChars.ShouldBe("123".ToCharArray());
+            cr.AsciiChars.ShouldBe("qrstuv".ToCharArray());
+            cr.AsciiChars.ShouldBe("wxyz".ToCharArray());
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -367,15 +366,15 @@ qrstuv wxyz
 ");
             string r;
             r = cr;
-            r.Should().Be("abcdefg");
+            r.ShouldBe("abcdefg");
             r = cr;
-            r.Should().Be("hijklmnop");
+            r.ShouldBe("hijklmnop");
             r = cr;
-            r.Should().Be("123");
+            r.ShouldBe("123");
             r = cr;
-            r.Should().Be("qrstuv");
+            r.ShouldBe("qrstuv");
             r = cr;
-            r.Should().Be("wxyz");
+            r.ShouldBe("wxyz");
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -389,14 +388,14 @@ qrstuv wxyz
 电脑😀
 컴퓨터
 ");
-            cr.String.Should().Be("abcdefg");
-            cr.String.Should().Be("hijklmnop");
-            cr.String.Should().Be("123");
-            cr.String.Should().Be("qrstuv");
-            cr.String.Should().Be("wxyz");
-            cr.String.Should().Be("コンピュータ");
-            cr.String.Should().Be("电脑😀");
-            cr.String.Should().Be("컴퓨터");
+            cr.String.ShouldBe("abcdefg");
+            cr.String.ShouldBe("hijklmnop");
+            cr.String.ShouldBe("123");
+            cr.String.ShouldBe("qrstuv");
+            cr.String.ShouldBe("wxyz");
+            cr.String.ShouldBe("コンピュータ");
+            cr.String.ShouldBe("电脑😀");
+            cr.String.ShouldBe("컴퓨터");
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -410,14 +409,14 @@ qrstuv wxyz
 电脑😀
 컴퓨터
 ");
-            cr.StringChars.Should().Equal("abcdefg".ToCharArray());
-            cr.StringChars.Should().Equal("hijklmnop".ToCharArray());
-            cr.StringChars.Should().Equal("123".ToCharArray());
-            cr.StringChars.Should().Equal("qrstuv".ToCharArray());
-            cr.StringChars.Should().Equal("wxyz".ToCharArray());
-            cr.StringChars.Should().Equal("コンピュータ".ToCharArray());
-            cr.StringChars.Should().Equal("电脑😀".ToCharArray());
-            cr.StringChars.Should().Equal("컴퓨터".ToCharArray());
+            cr.StringChars.ShouldBe("abcdefg".ToCharArray());
+            cr.StringChars.ShouldBe("hijklmnop".ToCharArray());
+            cr.StringChars.ShouldBe("123".ToCharArray());
+            cr.StringChars.ShouldBe("qrstuv".ToCharArray());
+            cr.StringChars.ShouldBe("wxyz".ToCharArray());
+            cr.StringChars.ShouldBe("コンピュータ".ToCharArray());
+            cr.StringChars.ShouldBe("电脑😀".ToCharArray());
+            cr.StringChars.ShouldBe("컴퓨터".ToCharArray());
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
@@ -432,20 +431,20 @@ qrstuv wxyz
 -10 -11 -12
 abc def
 ");
-            cr.Int.Should().Be(1);
-            cr.Long.Should().Be(2);
-            cr.UInt.Should().Be(3);
-            cr.ULong.Should().Be(4);
-            cr.Char.Should().Be('5');
-            cr.Double.Should().Be(6);
-            cr.Int0.Should().Be(7);
-            cr.Long0.Should().Be(8);
-            cr.Decimal.Should().Be(10.1m);
-            cr.Line.Should().Be("| a | b | b |");
-            cr.Line.Should().Be("7 8 9");
-            cr.Repeat(3).Long.Should().Equal(-10, -11, -12);
-            cr.Ascii.Should().Be("abc");
-            cr.String.Should().Be("def");
+            cr.Int.ShouldBe(1);
+            cr.Long.ShouldBe(2);
+            cr.UInt.ShouldBe(3u);
+            cr.ULong.ShouldBe(4u);
+            cr.Char.ShouldBe('5');
+            cr.Double.ShouldBe(6);
+            cr.Int0.ShouldBe(7);
+            cr.Long0.ShouldBe(8);
+            cr.Decimal.ShouldBe(10.1m);
+            cr.Line.ShouldBe("| a | b | b |");
+            cr.Line.ShouldBe("7 8 9");
+            cr.Repeat(3).Long.ShouldBe([-10, -11, -12]);
+            cr.Ascii.ShouldBe("abc");
+            cr.String.ShouldBe("def");
         }, TestContext.Current.CancellationToken);
 
         [Theory(Timeout = 5000)]
@@ -458,8 +457,8 @@ abc def
         {
             var str = new string('a', (1 << 12) - remaining);
             var cr = GetPropertyConsoleReader(str + " 12345");
-            cr.Ascii.Should().Be(str);
-            cr.Long.Should().Be(12345);
+            cr.Ascii.ShouldBe(str);
+            cr.Long.ShouldBe(12345);
         }, TestContext.Current.CancellationToken);
     }
 }

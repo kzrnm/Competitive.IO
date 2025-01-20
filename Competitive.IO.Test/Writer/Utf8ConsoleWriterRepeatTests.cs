@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using FluentAssertions;
 using Xunit;
 
 namespace Kzrnm.Competitive.IO.Writer
@@ -27,11 +26,11 @@ namespace Kzrnm.Competitive.IO.Writer
             return rt;
         }
 
-        public static IEnumerable<object[]> WriteRepeat_Data(int size)
+        public static IEnumerable<TheoryDataRow<int>> WriteRepeat_Data(int size)
         {
             for (int i = 1; i <= size; i++)
             {
-                yield return [i];
+                yield return i;
             }
         }
 
@@ -41,7 +40,7 @@ namespace Kzrnm.Competitive.IO.Writer
         {
             cw.Write('a', len);
             cw.Write('$').Flush();
-            buffer.Should().Equal(ToBytes(new string('a', len) + "$"));
+            buffer.ShouldBe(ToBytes(new string('a', len) + "$"));
         }
 
         [Theory]
@@ -51,7 +50,7 @@ namespace Kzrnm.Competitive.IO.Writer
             cw.Write("012");
             cw.Write('a', len);
             cw.Write('$').Flush();
-            buffer.Should().Equal(ToBytes("012" + new string('a', len) + "$"));
+            buffer.ShouldBe(ToBytes("012" + new string('a', len) + "$"));
         }
 
         [Theory]
@@ -60,7 +59,7 @@ namespace Kzrnm.Competitive.IO.Writer
         {
             cw.Write('ψ', len);
             cw.Write('$').Flush();
-            buffer.Should().Equal(ToBytes(new string('ψ', len) + "$"));
+            buffer.ShouldBe(ToBytes(new string('ψ', len) + "$"));
         }
 
         [Theory]
@@ -70,7 +69,7 @@ namespace Kzrnm.Competitive.IO.Writer
             cw.Write("012");
             cw.Write('ψ', len);
             cw.Write('$').Flush();
-            buffer.Should().Equal(ToBytes("012" + new string('ψ', len) + "$"));
+            buffer.ShouldBe(ToBytes("012" + new string('ψ', len) + "$"));
         }
 
         [Theory]
@@ -79,7 +78,7 @@ namespace Kzrnm.Competitive.IO.Writer
         {
             cw.Write('こ', len);
             cw.Write('$').Flush();
-            buffer.Should().Equal(ToBytes(new string('こ', len) + "$"));
+            buffer.ShouldBe(ToBytes(new string('こ', len) + "$"));
         }
 
         [Theory]
@@ -89,7 +88,7 @@ namespace Kzrnm.Competitive.IO.Writer
             cw.Write("012");
             cw.Write('こ', len);
             cw.Write('$').Flush();
-            buffer.Should().Equal(ToBytes("012" + new string('こ', len) + "$"));
+            buffer.ShouldBe(ToBytes("012" + new string('こ', len) + "$"));
         }
     }
 }

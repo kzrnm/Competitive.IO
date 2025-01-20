@@ -2,8 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using FluentAssertions;
-using FluentAssertions.Collections;
 
 namespace Kzrnm.Competitive.IO.Reader
 {
@@ -16,19 +14,9 @@ namespace Kzrnm.Competitive.IO.Reader
             => new(UTF8Stream(str + "\n"), new UTF8Encoding(false));
         public static ConsoleReader GetConsoleReader(string str)
             => new(UTF8Stream(str + "\n"), new UTF8Encoding(false));
-        public static AndConstraint<GenericCollectionAssertions<char[]>> Equal(
-            this GenericCollectionAssertions<char[]> a, params string[] s)
-        {
-            var r = new char[s.Length][];
-            for (int i = 0; i < s.Length; i++)
-                r[i] = s[i].ToCharArray();
-            return a.Equal(s, (c, d) => c.SequenceEqual(d));
-        }
 
-        private class SplitedStream : MemoryStream
+        private class SplitedStream(byte[] buffer) : MemoryStream(buffer)
         {
-            public SplitedStream(byte[] buffer) : base(buffer) { }
-
             public override int Read(byte[] buffer, int offset, int count)
             {
                 var pos = Position;

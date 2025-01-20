@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml.Linq;
-using FluentAssertions;
 using Xunit;
 
 namespace Kzrnm.Competitive.IO.Writer
@@ -34,9 +33,9 @@ namespace Kzrnm.Competitive.IO.Writer
         public void WriteLineEmpty()
         {
             cw.WriteLine();
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes(newLine));
+            buffer.ShouldBe(ToBytes(newLine));
         }
 
         [Fact]
@@ -59,9 +58,9 @@ namespace Kzrnm.Competitive.IO.Writer
             cw.Write("ιδέα".AsSpan());
             cw.Write("φύσις"u8);
             cw.Write(new Utf8ConsoleWriterFormatter());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes("2147483647int-2147483648" +
+            buffer.ShouldBe(ToBytes("2147483647int-2147483648" +
                 "9223372036854775807long-9223372036854775808" +
                 "4294967295uint0" +
                 "18446744073709551615ulong0" +
@@ -83,217 +82,217 @@ namespace Kzrnm.Competitive.IO.Writer
         public void WriteLine()
         {
             cw.WriteLine(-123456);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes("-123456" + newLine));
+            buffer.ShouldBe(ToBytes("-123456" + newLine));
         }
 
         [Fact]
         public void WriteLineJoinEmpty()
         {
             cw.WriteLineJoin();
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes(newLine));
+            buffer.ShouldBe(ToBytes(newLine));
         }
 
         [Fact]
         public void WriteLineJoin2()
         {
             cw.WriteLineJoin("foo", 1);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"foo 1{newLine}"));
+            buffer.ShouldBe(ToBytes($"foo 1{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoin3()
         {
             cw.WriteLineJoin("foo", 1, -2L);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"foo 1 -2{newLine}"));
+            buffer.ShouldBe(ToBytes($"foo 1 -2{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoin4()
         {
             cw.WriteLineJoin("foo", 1, -2L, 'x');
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"foo 1 -2 x{newLine}"));
+            buffer.ShouldBe(ToBytes($"foo 1 -2 x{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinMany()
         {
             cw.WriteLineJoin("foo", 1, -2L, 'x', "bar");
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"foo 1 -2 x bar{newLine}"));
+            buffer.ShouldBe(ToBytes($"foo 1 -2 x bar{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinManySameType()
         {
             cw.WriteLineJoin(1, 2, 3, 4, 5);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3 4 5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3 4 5{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinIEnumerable()
         {
             cw.WriteLineJoin(Enumerable.Range(1, 5));
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3 4 5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3 4 5{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinList()
         {
             cw.WriteLineJoin(Enumerable.Range(1, 5).ToList());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3 4 5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3 4 5{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinArray()
         {
             cw.WriteLineJoin(Enumerable.Range(1, 5).Select(i => $"{i}").ToArray());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3 4 5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3 4 5{newLine}"));
         }
 
         [Fact]
         public void WriteLinesIEnumerable()
         {
             cw.WriteLines(Enumerable.Range(1, 5));
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1\n2\n3\n4\n5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
 
         [Fact]
         public void WriteLinesList()
         {
             cw.WriteLines(Enumerable.Range(1, 5).ToList());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1\n2\n3\n4\n5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
 
         [Fact]
         public void WriteLineSpan()
         {
             cw.WriteLine("foobarテスト".AsSpan());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes("foobarテスト" + newLine));
+            buffer.ShouldBe(ToBytes("foobarテスト" + newLine));
 
             cw.Write("λόγος".AsSpan());
             cw.Write("ゆく河の流れは絶えずしてしかももとの水にあらず".AsSpan());
             cw.Flush();
-            buffer.Should().Equal(ToBytes("foobarテスト" + newLine + "λόγοςゆく河の流れは絶えずしてしかももとの水にあらず"));
+            buffer.ShouldBe(ToBytes("foobarテスト" + newLine + "λόγοςゆく河の流れは絶えずしてしかももとの水にあらず"));
         }
 
         [Fact]
         public void WriteLineU8()
         {
             cw.WriteLine("foobarテスト"u8);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes("foobarテスト" + newLine));
+            buffer.ShouldBe(ToBytes("foobarテスト" + newLine));
 
             cw.Write("λόγος"u8);
             cw.Write("ゆく河の流れは絶えずしてしかももとの水にあらず"u8);
             cw.Flush();
-            buffer.Should().Equal(ToBytes("foobarテスト" + newLine + "λόγοςゆく河の流れは絶えずしてしかももとの水にあらず"));
+            buffer.ShouldBe(ToBytes("foobarテスト" + newLine + "λόγοςゆく河の流れは絶えずしてしかももとの水にあらず"));
         }
 
         [Fact]
         public void WriteLineJoinSpan()
         {
             cw.WriteLineJoin((Span<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3 4 5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3 4 5{newLine}"));
         }
 
         [Fact]
         public void WriteLinesSpan()
         {
             cw.WriteLines((Span<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1\n2\n3\n4\n5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinReadOnlySpan()
         {
             cw.WriteLineJoin((ReadOnlySpan<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3 4 5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3 4 5{newLine}"));
         }
 
         [Fact]
         public void WriteLinesReadOnlySpan()
         {
             cw.WriteLines((ReadOnlySpan<int>)Enumerable.Range(1, 5).ToArray());
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1\n2\n3\n4\n5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1\n2\n3\n4\n5{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinTuple2()
         {
             cw.WriteLineJoin((1, 2));
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinTuple3()
         {
             cw.WriteLineJoin((1, 2, 'a'));
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 a{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 a{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinTuple4()
         {
             cw.WriteLineJoin((1, 2, 'a', 4));
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 a 4{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 a 4{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinTuple5()
         {
             cw.WriteLineJoin((1, 2, 'a', 4, 5));
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 a 4 5{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 a 4 5{newLine}"));
         }
 
         [Fact]
         public void WriteLineJoinTupleClass()
         {
             cw.WriteLineJoin(Tuple.Create(1, 2, 'a', 4));
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 a 4{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 a 4{newLine}"));
         }
 
         [Fact]
@@ -301,9 +300,9 @@ namespace Kzrnm.Competitive.IO.Writer
         {
             var foo = new[] { 'f', 'o', 'o', 'b', 'a', 'r', 'b', 'a', 'z' };
             cw.WriteLine(foo);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"foobarbaz{newLine}"));
+            buffer.ShouldBe(ToBytes($"foobarbaz{newLine}"));
         }
 
         [Fact]
@@ -315,9 +314,9 @@ namespace Kzrnm.Competitive.IO.Writer
                 [ -1, -2, -3, ],
                 [ 4, 5, 6, ],
             ]);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
         }
 
         [Fact]
@@ -329,9 +328,9 @@ namespace Kzrnm.Competitive.IO.Writer
                 (-1, -2, -3),
                 (4, 5, 6),
             ]);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
         }
 
         [Fact]
@@ -343,9 +342,9 @@ namespace Kzrnm.Competitive.IO.Writer
                 { -1, -2, -3, },
                 { 4, 5, 6, },
             });
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
+            buffer.ShouldBe(ToBytes($"1 2 3\n-1 -2 -3\n4 5 6{newLine}"));
         }
 
         [Fact]
@@ -360,9 +359,9 @@ namespace Kzrnm.Competitive.IO.Writer
                 new Pt { x = -5, y = -6 },
             };
             cw.WriteLines(pts);
-            buffer.Should().Equal(Enumerable.Repeat((byte)0, BufSize));
+            buffer.ShouldBe(Enumerable.Repeat((byte)0, BufSize));
             cw.Flush();
-            buffer.Should().Equal(ToBytes(@"1 2
+            buffer.ShouldBe(ToBytes(@"1 2
 -1 -2
 3 4
 -3 -4
@@ -391,9 +390,9 @@ namespace Kzrnm.Competitive.IO.Writer
             for (int i = 0; i < len; i++)
                 cw.Write('1');
             cw.Write(long.MinValue);
-            cw.len.Should().Be(20);
+            cw.len.ShouldBe(20);
             cw.Flush();
-            buffer.Should().Equal(ToBytes(new string('1', len) + long.MinValue.ToString()));
+            buffer.ShouldBe(ToBytes(new string('1', len) + long.MinValue.ToString()));
         }
         [Fact]
         public void EnsureDouble()
@@ -402,9 +401,9 @@ namespace Kzrnm.Competitive.IO.Writer
             for (int i = 0; i < len; i++)
                 cw.Write('1');
             cw.Write(double.MinValue);
-            cw.len.Should().Be(331);
+            cw.len.ShouldBe(331);
             cw.Flush();
-            buffer.Should().Equal(ToBytes(new string('1', len) + double.MinValue.ToString("F20")));
+            buffer.ShouldBe(ToBytes(new string('1', len) + double.MinValue.ToString("F20")));
         }
         [Fact]
         public void EnsureDecimal()
@@ -413,9 +412,9 @@ namespace Kzrnm.Competitive.IO.Writer
             for (int i = 0; i < len; i++)
                 cw.Write('1');
             cw.Write(decimal.MinValue);
-            cw.len.Should().Be(51);
+            cw.len.ShouldBe(51);
             cw.Flush();
-            buffer.Should().Equal(ToBytes(new string('1', len) + decimal.MinValue.ToString("F20")));
+            buffer.ShouldBe(ToBytes(new string('1', len) + decimal.MinValue.ToString("F20")));
         }
     }
 }
