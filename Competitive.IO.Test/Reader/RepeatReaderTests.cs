@@ -19,7 +19,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             cr.Repeat(3).Select<(int, int)>(c => (c.Int(), c))
             .Should().Equal((123, -14421), (-2147483647, 2147483647), (1, 2));
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task SelectWithIndex() => await Task.Run(() =>
@@ -32,7 +32,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             cr.Repeat(3).Select<(int, int, int)>((c, i) => (i, c.Int(), c))
             .Should().Equal((0, 123, -14421), (1, -2147483647, 2147483647), (2, 1, 2));
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Grid() => await Task.Run(() =>
@@ -47,7 +47,7 @@ namespace Kzrnm.Competitive.IO.Reader
             grid[0].Should().Equal(123, -14421);
             grid[1].Should().Equal(-2147483647, 2147483647);
             grid[2].Should().Equal(1, 2);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task GridWithIndex() => await Task.Run(() =>
@@ -62,7 +62,7 @@ namespace Kzrnm.Competitive.IO.Reader
             grid[0].Should().Equal((0, 0, 123), (0, 1, -14421));
             grid[1].Should().Equal((1, 0, -2147483647), (1, 1, 2147483647));
             grid[2].Should().Equal((2, 0, 1), (2, 1, 2));
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task SelectArray2() => await Task.Run(() =>
@@ -75,7 +75,7 @@ namespace Kzrnm.Competitive.IO.Reader
             var (a, b) = cr.Repeat(3).SelectArray(c => (c.Int(), c.Int()));
             a.Should().Equal(-1, -2, -3);
             b.Should().Equal(1, 2, 3);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task SelectArray3() => await Task.Run(() =>
@@ -89,7 +89,7 @@ namespace Kzrnm.Competitive.IO.Reader
             a.Should().Equal(-1, -2, -3);
             b.Should().Equal(1, 2, 3);
             c.Should().Equal('a', 'b', 'c');
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task SelectArray4() => await Task.Run(() =>
@@ -104,7 +104,7 @@ namespace Kzrnm.Competitive.IO.Reader
             b.Should().Equal(1, 2, 3);
             c.Should().Equal('a', 'b', 'c');
             d.Should().Equal(0.5, 1.5, 1e8);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Int() => await Task.Run(() =>
@@ -116,7 +116,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             cr.Repeat(4).Int().Should().Equal(123, -14421, -2147483647, 2147483647);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task IntImplicit() => await Task.Run(() =>
@@ -129,7 +129,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             int[] r = cr.Repeat(4);
             r.Should().Equal(123, -14421, -2147483647, 2147483647);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Int0() => await Task.Run(() =>
@@ -141,7 +141,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             cr.Repeat(4).Int0().Should().Equal(122, -14422, -2147483648, 2147483646);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task UInt() => await Task.Run(() =>
@@ -153,7 +153,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             cr.Repeat(4).UInt().Should().Equal(123, 14421, 0, 4294967295);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task UIntImplicit() => await Task.Run(() =>
@@ -166,7 +166,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             uint[] r = cr.Repeat(4);
             r.Should().Equal(123, 14421, 0, 4294967295);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task UInt0() => await Task.Run(() =>
@@ -178,7 +178,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             cr.Repeat(4).UInt0().Should().Equal(122, 14420, 4294967295, 4294967294);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Long() => await Task.Run(() =>
@@ -191,7 +191,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             cr.Repeat(4).Long().Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task LongImplicit() => await Task.Run(() =>
@@ -205,7 +205,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             long[] r = cr.Repeat(4);
             r.Should().Equal(123L, -14421L, -9223372036854775808L, 9223372036854775807L);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Long0() => await Task.Run(() =>
@@ -218,7 +218,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1
 ");
             cr.Repeat(4).Long0().Should().Equal(122L, -14422L, 9223372036854775807L, 9223372036854775806L);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task ULong() => await Task.Run(() =>
@@ -229,7 +229,7 @@ namespace Kzrnm.Competitive.IO.Reader
 9223372036854775808 18446744073709551615 456789
 ");
             cr.Repeat(4).ULong().Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task ULongImplicit() => await Task.Run(() =>
@@ -241,7 +241,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             ulong[] r = cr.Repeat(4);
             r.Should().Equal(123, 14421, 9223372036854775808, 18446744073709551615);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task ULong0() => await Task.Run(() =>
@@ -252,7 +252,7 @@ namespace Kzrnm.Competitive.IO.Reader
 9223372036854775808 18446744073709551615 456789
 ");
             cr.Repeat(4).ULong0().Should().Equal(122, 14420, 9223372036854775807, 18446744073709551614);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Double() => await Task.Run(() =>
@@ -264,7 +264,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1.0
 ");
             cr.Repeat(8).Double().Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task DoubleImplicit() => await Task.Run(() =>
@@ -277,7 +277,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             double[] r = cr.Repeat(8);
             r.Should().Equal(123, -14421, -123456789123456789123456789.0, 123456789123456789123456789.0, -0.000123456, -.000123456, 0.000123456, .000123456);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Decimal() => await Task.Run(() =>
@@ -289,7 +289,7 @@ namespace Kzrnm.Competitive.IO.Reader
 1.0
 ");
             cr.Repeat(8).Decimal().Should().Equal(123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task DecimalImplicit() => await Task.Run(() =>
@@ -302,7 +302,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             decimal[] r = cr.Repeat(8);
             r.Should().Equal(123m, -14421m, -123456789123456789123456789.0m, 123456789123456789123456789.0m, -0.000123456m, -.000123456m, 0.000123456m, .000123456m);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Ascii() => await Task.Run(() =>
@@ -314,7 +314,7 @@ qrstuv wxyz
 -----
 ");
             cr.Repeat(5).Ascii().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task AsciiImplicit() => await Task.Run(() =>
@@ -327,7 +327,7 @@ qrstuv wxyz
 ");
             string[] r = cr.Repeat(5);
             r.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task String() => await Task.Run(() =>
@@ -340,7 +340,7 @@ qrstuv wxyz
 -------
 ");
             cr.Repeat(8).String().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터");
-        });
+        }, TestContext.Current.CancellationToken);
 
 
         [Fact(Timeout = 5000)]
@@ -353,7 +353,7 @@ qrstuv wxyz
 -------
 ");
             cr.Repeat(4).Line().Should().Equal("abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task AsciiChars() => await Task.Run(() =>
@@ -365,7 +365,7 @@ qrstuv wxyz
 -----
 ");
             cr.Repeat(5).AsciiChars().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task AsciiCharsImplicit() => await Task.Run(() =>
@@ -378,7 +378,7 @@ qrstuv wxyz
 ");
             char[][] r = cr.Repeat(5);
             r.Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task StringChars() => await Task.Run(() =>
@@ -391,7 +391,7 @@ qrstuv wxyz
 -------
 ");
             cr.Repeat(8).StringChars().Should().Equal("abcdefg", "hijklmnop", "123", "qrstuv", "wxyz", "コンピュータ", "电脑😀", "컴퓨터");
-        });
+        }, TestContext.Current.CancellationToken);
 
 
         [Fact(Timeout = 5000)]
@@ -404,6 +404,6 @@ qrstuv wxyz
 -------
 ");
             cr.Repeat(4).LineChars().Should().Equal("abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------");
-        });
+        }, TestContext.Current.CancellationToken);
     }
 }

@@ -17,7 +17,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             cr.Line.Should().Be("1 2 3 4 5 6");
             cr.Line.Should().Be("| a | b | b |");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task LineChars() => await Task.Run(() =>
@@ -29,7 +29,7 @@ namespace Kzrnm.Competitive.IO.Reader
 ");
             cr.LineChars.Should().Equal("1 2 3 4 5 6".ToCharArray());
             cr.LineChars.Should().Equal("| a | b | b |".ToCharArray());
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Char() => await Task.Run(() =>
@@ -45,7 +45,7 @@ def
             cr.Char.Should().Be('d');
             cr.Char.Should().Be('e');
             cr.Char.Should().Be('f');
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Int() => await Task.Run(() =>
@@ -59,7 +59,7 @@ def
             cr.Int.Should().Be(-14421);
             cr.Int.Should().Be(-2147483647);
             cr.Int.Should().Be(2147483647);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task IntImplicit() => await Task.Run(() =>
@@ -78,7 +78,7 @@ def
             r.Should().Be(-2147483647);
             r = cr;
             r.Should().Be(2147483647);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Int0() => await Task.Run(() =>
@@ -92,7 +92,7 @@ def
             cr.Int0.Should().Be(-14422);
             cr.Int0.Should().Be(-2147483648);
             cr.Int0.Should().Be(2147483646);
-        });
+        }, TestContext.Current.CancellationToken);
 
 
         [Fact(Timeout = 5000)]
@@ -105,7 +105,7 @@ def
 ");
             cr.UInt.Should().Be(123U);
             cr.UInt.Should().Be(14421U);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task UIntImplicit() => await Task.Run(() =>
@@ -120,7 +120,7 @@ def
             r.Should().Be(123U);
             r = cr;
             r.Should().Be(14421U);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task UInt0() => await Task.Run(() =>
@@ -132,7 +132,7 @@ def
 ");
             cr.UInt.Should().Be(123U);
             cr.UInt.Should().Be(14421U);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Long() => await Task.Run(() =>
@@ -146,7 +146,7 @@ def
             cr.Long.Should().Be(-14421);
             cr.Long.Should().Be(-9223372036854775808);
             cr.Long.Should().Be(9223372036854775807);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task LongImplicit() => await Task.Run(() =>
@@ -165,7 +165,7 @@ def
             r.Should().Be(-9223372036854775808);
             r = cr;
             r.Should().Be(9223372036854775807);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Long0() => await Task.Run(() =>
@@ -179,7 +179,7 @@ def
             cr.Long0.Should().Be(-14422);
             cr.Long0.Should().Be(9223372036854775807);
             cr.Long0.Should().Be(9223372036854775806);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task ULong() => await Task.Run(() =>
@@ -193,7 +193,7 @@ def
             cr.ULong.Should().Be(14421);
             cr.ULong.Should().Be(9223372036854775808);
             cr.ULong.Should().Be(18446744073709551615);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task ULongImplicit() => await Task.Run(() =>
@@ -212,7 +212,7 @@ def
             r.Should().Be(9223372036854775808);
             r = cr;
             r.Should().Be(18446744073709551615);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task ULong0() => await Task.Run(() =>
@@ -226,7 +226,7 @@ def
             cr.ULong.Should().Be(14421);
             cr.ULong.Should().Be(9223372036854775808);
             cr.ULong.Should().Be(18446744073709551615);
-        });
+        }, TestContext.Current.CancellationToken);
 
 
         [Fact(Timeout = 5000)]
@@ -247,7 +247,7 @@ def
             cr.Double.Should().Be(-.000123456);
             cr.Double.Should().Be(0.000123456);
             cr.Double.Should().Be(.000123456);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task DoubleImplicit() => await Task.Run(() =>
@@ -276,7 +276,7 @@ def
             r.Should().Be(0.000123456);
             r = cr;
             r.Should().Be(.000123456);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Decimal() => await Task.Run(() =>
@@ -296,7 +296,7 @@ def
             cr.Decimal.Should().Be(-.000123456m);
             cr.Decimal.Should().Be(0.000123456m);
             cr.Decimal.Should().Be(.000123456m);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task DecimalImplicit() => await Task.Run(() =>
@@ -325,7 +325,7 @@ def
             r.Should().Be(0.000123456m);
             r = cr;
             r.Should().Be(.000123456m);
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Ascii() => await Task.Run(() =>
@@ -340,7 +340,7 @@ qrstuv wxyz
             cr.Ascii.Should().Be("123");
             cr.Ascii.Should().Be("qrstuv");
             cr.Ascii.Should().Be("wxyz");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task AsciiChars() => await Task.Run(() =>
@@ -355,7 +355,7 @@ qrstuv wxyz
             cr.AsciiChars.Should().Equal("123".ToCharArray());
             cr.AsciiChars.Should().Equal("qrstuv".ToCharArray());
             cr.AsciiChars.Should().Equal("wxyz".ToCharArray());
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task AsciiImplicit() => await Task.Run(() =>
@@ -376,7 +376,7 @@ qrstuv wxyz
             r.Should().Be("qrstuv");
             r = cr;
             r.Should().Be("wxyz");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task String() => await Task.Run(() =>
@@ -397,7 +397,7 @@ qrstuv wxyz
             cr.String.Should().Be("コンピュータ");
             cr.String.Should().Be("电脑😀");
             cr.String.Should().Be("컴퓨터");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task StringChars() => await Task.Run(() =>
@@ -418,7 +418,7 @@ qrstuv wxyz
             cr.StringChars.Should().Equal("コンピュータ".ToCharArray());
             cr.StringChars.Should().Equal("电脑😀".ToCharArray());
             cr.StringChars.Should().Equal("컴퓨터".ToCharArray());
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
         public async Task Mix() => await Task.Run(() =>
@@ -446,7 +446,7 @@ abc def
             cr.Repeat(3).Long.Should().Equal(-10, -11, -12);
             cr.Ascii.Should().Be("abc");
             cr.String.Should().Be("def");
-        });
+        }, TestContext.Current.CancellationToken);
 
         [Theory(Timeout = 5000)]
         [InlineData(4)]
@@ -460,6 +460,6 @@ abc def
             var cr = GetPropertyConsoleReader(str + " 12345");
             cr.Ascii.Should().Be(str);
             cr.Long.Should().Be(12345);
-        });
+        }, TestContext.Current.CancellationToken);
     }
 }

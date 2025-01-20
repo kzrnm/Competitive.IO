@@ -19,16 +19,21 @@ jobs:
       dotnet-version: |
         9.0.x
         8.0.x
+        7.0.x
         6.0.x
         3.1.x
   test:
     uses: kzrnm/dotnet-actions/.github/workflows/unittest.yml@v2
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
     with:
       target: Competitive.IO.sln
-      os: windows-latest
+      os: ${{matrix.os}}
       dotnet-version: |
         9.0.x
         8.0.x
+        7.0.x
         6.0.x
         3.1.x
       test-logger: GitHubActions

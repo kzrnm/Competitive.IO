@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFrameworks>net6.0;netcoreapp3.1;net472</TargetFrameworks>
+		<TargetFrameworks>net8.0;net6.0;net472</TargetFrameworks>
 		<Nullable Condition="'$(TargetFramework)' != 'netcoreapp3.1' And '$(TargetFramework)' != 'net472'">annotations</Nullable>
 
 		<LangVersion Condition="'$(TargetFramework)' == 'net472'">7</LangVersion>
@@ -16,9 +16,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SourceExpander.Generator" Version="5.5.1">
+		<PackageReference Include="SourceExpander.Generator" Version="8.0.0">
 			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzsers; buildtransitive</IncludeAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
 

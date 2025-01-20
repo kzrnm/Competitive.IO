@@ -1,9 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/kzrnm/SourceExpander/master/schema/embedder.schema.json",
   "minify-level": "full",
-  "embedding-source-class": {
-    "enabled": false
-  },
   "exclude-attributes": [
     "System.Diagnostics.CodeAnalysis.SuppressMessage",
     "System.ComponentModel.EditorBrowsable",
