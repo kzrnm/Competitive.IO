@@ -27,9 +27,10 @@ namespace Kzrnm.Competitive.IO
 #endif
             int sc = w.buf.Length / l;
             var size = (long)count * l;
-            var bl = size <= w.buf.Length
-                ? w.EnsureBuf((int)size)
-                : w.EnsureBuf(sc * l);
+            var bs = size <= w.buf.Length
+                ? (int)size
+                : sc * l;
+            var bl = w.EnsureBuf(bs).Slice(0, bs);
             if (l == 1)
                 bl.Fill(d[0]);
             else

@@ -3,6 +3,7 @@ using System.Buffers;
 using System.Buffers.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -25,13 +26,14 @@ namespace Kzrnm.Competitive.IO
     /// </remarks>
     /// <param name="output">Output stream</param>
     /// <param name="bufferSize">Output buffer size</param>
-    public sealed class Utf8ConsoleWriter(Stream output, int bufferSize) : IDisposable
+    public sealed class Utf8ConsoleWriter(Stream output, int bufferSize)
 #else
     /// <summary>
     /// Output Writer
     /// </summary>
-    public sealed class Utf8ConsoleWriter : IDisposable
+    public sealed class Utf8ConsoleWriter
 #endif
+         : IDisposable, IBufferWriter<byte>
     {
         internal static readonly UTF8Encoding Utf8NoBom =
 #if NET6_0_OR_GREATER
@@ -111,11 +113,33 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         internal Span<byte> EnsureBuf(int size)
         {
+            Debug.Assert(size <= buf.Length);
             if (buf.Length - len < size)
             {
                 Flush();
             }
-            return buf.AsSpan(len, size);
+            return buf.AsSpan(len);
+        }
+
+        /// <summary>
+        /// Ensure buffer span.
+        /// </summary>
+        [M(256)]
+        internal Span<byte> MustEnsureBuf(int size)
+        {
+            if (size == 0)
+            {
+                if (len == buf.Length)
+                    Flush();
+                return buf.AsSpan(len);
+            }
+            if (size > buf.Length)
+            {
+                Flush();
+                return buf = new byte[size];
+            }
+            else
+                return EnsureBuf(size);
         }
 
         /// <summary>
@@ -184,17 +208,8 @@ namespace Kzrnm.Competitive.IO
 #endif
         public W Write(ReadOnlySpan<char> v)
         {
-            var mlen = Utf8NoBom.GetMaxByteCount(v.Length);
-            if (mlen > buf.Length)
-            {
-                Flush();
-                buf = new byte[mlen * 2];
-            }
-            else if (mlen > buf.Length - len)
-            {
-                Flush();
-            }
-            var bw = Utf8NoBom.GetBytes(v, buf.AsSpan(len));
+            var s = Utf8NoBom.GetMaxByteCount(v.Length);
+            var bw = Utf8NoBom.GetBytes(v, MustEnsureBuf(s));
             len += bw;
             return this;
         }
@@ -207,11 +222,7 @@ namespace Kzrnm.Competitive.IO
         {
             if (v.Length < (buf.Length << 1))
             {
-                if (v.Length > buf.Length - len)
-                {
-                    Flush();
-                }
-                v.CopyTo(buf.AsSpan(len));
+                v.CopyTo(EnsureBuf(v.Length));
                 len += v.Length;
             }
             else
@@ -328,6 +339,19 @@ namespace Kzrnm.Competitive.IO
             }
             return WriteLine();
         }
+
+        Memory<byte> IBufferWriter<byte>.GetMemory(int s)
+        {
+            MustEnsureBuf(s);
+            return buf;
+        }
+
+        /// <inheritdoc/>
+        [M(256)]
+        public void Advance(int count) => len += count;
+        /// <inheritdoc/>
+        [M(256)]
+        public Span<byte> GetSpan(int sizeHint) => MustEnsureBuf(sizeHint);
     }
     /// <summary>
     /// Formatter

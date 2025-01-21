@@ -1,5 +1,6 @@
 ﻿#if NETCOREAPP3_0_OR_GREATER
 using System;
+using System.Buffers;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -415,6 +416,47 @@ namespace Kzrnm.Competitive.IO.Writer
             cw.len.ShouldBe(51);
             cw.Flush();
             buffer.ShouldBe(ToBytes(new string('1', len) + decimal.MinValue.ToString("F20")));
+        }
+
+        [Fact]
+        public void BufferWriterRaw()
+        {
+            IBufferWriter<byte> bw = cw;
+            var span = bw.GetSpan(1 << 6);
+            span.Length.ShouldBeGreaterThanOrEqualTo(1 << 6);
+            Enumerable.Repeat((byte)'#', 1 << 4).ToArray().AsSpan().CopyTo(span);
+            bw.Advance(1 << 4);
+            cw.len.ShouldBe(1 << 4);
+            span = bw.GetSpan((1 << 12) + 3);
+            cw.buf.Length.ShouldBe((1 << 12) + 3);
+            cw.len.ShouldBe(0);
+            span[0] = (byte)'!';
+            bw.Advance(1);
+            cw.Flush();
+            buffer.ShouldBe(ToBytes(new string('#', 1 << 4) + "!"));
+            cw.len.ShouldBe(0);
+        }
+
+        [Fact]
+        public void BufferWriter1()
+        {
+            IBufferWriter<byte> bw = cw;
+            bw.Write(Enumerable.Repeat((byte)'#', 1 << 10).ToArray());
+            cw.len.ShouldBe(1 << 10);
+            cw.Flush();
+            buffer.ShouldBe(ToBytes(new string('#', 1 << 10)));
+            cw.len.ShouldBe(0);
+        }
+
+        [Fact]
+        public void BufferWriter2()
+        {
+            IBufferWriter<byte> bw = cw;
+            bw.Write(Enumerable.Repeat((byte)'#', 1 << 12)
+                .Concat(Enumerable.Repeat((byte)'$', 1 << 6)).ToArray());
+            cw.len.ShouldBe(1 << 6);
+            cw.Flush();
+            buffer.ShouldBe(ToBytes(new string('#', 1 << 12) + new string('$', 1 << 6)));
         }
     }
 }

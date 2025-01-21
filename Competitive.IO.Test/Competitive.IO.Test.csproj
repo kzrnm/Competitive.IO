@@ -5,7 +5,7 @@
 
 		<IsPackable>false</IsPackable>
 		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
-		<NoWarn>$(NoWarn);IDE0005;IDE0057</NoWarn>
+		<NoWarn>$(NoWarn);IDE0005;IDE0057;CA1859</NoWarn>
 		<GenerateDocumentationFile>false</GenerateDocumentationFile>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<SelfContained>false</SelfContained>
