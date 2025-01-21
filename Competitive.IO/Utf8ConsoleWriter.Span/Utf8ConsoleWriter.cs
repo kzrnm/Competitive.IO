@@ -205,7 +205,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         public W Write(ReadOnlySpan<byte> v)
         {
-            if (v.Length <= 16)
+            if (v.Length < (buf.Length << 1))
             {
                 if (v.Length > buf.Length - len)
                 {
