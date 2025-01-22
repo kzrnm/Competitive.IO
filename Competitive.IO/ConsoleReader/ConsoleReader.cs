@@ -389,13 +389,13 @@ namespace Kzrnm.Competitive.IO
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
         [M(256)]
-        public string Ascii()
+        public string Ascii(int defaultBuf = 32)
 #if NETSTANDARD2_0
-            => new string(AsciiChars());
+            => new string(AsciiChars(defaultBuf));
 #elif !NET6_0_OR_GREATER
-            => new string(AsciiSpan());
+            => new string(AsciiSpan(defaultBuf));
 #else
-            => new(AsciiSpan());
+            => new(AsciiSpan(defaultBuf));
 #endif
 
 #if NETSTANDARD2_0
