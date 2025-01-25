@@ -1,16 +1,20 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kzrnm.Competitive.IO.Reader;
 using Xunit;
-using static Kzrnm.Competitive.IO.Reader.Helpers;
 
 namespace Kzrnm.Competitive.IO.Reader
 {
     public class RepeatReaderTests
     {
+        protected virtual ConsoleReader GetConsoleReader(string v)
+            => Helpers.GetConsoleReader(v);
+        protected virtual ConsoleReader GetConsoleReader(string v, int bufferSize)
+            => Helpers.GetConsoleReader(v, bufferSize);
+
         [Fact(Timeout = 5000)]
         public async Task Select() => await Task.Run(() =>
         {
@@ -409,10 +413,10 @@ qrstuv wxyz
             cr.Repeat(4).LineChars().Select(c => new string(c)).ShouldBe(["abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------"]);
         }, TestContext.Current.CancellationToken);
 
-        [Fact]
+        [Fact(Timeout = 10000)]
         public async Task RandomLong() => await Task.Run(() =>
         {
-            var rnd = new Random(227);
+            var rnd = new Random(GetType().GetHashCode());
             for (int q = 0; q < 1000; q++)
             {
                 var list = new List<long>();
@@ -425,12 +429,37 @@ qrstuv wxyz
                         < 30 => "  ",
                         _ => " ",
                     });
-                    var num = unchecked(((long)rnd.Next() << 33) | (long)rnd.Next());
-                    sb.Append(num);
-                    list.Add(num);
+                    var value = unchecked(((long)rnd.Next() << 33) | (long)rnd.Next());
+                    sb.Append(value);
+                    list.Add(value);
                 }
                 var cr = GetConsoleReader(sb.ToString(), 50);
                 cr.Repeat(list.Count).Long().ShouldBe(list);
+            }
+        }, TestContext.Current.CancellationToken);
+
+        [Fact(Timeout = 10000)]
+        public async Task RandomString() => await Task.Run(() =>
+        {
+            var rnd = new Random(GetType().GetHashCode());
+            for (int q = 0; q < 1000; q++)
+            {
+                var list = new List<string>();
+                var sb = new StringBuilder();
+                for (int s = rnd.Next(100, 1000); s >= 0; s--)
+                {
+                    sb.Append(rnd.Next(100) switch
+                    {
+                        < 10 => "\n",
+                        < 30 => "  ",
+                        _ => " ",
+                    });
+                    var value = new string(Enumerable.Repeat(rnd, rnd.Next(10, 60)).Select(rnd => (char)rnd.Next('a', 'z')).ToArray());
+                    sb.Append(value);
+                    list.Add(value);
+                }
+                var cr = GetConsoleReader(sb.ToString(), 50);
+                cr.Repeat(list.Count).String().ShouldBe(list);
             }
         }, TestContext.Current.CancellationToken);
     }

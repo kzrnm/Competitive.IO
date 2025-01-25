@@ -1,11 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Xunit;
-using static Kzrnm.Competitive.IO.Reader.Helpers;
 
 namespace Kzrnm.Competitive.IO.Reader
 {
     public class ConsoleReaderTests
     {
+        protected virtual ConsoleReader GetConsoleReader(string v)
+            => Helpers.GetConsoleReader(v);
+        protected virtual ConsoleReader GetConsoleReader(string v, int bufferSize)
+            => Helpers.GetConsoleReader(v, bufferSize);
+
         [Fact(Timeout = 5000)]
         public async Task Line() => await Task.Run(() =>
         {

@@ -3,7 +3,13 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.ComponentModel;
+
+#if NET8_0_OR_GREATER
+using System.Diagnostics;
+#endif
+
 #if !NETSTANDARD2_0
+using System.Buffers;
 using System.Buffers.Text;
 #endif
 
@@ -36,7 +42,7 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Encoding Encoding => encoding;
-        internal byte[] buf = new byte[bufferSize];
+        internal readonly byte[] buf = new byte[bufferSize];
 #else
     /// <summary>
     /// Input Reader
@@ -67,7 +73,7 @@ namespace Kzrnm.Competitive.IO
         public Encoding Encoding { get; }
         internal readonly byte[] buf;
 #endif
-        internal int pos = -1, len;
+        internal int p, e;
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
@@ -90,65 +96,49 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(256)]
         private void FillEntireNumber()
         {
-            if ((uint)pos >= (uint)buf.Length)
+            if ((uint)p >= (uint)e)
                 FillNextBuffer();
 #if NET8_0_OR_GREATER
-            // ' ' + 1 == 33
             int x;
-            while ((uint)(x = buf.AsSpan(pos).IndexOfAnyInRange<byte>(33, 255)) >= (uint)(len - pos))
-            {
+            while ((uint)(x = SP.Next(buf.AsSpan(p))) >= (uint)(e - p))
                 FillNextBuffer();
-            }
-            pos += x;
+            p += x;
 #else
-            while (buf[pos] <= ' ')
-                if (++pos >= len)
+            while (buf[p] <= ' ')
+                if (++p >= e)
                     FillNextBuffer();
 #endif
 
             // Ensure buffer for ulong.MaxValue or long.MinValue
 #if NET6_0_OR_GREATER
-            if (pos + 21 >= buf.Length && buf[^1] > ' ')
+            if (p + 21 >= buf.Length && buf[^1] > ' ')
 #else
-            if (pos + 21 >= buf.Length && buf[buf.Length - 1] > ' ')
+            if (p + 21 >= buf.Length && buf[buf.Length - 1] > ' ')
 #endif
             {
-                buf.AsSpan(pos, len - pos).CopyTo(buf);
-                len -= pos;
-                pos = 0;
-                var wrtn = Input.Read(buf, len, buf.Length - len);
-                if (wrtn == 0)
-                    buf[len++] = 10;
-                else if ((len += wrtn) < buf.Length)
-                    buf[len] = 10;
+                buf.AsSpan(p, e -= p).CopyTo(buf);
+                p = 0;
+                if ((e += Input.Read(buf, e, buf.Length - e)) < buf.Length)
+                    buf[e] = 10;
             }
         }
 #endif
         private void FillNextBuffer()
         {
-            if ((len = Input.Read(buf, 0, buf.Length)) == 0)
-            {
-                buf[0] = 10;
-                len = 1;
-            }
-            else if (len < buf.Length)
-#if NET6_0_OR_GREATER
-                buf[^1] = 10;
-#else
-                buf[buf.Length - 1] = 10;
-#endif
-            pos = 0;
+            if ((e = Input.Read(buf, 0, buf.Length)) < buf.Length)
+                buf[e] = 10;
+            p = 0;
         }
 
         /// <summary>
-        /// Move to next positon
+        /// Move to next piton
         /// </summary>
         [MethodImpl(256)]
         internal byte ReadByte()
         {
-            if ((uint)pos >= (uint)len)
+            if ((uint)p >= (uint)e)
                 FillNextBuffer();
-            return buf[pos++];
+            return buf[p++];
         }
 
 
@@ -179,8 +169,8 @@ namespace Kzrnm.Competitive.IO
         {
 #if !NETSTANDARD2_0
             FillEntireNumber();
-            TryParse(buf.AsSpan(pos), out int v, out int bc);
-            pos += bc;
+            TryParse(buf.AsSpan(p), out int v, out int bc);
+            p += bc;
             return v;
 #else
             int res = 0;
@@ -211,8 +201,8 @@ namespace Kzrnm.Competitive.IO
 
 #if !NETSTANDARD2_0
             FillEntireNumber();
-            TryParse(buf.AsSpan(pos), out uint v, out int bc);
-            pos += bc;
+            TryParse(buf.AsSpan(p), out uint v, out int bc);
+            p += bc;
             return v;
 #else
             uint res = 0;
@@ -236,8 +226,8 @@ namespace Kzrnm.Competitive.IO
         {
 #if !NETSTANDARD2_0
             FillEntireNumber();
-            TryParse(buf.AsSpan(pos), out long v, out int bc);
-            pos += bc;
+            TryParse(buf.AsSpan(p), out long v, out int bc);
+            p += bc;
             return v;
 #else
             long res = 0;
@@ -267,8 +257,8 @@ namespace Kzrnm.Competitive.IO
         {
 #if !NETSTANDARD2_0
             FillEntireNumber();
-            TryParse(buf.AsSpan(pos), out ulong v, out int bc);
-            pos += bc;
+            TryParse(buf.AsSpan(p), out ulong v, out int bc);
+            p += bc;
             return v;
 #else
             ulong res = 0;
@@ -292,8 +282,8 @@ namespace Kzrnm.Competitive.IO
         {
 #if !NETSTANDARD2_0
             FillEntireNumber();
-            TryParse(buf.AsSpan(pos), out double v, out int bc);
-            pos += bc;
+            TryParse(buf.AsSpan(p), out double v, out int bc);
+            p += bc;
             return v;
 #else
             return double.Parse(Ascii());
@@ -308,8 +298,8 @@ namespace Kzrnm.Competitive.IO
         {
 #if !NETSTANDARD2_0
             FillEntireNumber();
-            TryParse(buf.AsSpan(pos), out decimal v, out int bc);
-            pos += bc;
+            TryParse(buf.AsSpan(p), out decimal v, out int bc);
+            p += bc;
             return v;
 #else
             return decimal.Parse(Ascii());
@@ -328,90 +318,18 @@ namespace Kzrnm.Competitive.IO
             return (char)b;
         }
 
-        interface IBlock
-        {
-            bool Ok(byte b);
-        }
-#pragma warning disable IDE0079
-#pragma warning disable IDE0251
-        struct AC : IBlock { [MethodImpl(256)] public bool Ok(byte b) => ' ' < b; }
-        struct LB : IBlock { [MethodImpl(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
-#pragma warning restore IDE0251
-#pragma warning restore IDE0079
-
-        /// <summary>
-        /// Read <see cref="string"/> from stdin with encoding
-        /// </summary>
         [MethodImpl(256)]
-        (byte[], int) InnerBlock<T>() where T : struct, IBlock
+        static void Resize<T>(ref T[] b, int e)
         {
-            int c = 0;
-            byte b;
-            do b = ReadByte();
-            while (!new T().Ok(b));
-            var sb = new byte[len - pos];
-            do
-            {
-                sb[c++] = b;
-                if (c >= sb.Length)
-                    Array.Resize(ref sb, sb.Length << 1);
-                b = ReadByte();
-            } while (new T().Ok(b));
-            return (sb, c);
-        }
-
-        /// <summary>
-        /// Read <see cref="string"/> from stdin with encoding
-        /// </summary>
-        [MethodImpl(256)]
-        public string String()
-        {
-            var (sb, c) = InnerBlock<AC>();
-            return Encoding.GetString(sb, 0, c);
-        }
-
-        /// <summary>
-        /// Read line from stdin
-        /// </summary>
-        [MethodImpl(256)]
-        public string Line()
-        {
-            var (sb, c) = InnerBlock<LB>();
-            return Encoding.GetString(sb, 0, c);
-        }
-
-        /// <summary>
-        /// Read <see cref="T:char[]"/> from stdin with encoding
-        /// </summary>
-        [MethodImpl(256)]
-        public char[] StringChars()
-        {
-            var (sb, c) = InnerBlock<AC>();
-            return Encoding.GetChars(sb, 0, c);
-        }
-
-        /// <summary>
-        /// Read line from stdin
-        /// </summary>
-        [MethodImpl(256)]
-        public char[] LineChars()
-        {
-            var (sb, c) = InnerBlock<LB>();
-            return Encoding.GetChars(sb, 0, c);
-        }
-
-        /// <summary>
-        /// Read <see cref="string"/> from stdin as ascii
-        /// </summary>
-        [MethodImpl(256)]
-        public string Ascii()
 #if NETSTANDARD2_0
-            => new string(AsciiChars());
-#elif !NET6_0_OR_GREATER
-            => new string(AsciiSpan());
+            Array.Resize(ref b, e);
 #else
-            => new(AsciiSpan());
+            var c = b;
+            b = ArrayPool<T>.Shared.Rent(e);
+            c.AsSpan(0, e).CopyTo(b);
+            ArrayPool<T>.Shared.Return(c);
 #endif
+        }
 
 #if NETSTANDARD2_0
         /// <summary>
@@ -420,21 +338,6 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(256)]
         public char[] AsciiChars()
         {
-            int c = 0;
-            byte b;
-            do b = ReadByte();
-            while (b <= ' ');
-            var sb = new char[len - pos];
-            do
-            {
-                sb[c++] = (char)b;
-                if (c >= sb.Length)
-                    Array.Resize(ref sb, sb.Length << 1);
-                b = ReadByte();
-            } while (' ' < b);
-            Array.Resize(ref sb, c);
-            return sb;
-        }
 #else
         /// <summary>
         /// Read <see cref="T:char[]"/> from stdin as ascii
@@ -448,11 +351,13 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(256)]
         public Span<char> AsciiSpan()
         {
+#endif
             int c = 0;
             byte b;
             do b = ReadByte();
             while (b <= ' ');
-            var sb = new char[len - pos];
+
+            var sb = new char[buf.Length];
             do
             {
                 sb[c++] = (char)b;
@@ -460,14 +365,210 @@ namespace Kzrnm.Competitive.IO
                     Array.Resize(ref sb, sb.Length << 1);
                 b = ReadByte();
             } while (' ' < b);
+
+#if NETSTANDARD2_0
+            Resize(ref sb, c);
+            return sb;
+        }
+#else
             return sb.AsSpan(0, c);
         }
 #endif
 
+#if NET8_0_OR_GREATER
+        [MethodImpl(256)]
+        char[] Bk<T>() where T : IBk
+        {
+            int x;
+            while ((uint)(x = SP.Next(buf.AsSpan(p))) >= (uint)(e - p))
+                FillNextBuffer();
+            p += x;
+
+            if ((uint)(x = T.Next(buf.AsSpan(p))) < (uint)(e - p))
+            {
+                var q = p;
+                p += x;
+                return Encoding.GetChars(buf, q, x);
+            }
+
+            var sb = ArrayPool<byte>.Shared.Rent(buf.Length << 1);
+            var sl = (int)Math.Min((uint)(e - p), (uint)x);
+            Array.Copy(buf, p, sb, 0, sl);
+            FillNextBuffer();
+            Debug.Assert(p == 0);
+            while ((uint)(x = T.Next(buf.AsSpan(p))) >= (uint)e)
+            {
+                Debug.Assert(p == 0);
+                if (sl + buf.Length > sb.Length)
+                    Resize(ref sb, sb.Length << 1);
+                buf.AsSpan(0, e).CopyTo(sb.AsSpan(sl));
+                sl += e;
+                FillNextBuffer();
+            }
+
+            int y = sl + x;
+            if (y > sb.Length)
+                Resize(ref sb, y);
+            buf.AsSpan(0, x).CopyTo(sb.AsSpan(sl));
+            p += x;
+            var rt = Encoding.GetChars(sb, 0, y);
+            ArrayPool<byte>.Shared.Return(sb);
+            return rt;
+        }
+
+        interface IBk
+        {
+            static abstract int Next(Span<byte> b);
+        }
         /// <summary>
-        /// Parse <see cref="int"/> from stdin and decrement
+        /// ' ' &lt; b[i] &lt;= U+00FF
         /// </summary>
-        [MethodImpl(256)] public int Int0() => Int() - 1;
+        struct SP : IBk
+        {
+            /// <inheritdoc cref="SP"/>
+            [MethodImpl(256)] public static int Next(Span<byte> b) => b.IndexOfAnyInRange<byte>(33, 255); // ' ' + 1 == 33
+        }
+        /// <summary>
+        /// b[i] &lt;= ' '
+        /// </summary>
+        struct AC : IBk
+        {
+            /// <inheritdoc cref="AC"/>
+            [MethodImpl(256)] public static int Next(Span<byte> b) => b.IndexOfAnyInRange<byte>(0, 32); // ' ' == 32
+        }
+        /// <summary>
+        /// b[i] != '\r' or '\n'
+        /// </summary>
+        struct LB : IBk
+        {
+            /// <inheritdoc cref="LB"/>
+            [MethodImpl(256)] public static int Next(Span<byte> b) => b.IndexOfAny<byte>(10, 13); // '\r' == 13, '\n' == 10
+        }
+
+
+        /// <summary>
+        /// Read <see cref="string"/> from stdin with encoding
+        /// </summary>
+        [MethodImpl(256)]
+        public string String() => new(Bk<AC>());
+
+        /// <summary>
+        /// Read line from stdin
+        /// </summary>
+        [MethodImpl(256)]
+        public string Line() => new(Bk<LB>());
+
+
+        /// <summary>
+        /// Read <see cref="T:char[]"/> from stdin with encoding
+        /// </summary>
+        [MethodImpl(256)]
+        public char[] StringChars() => Bk<AC>();
+
+
+        /// <summary>
+        /// Read line from stdin
+        /// </summary>
+        [MethodImpl(256)]
+        public char[] LineChars() => Bk<LB>();
+
+
+        /// <summary>
+        /// Read <see cref="string"/> from stdin as ascii
+        /// </summary>
+        [MethodImpl(256)]
+        public string Ascii()
+            => new(AsciiSpan());
+#else
+        [MethodImpl(256)]
+        char[] Bk<T>() where T : struct, IBk
+        {
+            int c = 0;
+            byte b;
+            do b = ReadByte();
+            while (!new T().Ok(b));
+#if NETSTANDARD2_0
+            var sb = new byte[buf.Length];
+#else
+            var sb = ArrayPool<byte>.Shared.Rent(buf.Length);
+#endif
+            do
+            {
+                sb[c++] = b;
+                if (c >= sb.Length)
+                    Resize(ref sb, sb.Length << 1);
+                b = ReadByte();
+            } while (new T().Ok(b));
+#if NETSTANDARD2_0
+            return Encoding.GetChars(sb, 0, c);
+#else
+            var r = Encoding.GetChars(sb, 0, c);
+            ArrayPool<byte>.Shared.Return(sb);
+            return r;
+#endif
+        }
+
+        interface IBk
+        {
+            bool Ok(byte b);
+        }
+#pragma warning disable IDE0079
+#pragma warning disable IDE0251
+        struct AC : IBk { [MethodImpl(256)] public bool Ok(byte b) => ' ' < b; }
+        struct LB : IBk { [MethodImpl(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
+#pragma warning restore IDE0251
+#pragma warning restore IDE0079
+
+        /// <summary>
+        /// Read <see cref="string"/> from stdin with encoding
+        /// </summary>
+        [MethodImpl(256)]
+        public string String() => new
+#if !NET6_0_OR_GREATER
+            string
+#endif
+            (Bk<AC>());
+
+        /// <summary>
+        /// Read line from stdin
+        /// </summary>
+        [MethodImpl(256)]
+        public string Line() => new
+#if !NET6_0_OR_GREATER
+            string
+#endif
+            (Bk<LB>());
+
+        /// <summary>
+        /// Read <see cref="T:char[]"/> from stdin with encoding
+        /// </summary>
+        [MethodImpl(256)]
+        public char[] StringChars() => Bk<AC>();
+
+        /// <summary>
+        /// Read line from stdin
+        /// </summary>
+        [MethodImpl(256)]
+        public char[] LineChars() => Bk<LB>();
+
+        /// <summary>
+        /// Read <see cref="string"/> from stdin as ascii
+        /// </summary>
+        [MethodImpl(256)]
+        public string Ascii()
+#if NETSTANDARD2_0
+            => new string(AsciiChars());
+#elif !NET6_0_OR_GREATER
+            => new string(AsciiSpan());
+#else
+            => new(AsciiSpan());
+#endif
+#endif
+
+            /// <summary>
+            /// Parse <see cref="int"/> from stdin and decrement
+            /// </summary>
+            [MethodImpl(256)] public int Int0() => Int() - 1;
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>

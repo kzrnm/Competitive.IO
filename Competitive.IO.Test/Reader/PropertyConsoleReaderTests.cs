@@ -1,13 +1,21 @@
 ﻿using System.Threading.Tasks;
 using Xunit;
-using static Kzrnm.Competitive.IO.Reader.Helpers;
 
 namespace Kzrnm.Competitive.IO.Reader
 {
-    public class PropertyConsoleReaderTests
+    public class PropertyConsoleReaderTests : ConsoleReaderTests
     {
+        protected override ConsoleReader GetConsoleReader(string v)
+            => GetPropertyConsoleReader(v);
+        protected override ConsoleReader GetConsoleReader(string v, int bufferSize)
+            => GetPropertyConsoleReader(v, bufferSize);
+        protected static PropertyConsoleReader GetPropertyConsoleReader(string v)
+            => Helpers.GetPropertyConsoleReader(v);
+        protected static PropertyConsoleReader GetPropertyConsoleReader(string v, int bufferSize)
+            => Helpers.GetPropertyConsoleReader(v, bufferSize);
+
         [Fact(Timeout = 5000)]
-        public async Task Line() => await Task.Run(() =>
+        public async Task LineProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -19,7 +27,7 @@ namespace Kzrnm.Competitive.IO.Reader
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task LineChars() => await Task.Run(() =>
+        public async Task LineCharsProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -31,7 +39,7 @@ namespace Kzrnm.Competitive.IO.Reader
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task Char() => await Task.Run(() =>
+        public async Task CharProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -47,7 +55,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task Int() => await Task.Run(() =>
+        public async Task IntProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -61,26 +69,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task IntImplicit() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-123 -14421
--2147483647 2147483647
-");
-            int r;
-            r = cr;
-            r.ShouldBe(123);
-            r = cr;
-            r.ShouldBe(-14421);
-            r = cr;
-            r.ShouldBe(-2147483647);
-            r = cr;
-            r.ShouldBe(2147483647);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task Int0() => await Task.Run(() =>
+        public async Task Int0Prop() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -95,7 +84,7 @@ def
 
 
         [Fact(Timeout = 5000)]
-        public async Task UInt() => await Task.Run(() =>
+        public async Task UIntProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -107,22 +96,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task UIntImplicit() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-123 14421
-9223372036854775808 18446744073709551615
-");
-            uint r;
-            r = cr;
-            r.ShouldBe(123U);
-            r = cr;
-            r.ShouldBe(14421U);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task UInt0() => await Task.Run(() =>
+        public async Task UInt0Prop() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -134,7 +108,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task Long() => await Task.Run(() =>
+        public async Task LongProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -148,26 +122,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task LongImplicit() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-123 -14421
--9223372036854775808 9223372036854775807
-");
-            long r;
-            r = cr;
-            r.ShouldBe(123);
-            r = cr;
-            r.ShouldBe(-14421);
-            r = cr;
-            r.ShouldBe(-9223372036854775808);
-            r = cr;
-            r.ShouldBe(9223372036854775807);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task Long0() => await Task.Run(() =>
+        public async Task Long0Prop() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -181,7 +136,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task ULong() => await Task.Run(() =>
+        public async Task ULongProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -195,26 +150,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task ULongImplicit() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-123 14421
-9223372036854775808 18446744073709551615
-");
-            ulong r;
-            r = cr;
-            r.ShouldBe(123u);
-            r = cr;
-            r.ShouldBe(14421u);
-            r = cr;
-            r.ShouldBe(9223372036854775808u);
-            r = cr;
-            r.ShouldBe(18446744073709551615u);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task ULong0() => await Task.Run(() =>
+        public async Task ULong0Prop() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -229,7 +165,7 @@ def
 
 
         [Fact(Timeout = 5000)]
-        public async Task Double() => await Task.Run(() =>
+        public async Task DoubleProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -249,36 +185,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task DoubleImplicit() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-123 -14421
--123456789123456789123456789 123456789123456789123456789
--0.000123456 -.000123456
-0.000123456 .000123456
-");
-            double r;
-            r = cr;
-            r.ShouldBe(123.0);
-            r = cr;
-            r.ShouldBe(-14421.0);
-            r = cr;
-            r.ShouldBe(-123456789123456789123456789.0);
-            r = cr;
-            r.ShouldBe(123456789123456789123456789.0);
-            r = cr;
-            r.ShouldBe(-0.000123456);
-            r = cr;
-            r.ShouldBe(-.000123456);
-            r = cr;
-            r.ShouldBe(0.000123456);
-            r = cr;
-            r.ShouldBe(.000123456);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task Decimal() => await Task.Run(() =>
+        public async Task DecimalProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -298,36 +205,7 @@ def
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task DecimalImplicit() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-123 -14421
--123456789123456789123456789 123456789123456789123456789
--0.000123456 -.000123456
-0.000123456 .000123456
-");
-            decimal r;
-            r = cr;
-            r.ShouldBe(123.0m);
-            r = cr;
-            r.ShouldBe(-14421.0m);
-            r = cr;
-            r.ShouldBe(-123456789123456789123456789.0m);
-            r = cr;
-            r.ShouldBe(123456789123456789123456789.0m);
-            r = cr;
-            r.ShouldBe(-0.000123456m);
-            r = cr;
-            r.ShouldBe(-.000123456m);
-            r = cr;
-            r.ShouldBe(0.000123456m);
-            r = cr;
-            r.ShouldBe(.000123456m);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task Ascii() => await Task.Run(() =>
+        public async Task AsciiProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -342,7 +220,7 @@ qrstuv wxyz
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task AsciiChars() => await Task.Run(() =>
+        public async Task AsciiCharsProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -357,28 +235,7 @@ qrstuv wxyz
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task AsciiImplicit() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-abcdefg hijklmnop 123
-qrstuv wxyz
-");
-            string r;
-            r = cr;
-            r.ShouldBe("abcdefg");
-            r = cr;
-            r.ShouldBe("hijklmnop");
-            r = cr;
-            r.ShouldBe("123");
-            r = cr;
-            r.ShouldBe("qrstuv");
-            r = cr;
-            r.ShouldBe("wxyz");
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task String() => await Task.Run(() =>
+        public async Task StringProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -399,7 +256,7 @@ qrstuv wxyz
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task StringChars() => await Task.Run(() =>
+        public async Task StringCharsProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"
 
@@ -420,7 +277,7 @@ qrstuv wxyz
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task Mix() => await Task.Run(() =>
+        public async Task MixProp() => await Task.Run(() =>
         {
 
             var cr = GetPropertyConsoleReader(@"
@@ -445,20 +302,6 @@ abc def
             cr.Repeat(3).Long.ShouldBe([-10, -11, -12]);
             cr.Ascii.ShouldBe("abc");
             cr.String.ShouldBe("def");
-        }, TestContext.Current.CancellationToken);
-
-        [Theory(Timeout = 5000)]
-        [InlineData(4)]
-        [InlineData(5)]
-        [InlineData(6)]
-        [InlineData(7)]
-        [InlineData(8)]
-        public async Task FillEntireNumber(int remaining) => await Task.Run(() =>
-        {
-            var str = new string('a', (1 << 12) - remaining);
-            var cr = GetPropertyConsoleReader(str + " 12345");
-            cr.Ascii.ShouldBe(str);
-            cr.Long.ShouldBe(12345);
         }, TestContext.Current.CancellationToken);
     }
 }
