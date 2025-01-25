@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 
 namespace Kzrnm.Competitive.IO
 {
-    using M = MethodImplAttribute;
     /// <summary>
     /// <see cref="RepeatReader{R}"/>
     /// </summary>

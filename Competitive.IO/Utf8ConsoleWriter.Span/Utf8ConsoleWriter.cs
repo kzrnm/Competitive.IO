@@ -171,7 +171,7 @@ namespace Kzrnm.Competitive.IO
             {
                 var dst = EnsureBuf(6);
                 var c = (char)(object)v;
-                if (c < 0x7f)
+                if (c < 127)
                 {
                     dst[0] = (byte)c;
                     bw = 1;

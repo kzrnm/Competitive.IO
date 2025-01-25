@@ -31,13 +31,13 @@ namespace Kzrnm.Competitive.IO
         /// The source stream.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Stream Input { get; } = input;
+        public Stream Input => input;
         /// <summary>
         /// The encoding of <see cref="Input"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Encoding Encoding { get; } = encoding;
-        internal readonly byte[] buf = new byte[bufferSize];
+        public Encoding Encoding => encoding;
+        internal byte[] buf = new byte[bufferSize];
 #else
     /// <summary>
     /// Input Reader
@@ -68,8 +68,7 @@ namespace Kzrnm.Competitive.IO
         public Encoding Encoding { get; }
         internal readonly byte[] buf;
 #endif
-        internal int pos;
-        internal int len;
+        internal int pos = -1, len;
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
@@ -94,31 +93,36 @@ namespace Kzrnm.Competitive.IO
         {
             if ((uint)pos >= (uint)buf.Length)
                 FillNextBuffer();
+#if NET8_0_OR_GREATER
+            // ' ' + 1 == 33
+            int x;
+            while ((uint)(x = buf.AsSpan(pos).IndexOfAnyInRange<byte>(33, 255)) >= (uint)(len - pos))
+            {
+                FillNextBuffer();
+            }
+            pos += x;
+#else
             while (buf[pos] <= ' ')
                 if (++pos >= len)
                     FillNextBuffer();
+#endif
+
+            // Ensure buffer for ulong.MaxValue or long.MinValue
 #if NET6_0_OR_GREATER
             if (pos + 21 >= buf.Length && buf[^1] > ' ')
 #else
             if (pos + 21 >= buf.Length && buf[buf.Length - 1] > ' ')
 #endif
-                FillEntireNumberImpl();
-        }
-        private void FillEntireNumberImpl()
-        {
-            buf.AsSpan(pos, len - pos).CopyTo(buf);
-            len -= pos;
-            pos = 0;
-            var numberOfBytes = Input.Read(buf, len, buf.Length - len);
-            if (numberOfBytes == 0)
-                buf[len++] = 10;
-            else if (numberOfBytes + len < buf.Length)
-#if NET6_0_OR_GREATER
-                buf[^1] = 10;
-#else
-                buf[buf.Length - 1] = 10;
-#endif
-            len += numberOfBytes;
+            {
+                buf.AsSpan(pos, len - pos).CopyTo(buf);
+                len -= pos;
+                pos = 0;
+                var wrtn = Input.Read(buf, len, buf.Length - len);
+                if (wrtn == 0)
+                    buf[len++] = 10;
+                else if ((len += wrtn) < buf.Length)
+                    buf[len] = 10;
+            }
         }
 #endif
         private void FillNextBuffer()
@@ -143,7 +147,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         internal byte ReadByte()
         {
-            if (pos >= len)
+            if ((uint)pos >= (uint)len)
                 FillNextBuffer();
             return buf[pos++];
         }
@@ -313,6 +317,18 @@ namespace Kzrnm.Competitive.IO
 #endif
         }
 
+        /// <summary>
+        /// Read a <see cref="char"/> from stdin
+        /// </summary>
+        [MethodImpl(256)]
+        public char Char()
+        {
+            byte b;
+            do b = ReadByte();
+            while (b <= ' ');
+            return (char)b;
+        }
+
         interface IBlock
         {
             bool Ok(byte b);
@@ -330,11 +346,11 @@ namespace Kzrnm.Competitive.IO
         [M(256)]
         (byte[], int) InnerBlock<T>() where T : struct, IBlock
         {
-            var sb = new byte[32];
             int c = 0;
             byte b;
             do b = ReadByte();
             while (!new T().Ok(b));
+            var sb = new byte[len - pos];
             do
             {
                 sb[c++] = b;
@@ -388,28 +404,28 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="string"/> from stdin as ascii
         /// </summary>
-        [M(256)]
-        public string Ascii(int defaultBuf = 32)
+        [MethodImpl(256)]
+        public string Ascii()
 #if NETSTANDARD2_0
-            => new string(AsciiChars(defaultBuf));
+            => new string(AsciiChars());
 #elif !NET6_0_OR_GREATER
-            => new string(AsciiSpan(defaultBuf));
+            => new string(AsciiSpan());
 #else
-            => new(AsciiSpan(defaultBuf));
+            => new(AsciiSpan());
 #endif
 
 #if NETSTANDARD2_0
         /// <summary>
         /// Read <see cref="T:char[]"/> from stdin as ascii
         /// </summary>
-        [M(256)]
-        public char[] AsciiChars(int defaultBuf = 32)
+        [MethodImpl(256)]
+        public char[] AsciiChars()
         {
-            var sb = new char[defaultBuf];
             int c = 0;
             byte b;
             do b = ReadByte();
             while (b <= ' ');
+            var sb = new char[len - pos];
             do
             {
                 sb[c++] = (char)b;
@@ -424,20 +440,20 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="T:char[]"/> from stdin as ascii
         /// </summary>
-        [M(256)]
-        public char[] AsciiChars(int defaultBuf = 32) => AsciiSpan(defaultBuf).ToArray();
+        [MethodImpl(256)]
+        public char[] AsciiChars() => AsciiSpan().ToArray();
 
         /// <summary>
         /// Read <see cref="T:Span&lt;char&gt;"/> from stdin as ascii
         /// </summary>
-        [M(256)]
-        public Span<char> AsciiSpan(int defaultBuf = 32)
+        [MethodImpl(256)]
+        public Span<char> AsciiSpan()
         {
-            var sb = new char[defaultBuf];
             int c = 0;
             byte b;
             do b = ReadByte();
             while (b <= ' ');
+            var sb = new char[len - pos];
             do
             {
                 sb[c++] = (char)b;
@@ -448,19 +464,6 @@ namespace Kzrnm.Competitive.IO
             return sb.AsSpan(0, c);
         }
 #endif
-
-        /// <summary>
-        /// Read a <see cref="char"/> from stdin
-        /// </summary>
-        [M(256)]
-        public char Char()
-        {
-            byte b;
-            do b = ReadByte();
-            while (b <= ' ');
-            return (char)b;
-        }
-
 
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
@@ -517,7 +520,7 @@ namespace Kzrnm.Competitive.IO
         [M(256)] public static implicit operator string(R cr) => cr.Ascii();
 
         /// <summary>
-        /// implicit call <see cref="AsciiChars(int)"/>
+        /// implicit call <see cref="AsciiChars()"/>
         /// </summary>
         [M(256)] public static implicit operator char[](R cr) => cr.AsciiChars();
 
