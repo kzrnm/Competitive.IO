@@ -11,7 +11,6 @@ using System.Text;
 namespace Kzrnm.Competitive.IO
 {
     using static Utf8Formatter;
-    using M = MethodImplAttribute;
     using W = Utf8ConsoleWriter;
 #if NET9_0_OR_GREATER
     using O = OverloadResolutionPriorityAttribute;
@@ -99,7 +98,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Flush output stream.
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public void Flush() { Output.Write(buf, 0, len); len = 0; }
 
         /// <summary>
@@ -110,7 +109,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Ensure buffer span. <paramref name="size"/> must be less than or equal to buf.Length.
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         internal Span<byte> EnsureBuf(int size)
         {
             Debug.Assert(size <= buf.Length);
@@ -124,7 +123,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Ensure buffer span.
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         internal Span<byte> MustEnsureBuf(int size)
         {
             if (size == 0)
@@ -146,7 +145,7 @@ namespace Kzrnm.Competitive.IO
         /// Write <paramref name="v"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256 | 512)]
+        [MethodImpl(256 | 512)]
         public W Write<T>(T v)
         {
             void FormatFloat(double d, out int b)
@@ -202,7 +201,7 @@ namespace Kzrnm.Competitive.IO
         /// Write <paramref name="v"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256 | 512)]
+        [MethodImpl(256 | 512)]
 #if NET9_0_OR_GREATER
         [O(1)]
 #endif
@@ -217,7 +216,7 @@ namespace Kzrnm.Competitive.IO
         /// Write <paramref name="v"/> to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public W Write(ReadOnlySpan<byte> v)
         {
             if (v.Length < (buf.Length << 1))
@@ -236,20 +235,20 @@ namespace Kzrnm.Competitive.IO
         /// Write empty line to the output stream.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public W WriteLine() => Write('\n');
         /// <summary>
         /// Write <paramref name="v"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public W WriteLine<T>(T v) { Write(v); return Write('\n'); }
 
         /// <summary>
         /// Write <paramref name="v"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
 #if NET9_0_OR_GREATER
         [O(1)]
 #endif
@@ -259,24 +258,24 @@ namespace Kzrnm.Competitive.IO
         /// Write <paramref name="v"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public W WriteLine(ReadOnlySpan<byte> v) { Write(v); return Write('\n'); }
 
         /// <summary>
         /// Write line each item of <paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)] public W WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
+        [MethodImpl(256)] public W WriteLines<T>(IEnumerable<T> col) => WriteMany('\n', col);
         /// <summary>
         /// Write line each item of<paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)] public W WriteLines<T>(T[] col) => WriteMany('\n', (ReadOnlySpan<T>)col);
+        [MethodImpl(256)] public W WriteLines<T>(T[] col) => WriteMany('\n', (ReadOnlySpan<T>)col);
         /// <summary>
         /// Write line each item of<paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)] public W WriteLines<T>(Span<T> col) => WriteMany('\n', (ReadOnlySpan<T>)col);
+        [MethodImpl(256)] public W WriteLines<T>(Span<T> col) => WriteMany('\n', (ReadOnlySpan<T>)col);
         /// <summary>
         /// Write line each item of<paramref name="col"/>
         /// </summary>
@@ -284,7 +283,7 @@ namespace Kzrnm.Competitive.IO
 #if NET9_0_OR_GREATER
         [O(1)]
 #endif
-        [M(256)] public W WriteLines<T>(ReadOnlySpan<T> col) => WriteMany('\n', col);
+        [MethodImpl(256)] public W WriteLines<T>(ReadOnlySpan<T> col) => WriteMany('\n', col);
 
         /// <summary>
         /// Write items separated by <paramref name="sep"/>
@@ -292,7 +291,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="sep">sparating charactor</param>
         /// <param name="col">output items</param>
         /// <returns></returns>
-        [M(256)]
+        [MethodImpl(256)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public W WriteMany<T>(char sep, IEnumerable<T> col)
         {
@@ -317,7 +316,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="sep">sparating charactor</param>
         /// <param name="col">output items</param>
         /// <returns></returns>
-        [M(256)]
+        [MethodImpl(256)]
         [EditorBrowsable(EditorBrowsableState.Never)]
 #if NET9_0_OR_GREATER
         [O(1)]
@@ -347,10 +346,10 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <inheritdoc/>
-        [M(256)]
+        [MethodImpl(256)]
         public void Advance(int count) => len += count;
         /// <inheritdoc/>
-        [M(256)]
+        [MethodImpl(256)]
         public Span<byte> GetSpan(int sizeHint) => MustEnsureBuf(sizeHint);
     }
     /// <summary>

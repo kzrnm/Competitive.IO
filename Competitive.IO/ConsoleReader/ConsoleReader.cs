@@ -12,7 +12,6 @@ namespace Kzrnm.Competitive.IO
 #if !NETSTANDARD2_0
     using static Utf8Parser;
 #endif
-    using M = MethodImplAttribute;
     using R = ConsoleReader;
 
 #if NET8_0_OR_GREATER
@@ -75,20 +74,20 @@ namespace Kzrnm.Competitive.IO
         /// <para>Input stream: <see cref="Console.OpenStandardInput()"/></para>
         /// <para>Input encoding: <see cref="Console.InputEncoding"/></para>
         /// </summary>
-        [M(256)] public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, 1 << 12) { }
+        [MethodImpl(256)] public ConsoleReader() : this(Console.OpenStandardInput(), Console.InputEncoding, 1 << 12) { }
 
         /// <summary>
         /// <para>Wrapper of stdin</para>
         /// </summary>
         /// <param name="input">Input stream</param>
         /// <param name="encoding">Input encoding</param>
-        [M(256)] public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, 1 << 12) { }
+        [MethodImpl(256)] public ConsoleReader(Stream input, Encoding encoding) : this(input, encoding, 1 << 12) { }
 
 #if !NETSTANDARD2_0
         /// <summary>
         /// Read entire numeric string
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         private void FillEntireNumber()
         {
             if ((uint)pos >= (uint)buf.Length)
@@ -144,7 +143,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Move to next positon
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         internal byte ReadByte()
         {
             if ((uint)pos >= (uint)len)
@@ -156,7 +155,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse value from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public T Read<T>()
         {
             if (typeof(T) == typeof(int)) return (T)(object)Int();
@@ -175,7 +174,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public int Int()
         {
 #if !NETSTANDARD2_0
@@ -206,7 +205,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="uint"/> from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public uint UInt()
         {
 
@@ -232,7 +231,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="long"/> from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public long Long()
         {
 #if !NETSTANDARD2_0
@@ -263,7 +262,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public ulong ULong()
         {
 #if !NETSTANDARD2_0
@@ -288,7 +287,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="double"/> from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public double Double()
         {
 #if !NETSTANDARD2_0
@@ -304,7 +303,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read a <see cref="decimal"/> from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public decimal Decimal()
         {
 #if !NETSTANDARD2_0
@@ -335,15 +334,15 @@ namespace Kzrnm.Competitive.IO
         }
 #pragma warning disable IDE0079
 #pragma warning disable IDE0251
-        struct AC : IBlock { [M(256)] public bool Ok(byte b) => ' ' < b; }
-        struct LB : IBlock { [M(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
+        struct AC : IBlock { [MethodImpl(256)] public bool Ok(byte b) => ' ' < b; }
+        struct LB : IBlock { [MethodImpl(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
 #pragma warning restore IDE0251
 #pragma warning restore IDE0079
 
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         (byte[], int) InnerBlock<T>() where T : struct, IBlock
         {
             int c = 0;
@@ -364,7 +363,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="string"/> from stdin with encoding
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public string String()
         {
             var (sb, c) = InnerBlock<AC>();
@@ -374,7 +373,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public string Line()
         {
             var (sb, c) = InnerBlock<LB>();
@@ -384,7 +383,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="T:char[]"/> from stdin with encoding
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public char[] StringChars()
         {
             var (sb, c) = InnerBlock<AC>();
@@ -394,7 +393,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read line from stdin
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public char[] LineChars()
         {
             var (sb, c) = InnerBlock<LB>();
@@ -468,66 +467,66 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
-        [M(256)] public int Int0() => Int() - 1;
+        [MethodImpl(256)] public int Int0() => Int() - 1;
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>
-        [M(256)] public uint UInt0() => UInt() - 1;
+        [MethodImpl(256)] public uint UInt0() => UInt() - 1;
 
         /// <summary>
         /// Parse <see cref="long"/> from stdin and decrement
         /// </summary>
-        [M(256)] public long Long0() => Long() - 1;
+        [MethodImpl(256)] public long Long0() => Long() - 1;
         /// <summary>
         /// Parse <see cref="ulong"/> from stdin and decrement
         /// </summary>
-        [M(256)] public ulong ULong0() => ULong() - 1;
+        [MethodImpl(256)] public ulong ULong0() => ULong() - 1;
 
 
         /// <summary>
         /// implicit call <see cref="Int()"/>
         /// </summary>
-        [M(256)] public static implicit operator int(R cr) => cr.Int();
+        [MethodImpl(256)] public static implicit operator int(R cr) => cr.Int();
 
         /// <summary>
         /// implicit call <see cref="UInt()"/>
         /// </summary>
-        [M(256)] public static implicit operator uint(R cr) => cr.UInt();
+        [MethodImpl(256)] public static implicit operator uint(R cr) => cr.UInt();
 
         /// <summary>
         /// implicit call <see cref="Long()"/>
         /// </summary>
-        [M(256)] public static implicit operator long(R cr) => cr.Long();
+        [MethodImpl(256)] public static implicit operator long(R cr) => cr.Long();
 
         /// <summary>
         /// implicit call <see cref="ULong()"/>
         /// </summary>
-        [M(256)] public static implicit operator ulong(R cr) => cr.ULong();
+        [MethodImpl(256)] public static implicit operator ulong(R cr) => cr.ULong();
 
         /// <summary>
         /// implicit call <see cref="Double()"/>
         /// </summary>
-        [M(256)] public static implicit operator double(R cr) => cr.Double();
+        [MethodImpl(256)] public static implicit operator double(R cr) => cr.Double();
 
         /// <summary>
         /// implicit call <see cref="Decimal"/>
         /// </summary>
-        [M(256)] public static implicit operator decimal(R cr) => cr.Decimal();
+        [MethodImpl(256)] public static implicit operator decimal(R cr) => cr.Decimal();
 
         /// <summary>
         /// implicit call <see cref="Ascii()"/>
         /// </summary>
-        [M(256)] public static implicit operator string(R cr) => cr.Ascii();
+        [MethodImpl(256)] public static implicit operator string(R cr) => cr.Ascii();
 
         /// <summary>
         /// implicit call <see cref="AsciiChars()"/>
         /// </summary>
-        [M(256)] public static implicit operator char[](R cr) => cr.AsciiChars();
+        [MethodImpl(256)] public static implicit operator char[](R cr) => cr.AsciiChars();
 
         /// <summary>
         /// Get array of <typeparamref name="T"/>.
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public T[] Repeat<T>(int count)
         {
             var a = new T[count];
@@ -540,7 +539,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read and write into <paramref name="dst"/>.
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public void Repeat<T>(Span<T> dst)
         {
 #if NET6_0_OR_GREATER
