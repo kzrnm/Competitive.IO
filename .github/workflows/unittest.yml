@@ -12,17 +12,6 @@ env:
   WORKFLOW_BUILD_SLN: Competitive.IO.sln
 
 jobs:
-  format:
-    uses: kzrnm/dotnet-actions/.github/workflows/format.yml@v2
-    with:
-      target: Competitive.IO.sln
-      os: windows-latest
-      dotnet-version: |
-        9.0.x
-        8.0.x
-        7.0.x
-        6.0.x
-        3.1.x
   test:
     uses: kzrnm/dotnet-actions/.github/workflows/unittest.yml@v2
     strategy:
