@@ -11,6 +11,7 @@
 		<RuntimeIdentifier Condition="$([System.OperatingSystem]::IsWindows())">win-x64</RuntimeIdentifier>
 		<SelfContained>false</SelfContained>
 		<LangVersion>latest</LangVersion>
+		<DefineConstants Condition="'$(CI)' != ''">$(DefineConstants);CI</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>

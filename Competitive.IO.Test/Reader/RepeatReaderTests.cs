@@ -413,7 +413,11 @@ qrstuv wxyz
             cr.Repeat(4).LineChars().Select(c => new string(c)).ShouldBe(["abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------"]);
         }, TestContext.Current.CancellationToken);
 
+#if CI
+        [Fact(Timeout = 60000)]
+#else
         [Fact(Timeout = 10000)]
+#endif
         public async Task RandomLong() => await Task.Run(() =>
         {
             var rnd = new Random(GetType().GetHashCode());
@@ -438,7 +442,11 @@ qrstuv wxyz
             }
         }, TestContext.Current.CancellationToken);
 
+#if CI
+        [Fact(Timeout = 60000)]
+#else
         [Fact(Timeout = 10000)]
+#endif
         public async Task RandomString() => await Task.Run(() =>
         {
             var rnd = new Random(GetType().GetHashCode());
@@ -463,7 +471,11 @@ qrstuv wxyz
             }
         }, TestContext.Current.CancellationToken);
 
-        [Fact(Timeout = 20000)]
+#if CI
+        [Fact(Timeout = 60000)]
+#else
+        [Fact(Timeout = 10000)]
+#endif
         public async Task RandomLargeString() => await Task.Run(() =>
         {
             var rnd = new Random(GetType().GetHashCode());
