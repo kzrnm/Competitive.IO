@@ -134,7 +134,7 @@ namespace Kzrnm.Competitive.IO
         /// Move to next piton
         /// </summary>
         [MethodImpl(256)]
-        internal byte ReadByte()
+        byte ReadByte()
         {
             if ((uint)p >= (uint)e)
                 FillNextBuffer();
@@ -312,10 +312,18 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(256)]
         public char Char()
         {
+#if NET8_0_OR_GREATER
+            int x;
+            while ((uint)(x = SP.Next(buf.AsSpan(p))) >= (uint)(e - p))
+                FillNextBuffer();
+            p += x;
+            return (char)buf[p++];
+#else
             byte b;
             do b = ReadByte();
             while (b <= ' ');
             return (char)b;
+#endif
         }
 
         [MethodImpl(256)]
@@ -326,7 +334,7 @@ namespace Kzrnm.Competitive.IO
 #else
             var c = b;
             b = ArrayPool<T>.Shared.Rent(e);
-            c.AsSpan(0, e).CopyTo(b);
+            c.AsSpan().CopyTo(b);
             ArrayPool<T>.Shared.Return(c);
 #endif
         }
@@ -565,10 +573,10 @@ namespace Kzrnm.Competitive.IO
 #endif
 #endif
 
-            /// <summary>
-            /// Parse <see cref="int"/> from stdin and decrement
-            /// </summary>
-            [MethodImpl(256)] public int Int0() => Int() - 1;
+        /// <summary>
+        /// Parse <see cref="int"/> from stdin and decrement
+        /// </summary>
+        [MethodImpl(256)] public int Int0() => Int() - 1;
         /// <summary>
         /// Parse <see cref="uint"/> from stdin and decrement
         /// </summary>

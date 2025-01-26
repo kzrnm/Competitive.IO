@@ -462,5 +462,30 @@ qrstuv wxyz
                 cr.Repeat(list.Count).String().ShouldBe(list);
             }
         }, TestContext.Current.CancellationToken);
+
+        [Fact(Timeout = 20000)]
+        public async Task RandomLargeString() => await Task.Run(() =>
+        {
+            var rnd = new Random(GetType().GetHashCode());
+            for (int q = 0; q < 80; q++)
+            {
+                var list = new List<string>();
+                var sb = new StringBuilder();
+                for (int s = rnd.Next(100, 500); s >= 0; s--)
+                {
+                    sb.Append(rnd.Next(100) switch
+                    {
+                        < 10 => "\n",
+                        < 30 => "  ",
+                        _ => " ",
+                    });
+                    var value = new string(Enumerable.Repeat(rnd, rnd.Next(120, 1200)).Select(rnd => (char)rnd.Next('a', 'z')).ToArray());
+                    sb.Append(value);
+                    list.Add(value);
+                }
+                var cr = GetConsoleReader(sb.ToString(), 50);
+                cr.Repeat(list.Count).String().ShouldBe(list);
+            }
+        }, TestContext.Current.CancellationToken);
     }
 }
