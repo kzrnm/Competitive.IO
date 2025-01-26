@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 namespace Kzrnm.Competitive.IO
 {
     using C = ConsoleReader;
-    using M = MethodImplAttribute;
     using P = RepeatReader;
     /// <summary>
     /// Calls <see cref="IO.ConsoleReader"/> several times
@@ -21,7 +20,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Initialize <see cref="RepeatReader"/>
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public RepeatReader(C cr, int count)
         {
             this.cr = cr;
@@ -31,44 +30,44 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Ascii"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public string[] Ascii() => Read<string>();
         /// <summary>
         /// Read <see cref="ConsoleReader.Int"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public int[] Int() => Read<int>();
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public uint[] UInt() => Read<uint>();
         /// <summary>
         /// Read <see cref="ConsoleReader.Long"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public long[] Long() => Read<long>();
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public ulong[] ULong() => Read<ulong>();
         /// <summary>
         /// Read <see cref="ConsoleReader.Double"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public double[] Double() => Read<double>();
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Decimal"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public decimal[] Decimal() => Read<decimal>();
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public string[] Line()
         {
             var a = new string[Count];
@@ -79,7 +78,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.String"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public string[] String()
         {
             var a = new string[Count];
@@ -90,7 +89,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.AsciiChars"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public char[][] AsciiChars()
         {
             var a = new char[Count][];
@@ -101,7 +100,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.LineChars"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public char[][] LineChars()
         {
             var a = new char[Count][];
@@ -112,7 +111,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.StringChars"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public char[][] StringChars()
         {
             var a = new char[Count][];
@@ -124,7 +123,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Int0"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public int[] Int0()
         {
             var a = new int[Count];
@@ -135,7 +134,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt0"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public uint[] UInt0()
         {
             var a = new uint[Count];
@@ -146,7 +145,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Long0"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public long[] Long0()
         {
             var a = new long[Count];
@@ -157,7 +156,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong0"/> array
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public ulong[] ULong0()
         {
             var a = new ulong[Count];
@@ -169,35 +168,35 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator int[](P rr) => rr.Int();
+        [MethodImpl(256)] public static implicit operator int[](P rr) => rr.Int();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator uint[](P rr) => rr.UInt();
+        [MethodImpl(256)] public static implicit operator uint[](P rr) => rr.UInt();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator long[](P rr) => rr.Long();
+        [MethodImpl(256)] public static implicit operator long[](P rr) => rr.Long();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator ulong[](P rr) => rr.ULong();
+        [MethodImpl(256)] public static implicit operator ulong[](P rr) => rr.ULong();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator double[](P rr) => rr.Double();
+        [MethodImpl(256)] public static implicit operator double[](P rr) => rr.Double();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator decimal[](P rr) => rr.Decimal();
+        [MethodImpl(256)] public static implicit operator decimal[](P rr) => rr.Decimal();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator string[](P rr) => rr.Ascii();
+        [MethodImpl(256)] public static implicit operator string[](P rr) => rr.Ascii();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [M(256)] public static implicit operator char[][](P rr) => rr.AsciiChars();
+        [MethodImpl(256)] public static implicit operator char[][](P rr) => rr.AsciiChars();
 
         /// <summary>
         /// Get array of <typeparamref name="T"/>.
@@ -223,14 +222,14 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Initialize <see cref="RepeatReader{R}"/>
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public RepeatReader(R cr, int count) : base(cr, count) { }
 
 #if NETSTANDARD2_0
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public T[] Select<T>(Func<R, T> factory)
         {
             var a = new T[Count];
@@ -241,7 +240,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public T[] Select<T>(Func<R, int, T> factory)
         {
             var a = new T[Count];
@@ -253,7 +252,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public T[] Select<T>(Func<R, T> factory)
         {
             var a = new T[Count];
@@ -264,7 +263,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read and write into <paramref name="dst"/>.
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public void Select<T>(Span<T> dst, Func<R, T> factory)
         {
 #if NET6_0_OR_GREATER
@@ -279,7 +278,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Repeat <paramref name="factory"/>()
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public T[] Select<T>(Func<R, int, T> factory)
         {
             var a = new T[Count];
@@ -290,7 +289,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read and write into <paramref name="dst"/>.
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public void Select<T>(Span<T> dst, Func<R, int, T> factory)
         {
             for (var i = 0; i < dst.Length; i++)
@@ -306,7 +305,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Get <see cref="RepeatReader{R}"/>
         /// </summary>
-        [M(256)]
+        [MethodImpl(256)]
         public static RepeatReader<C> Repeat(this C cr, int count)
 #if NET6_0_OR_GREATER
             => new(cr, count);

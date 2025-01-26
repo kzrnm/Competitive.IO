@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace Kzrnm.Competitive.IO
 {
-    using M = MethodImplAttribute;
     using W = Utf8ConsoleWriter;
     /// <summary>
     /// Output Writer
@@ -16,7 +15,7 @@ namespace Kzrnm.Competitive.IO
         /// Write lines separated by space
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public static W WriteGrid<T>(this W w, IEnumerable<IEnumerable<T>> cols)
         {
             foreach (var col in cols)
@@ -27,7 +26,7 @@ namespace Kzrnm.Competitive.IO
         /// Write line each item of <paramref name="tuples"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public static W WriteGrid<Tp>(this W w, IEnumerable<Tp> tuples) where Tp : ITuple
         {
             foreach (var tup in tuples)
@@ -38,14 +37,14 @@ namespace Kzrnm.Competitive.IO
         /// Write lines separated by space
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public static W WriteGrid<T>(this W w, T[,] cols)
             => WriteGrid(w, MemoryMarshal.CreateReadOnlySpan(ref cols[0, 0], cols.Length), cols.GetLength(1));
         /// <summary>
         /// Write lines separated by space
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public static W WriteGrid<T>(this W w, ReadOnlySpan<T> s, int width)
         {
             do

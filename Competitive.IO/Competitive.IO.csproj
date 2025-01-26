@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0;net8.0;net7.0;net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net9.0;net8.0;net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
 		<DotnetVersion>$([System.Text.RegularExpressions.Regex]::Match($(TargetFramework), '^net(\d+)\.0').Groups[1].Value)</DotnetVersion>
 		<LangVersion Condition="'$(TargetFramework)' == 'netstandard2.0'">7</LangVersion>
 		<LangVersion Condition="'$(TargetFramework)' == 'netstandard2.1'">7.3</LangVersion>

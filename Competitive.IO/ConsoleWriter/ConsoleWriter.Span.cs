@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace Kzrnm.Competitive.IO
 {
-    using M = MethodImplAttribute;
     using W = ConsoleWriter;
     public partial class ConsoleWriter
     {
@@ -13,32 +12,32 @@ namespace Kzrnm.Competitive.IO
         /// Write <paramref name="v"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)] public W WriteLine(ReadOnlySpan<char> v) { sw.WriteLine(v); return this; }
+        [MethodImpl(256)] public W WriteLine(ReadOnlySpan<char> v) { sw.WriteLine(v); return this; }
         /// <summary>
         /// Write joined <paramref name="col"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(Span<T> col) => WriteMany(' ', (ReadOnlySpan<T>)col);
+        [MethodImpl(256)] public W WriteLineJoin<T>(Span<T> col) => WriteMany(' ', (ReadOnlySpan<T>)col);
         /// <summary>
         /// Write joined <paramref name="col"/> to the output stream with end of line.
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)] public W WriteLineJoin<T>(ReadOnlySpan<T> col) => WriteMany(' ', col);
+        [MethodImpl(256)] public W WriteLineJoin<T>(ReadOnlySpan<T> col) => WriteMany(' ', col);
         /// <summary>
         /// Write line each item of<paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)] public W WriteLines<T>(Span<T> col) => WriteMany('\n', (ReadOnlySpan<T>)col);
+        [MethodImpl(256)] public W WriteLines<T>(Span<T> col) => WriteMany('\n', (ReadOnlySpan<T>)col);
         /// <summary>
         /// Write line each item of<paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)] public W WriteLines<T>(ReadOnlySpan<T> col) => WriteMany('\n', col);
+        [MethodImpl(256)] public W WriteLines<T>(ReadOnlySpan<T> col) => WriteMany('\n', col);
         /// <summary>
         /// Write lines separated by space
         /// </summary>
         /// <returns>this instance.</returns>
-        [M(256)]
+        [MethodImpl(256)]
         public W WriteGrid<T>(T[,] cols)
         {
             var width = cols.GetLength(1);
@@ -57,7 +56,7 @@ namespace Kzrnm.Competitive.IO
         /// <param name="sep">sparating charactor</param>
         /// <param name="col">output items</param>
         /// <returns></returns>
-        [M(256)]
+        [MethodImpl(256)]
         private W WriteMany<T>(char sep, ReadOnlySpan<T> col)
         {
             if (col.Length > 0)

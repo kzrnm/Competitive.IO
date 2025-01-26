@@ -14,6 +14,10 @@ namespace Kzrnm.Competitive.IO.Reader
             => new(UTF8Stream(str + "\n"), new UTF8Encoding(false));
         public static ConsoleReader GetConsoleReader(string str)
             => new(UTF8Stream(str + "\n"), new UTF8Encoding(false));
+        public static PropertyConsoleReader GetPropertyConsoleReader(string str, int bufferSize)
+            => new(UTF8Stream(str + "\n"), new UTF8Encoding(false), bufferSize);
+        public static ConsoleReader GetConsoleReader(string str, int bufferSize)
+            => new(UTF8Stream(str + "\n"), new UTF8Encoding(false), bufferSize);
 
         private class SplitedStream(byte[] buffer) : MemoryStream(buffer)
         {
@@ -23,7 +27,7 @@ namespace Kzrnm.Competitive.IO.Reader
                 var tmp = new byte[count];
                 var read = base.Read(tmp, 0, count);
                 if (read == 0)
-                    throw new Exception("if in console, console is freezed.");
+                    throw new InvalidOperationException();
 
                 var sp = tmp.AsSpan(0, read);
                 var lineLength = sp.IndexOf((byte)'\n') + 1;

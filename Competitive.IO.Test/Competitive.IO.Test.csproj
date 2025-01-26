@@ -1,13 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0;net8.0;net6.0;net472</TargetFrameworks>
+		<TargetFrameworks>net9.0;net8.0;net6.0</TargetFrameworks>
+		<TargetFrameworks Condition="$([System.OperatingSystem]::IsWindows())">$(TargetFrameworks);net472</TargetFrameworks>
 
 		<IsPackable>false</IsPackable>
 		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
 		<NoWarn>$(NoWarn);IDE0005;IDE0057;CA1859</NoWarn>
 		<GenerateDocumentationFile>false</GenerateDocumentationFile>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<RuntimeIdentifier Condition="$([System.OperatingSystem]::IsWindows())">win-x64</RuntimeIdentifier>
 		<SelfContained>false</SelfContained>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
