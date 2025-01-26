@@ -19,8 +19,6 @@ namespace Kzrnm.Competitive.IO
                 "10.0"
 #elif NET8_0
                 "12.0"
-#elif NET9_0
-                "13.0"
 #endif
                 ;
 
