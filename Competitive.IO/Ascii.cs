@@ -23,7 +23,9 @@ namespace Kzrnm.Competitive.IO
 #if !NETSTANDARD2_0
         readonly
 #endif
-        struct Asciis : IEquatable<Asciis>, IEnumerable<Ascii>
+
+#if NET8_0_OR_GREATER
+        struct Asciis(byte[] d) : IEquatable<Asciis>, IEnumerable<Ascii>
 #pragma warning restore CA2231
 #pragma warning restore IDE0079
     {
@@ -32,7 +34,26 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public readonly byte[] d = d;
+#else
+        struct Asciis : IEquatable<Asciis>, IEnumerable<Ascii>
+#pragma warning restore CA2231
+#pragma warning restore IDE0079
+    {
+        /// <summary>
+        /// Creates <see cref="Asciis"/>.
+        /// </summary>
+        /// <param name="b"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Asciis(byte[] b) { d = b; }
+        /// <summary>
+        /// entity
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public readonly byte[] d;
+#endif
+
 #if NETCOREAPP3_1_OR_GREATER
         /// <summary>
         /// Casts <see cref="d"/> as Ascii[].
@@ -47,7 +68,6 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public int Length => d.Length;
-        internal Asciis(byte[] b) { d = b; }
         /// <summary>
         /// Returns charactor.
         /// </summary>
