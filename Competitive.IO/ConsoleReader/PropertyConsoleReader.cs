@@ -97,9 +97,9 @@ namespace Kzrnm.Competitive.IO
         [DebuggerBrowsable(0)] public new string Line => Line();
 
         /// <summary>
-        /// Read <see cref="string"/> from stdin as ascii
+        /// Read <see cref="Asciis"/> from stdin as ascii
         /// </summary>
-        [DebuggerBrowsable(0)] public new string Ascii => Ascii();
+        [DebuggerBrowsable(0)] public new Asciis Ascii => Ascii();
 
 
         /// <summary>
@@ -111,18 +111,6 @@ namespace Kzrnm.Competitive.IO
         /// Read line from stdin
         /// </summary>
         [DebuggerBrowsable(0)] public new char[] LineChars => LineChars();
-
-        /// <summary>
-        /// Read <see cref="T:char[]"/> from stdin as ascii
-        /// </summary>
-        [DebuggerBrowsable(0)] public new char[] AsciiChars => AsciiChars();
-
-#if !NETSTANDARD2_0
-        /// <summary>
-        /// Read <see cref="T:Span&lt;char&gt;"/> from stdin as ascii
-        /// </summary>
-        [DebuggerBrowsable(0)] public new Span<char> AsciiSpan => AsciiSpan();
-#endif
 
         /// <summary>
         /// Read a <see cref="char"/> from stdin

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Kzrnm.Competitive.IO.Reader
@@ -346,21 +347,6 @@ qrstuv wxyz
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task AsciiChars() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
-
-abcdefg hijklmnop 123
-qrstuv wxyz
-");
-            cr.AsciiChars().ShouldBe("abcdefg".ToCharArray());
-            cr.AsciiChars().ShouldBe("hijklmnop".ToCharArray());
-            cr.AsciiChars().ShouldBe("123".ToCharArray());
-            cr.AsciiChars().ShouldBe("qrstuv".ToCharArray());
-            cr.AsciiChars().ShouldBe("wxyz".ToCharArray());
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
         public async Task AsciiImplicit() => await Task.Run(() =>
         {
             var cr = GetConsoleReader(@"
@@ -368,7 +354,7 @@ qrstuv wxyz
 abcdefg hijklmnop 123
 qrstuv wxyz
 ");
-            string r;
+            Asciis r;
             r = cr;
             r.ShouldBe("abcdefg");
             r = cr;

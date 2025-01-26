@@ -220,21 +220,6 @@ qrstuv wxyz
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task AsciiCharsProp() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-abcdefg hijklmnop 123
-qrstuv wxyz
-");
-            cr.AsciiChars.ShouldBe("abcdefg".ToCharArray());
-            cr.AsciiChars.ShouldBe("hijklmnop".ToCharArray());
-            cr.AsciiChars.ShouldBe("123".ToCharArray());
-            cr.AsciiChars.ShouldBe("qrstuv".ToCharArray());
-            cr.AsciiChars.ShouldBe("wxyz".ToCharArray());
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
         public async Task StringProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"

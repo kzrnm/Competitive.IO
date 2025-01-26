@@ -332,7 +332,7 @@ abcdefg hijklmnop 123
 qrstuv wxyz
 
 ");
-            string[] r = cr.Repeat(5);
+            Asciis[] r = cr.Repeat(5);
             r.ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
         }, TestContext.Current.CancellationToken);
 
@@ -360,18 +360,6 @@ qrstuv wxyz
 -------
 ");
             cr.Repeat(4).Line().ShouldBe(["abcdefg hijklmnop 123", "qrstuv wxyz", "コンピュータ 电脑😀 컴퓨터", "-------"]);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task AsciiChars() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
-
-abcdefg hijklmnop 123
-qrstuv wxyz
------
-");
-            cr.Repeat(5).AsciiChars().Select(c => new string(c)).ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
