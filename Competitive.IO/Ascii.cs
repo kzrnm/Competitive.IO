@@ -20,12 +20,9 @@ namespace Kzrnm.Competitive.IO
 #pragma warning disable IDE0079
 #pragma warning disable CA2231
     public
-#if !NETSTANDARD2_0
-        readonly
-#endif
 
 #if NET8_0_OR_GREATER
-        struct Asciis(byte[] d) : IEquatable<Asciis>, IEnumerable<Ascii>
+        class Asciis(byte[] d) : IEquatable<Asciis>, IEnumerable<Ascii>
 #pragma warning restore CA2231
 #pragma warning restore IDE0079
     {
@@ -36,7 +33,7 @@ namespace Kzrnm.Competitive.IO
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public readonly byte[] d = d;
 #else
-        struct Asciis : IEquatable<Asciis>, IEnumerable<Ascii>
+        class Asciis : IEquatable<Asciis>, IEnumerable<Ascii>
 #pragma warning restore CA2231
 #pragma warning restore IDE0079
     {
