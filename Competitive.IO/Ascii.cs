@@ -27,10 +27,19 @@ namespace Kzrnm.Competitive.IO
 #pragma warning restore CA2231
 #pragma warning restore IDE0079
     {
+        /// <summary>
+        /// entity
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly byte[] d;
+        public readonly byte[] d;
 #if NETCOREAPP3_1_OR_GREATER
-        [MethodImpl(256)] Ascii[] Cast() => Unsafe.As<Ascii[]>(d);
+        /// <summary>
+        /// Casts <see cref="d"/> as Ascii[].
+        /// </summary>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [MethodImpl(256)] public Ascii[] Cast() => Unsafe.As<Ascii[]>(d);
 #endif
 
         /// <summary>
