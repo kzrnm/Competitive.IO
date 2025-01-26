@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - **Breaking change** Remove `AsciiChars()` and `AsciiSpan()`.
 
+## [2.6.0] - 2025-01-27
+### Changed
+- Fix `ConsoleReader`
+
 ## [2.5.1] - 2025-01-26
 ### Changed
 - Fix `ConsoleReader.String`
