@@ -83,6 +83,7 @@ namespace Kzrnm.Competitive.IO
         /// <inheritdoc />
         public bool Equals(Asciis other)
         {
+            if (other == null) return false;
             var e = other.d;
             if (e.Length != d.Length) return false;
             for (int i = d.Length - 1; i >= 0; i--)
@@ -104,7 +105,7 @@ namespace Kzrnm.Competitive.IO
         }
 #else
         /// <inheritdoc />
-        public bool Equals(Asciis other) => AsSpan().SequenceEqual(other.d);
+        public bool Equals(Asciis other) => other != null && AsSpan().SequenceEqual(other.d);
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
