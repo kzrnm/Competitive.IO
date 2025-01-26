@@ -12,9 +12,6 @@ namespace Kzrnm.Competitive.IO
 {
     using static Utf8Formatter;
     using W = Utf8ConsoleWriter;
-#if NET9_0_OR_GREATER
-    using O = OverloadResolutionPriorityAttribute;
-#endif
 
 #if NET8_0_OR_GREATER
     /// <summary>
@@ -202,9 +199,6 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <returns>this instance.</returns>
         [MethodImpl(256 | 512)]
-#if NET9_0_OR_GREATER
-        [O(1)]
-#endif
         public W Write(ReadOnlySpan<char> v)
         {
             var s = Utf8NoBom.GetMaxByteCount(v.Length);
@@ -249,9 +243,6 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         /// <returns>this instance.</returns>
         [MethodImpl(256)]
-#if NET9_0_OR_GREATER
-        [O(1)]
-#endif
         public W WriteLine(ReadOnlySpan<char> v) { Write(v); return Write('\n'); }
 
         /// <summary>
@@ -280,9 +271,6 @@ namespace Kzrnm.Competitive.IO
         /// Write line each item of<paramref name="col"/>
         /// </summary>
         /// <returns>this instance.</returns>
-#if NET9_0_OR_GREATER
-        [O(1)]
-#endif
         [MethodImpl(256)] public W WriteLines<T>(ReadOnlySpan<T> col) => WriteMany('\n', col);
 
         /// <summary>
@@ -318,9 +306,6 @@ namespace Kzrnm.Competitive.IO
         /// <returns></returns>
         [MethodImpl(256)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-#if NET9_0_OR_GREATER
-        [O(1)]
-#endif
         public W WriteMany<T>(char sep, ReadOnlySpan<T> col)
         {
             if (col.Length > 0)

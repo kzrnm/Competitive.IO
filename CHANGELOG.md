@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.5.1] - 2025-01-26
 ### Changed
 - Fix `ConsoleReader.String`
+### Removed
+- Remove .NET 9 build
+
 
 ## [2.5.0] - 2025-01-26
 ### Added
