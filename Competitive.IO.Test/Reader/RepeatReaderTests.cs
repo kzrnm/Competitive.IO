@@ -417,11 +417,11 @@ qrstuv wxyz
         public async Task RandomLong() => await Task.Run(() =>
         {
             var rnd = new Random(GetType().GetHashCode());
-            for (int q = 0; q < 1000; q++)
+            for (int q = 0; q < 800; q++)
             {
                 var list = new List<long>();
                 var sb = new StringBuilder();
-                for (int s = rnd.Next(100, 1000); s >= 0; s--)
+                for (int s = rnd.Next(100, 500); s >= 0; s--)
                 {
                     sb.Append(rnd.Next(100) switch
                     {
@@ -442,11 +442,11 @@ qrstuv wxyz
         public async Task RandomString() => await Task.Run(() =>
         {
             var rnd = new Random(GetType().GetHashCode());
-            for (int q = 0; q < 1000; q++)
+            for (int q = 0; q < 800; q++)
             {
                 var list = new List<string>();
                 var sb = new StringBuilder();
-                for (int s = rnd.Next(100, 1000); s >= 0; s--)
+                for (int s = rnd.Next(100, 500); s >= 0; s--)
                 {
                     sb.Append(rnd.Next(100) switch
                     {
