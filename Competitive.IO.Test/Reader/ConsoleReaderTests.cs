@@ -484,5 +484,26 @@ def
             cr.Ascii().ShouldBe(str);
             cr.Long().ShouldBe(12345);
         }, TestContext.Current.CancellationToken);
+
+        [Fact(Timeout = 5000)]
+        public async Task Single() => await Task.Run(() =>
+        {
+            {
+                var cr = GetConsoleReader("12345");
+                cr.Ascii().ShouldBe("12345");
+            }
+            {
+                var cr = GetConsoleReader("12345");
+                cr.String().ShouldBe("12345");
+            }
+            {
+                var cr = GetConsoleReader("12345");
+                cr.Line().ShouldBe("12345");
+            }
+            {
+                var cr = GetConsoleReader("12345");
+                cr.Long().ShouldBe(12345);
+            }
+        }, TestContext.Current.CancellationToken);
     }
 }

@@ -404,13 +404,15 @@ namespace Kzrnm.Competitive.IO
             Array.Copy(buf, p, sb, 0, sl);
             FillNextBuffer();
             Debug.Assert(p == 0);
-            while ((uint)(x = T.Next(buf.AsSpan(p))) >= (uint)e)
+            x = 0;
+            while (e > 0 && (uint)(x = T.Next(buf.AsSpan(p))) >= (uint)e)
             {
                 Debug.Assert(p == 0);
                 if (sl + buf.Length > sb.Length)
                     Resize(ref sb, sb.Length << 1);
                 buf.AsSpan(0, e).CopyTo(sb.AsSpan(sl));
                 sl += e;
+                x = 0;
                 FillNextBuffer();
             }
 
