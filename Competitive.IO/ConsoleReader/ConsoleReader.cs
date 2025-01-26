@@ -131,18 +131,6 @@ namespace Kzrnm.Competitive.IO
         }
 
         /// <summary>
-        /// Move to next piton
-        /// </summary>
-        [MethodImpl(256)]
-        byte ReadByte()
-        {
-            if ((uint)p >= (uint)e)
-                FillNextBuffer();
-            return buf[p++];
-        }
-
-
-        /// <summary>
         /// Parse value from stdin
         /// </summary>
         [MethodImpl(256)]
@@ -155,8 +143,9 @@ namespace Kzrnm.Competitive.IO
             if (typeof(T) == typeof(double)) return (T)(object)Double();
             if (typeof(T) == typeof(decimal)) return (T)(object)Decimal();
             if (typeof(T) == typeof(char)) return (T)(object)Char();
-            if (typeof(T) == typeof(string)) return (T)(object)Ascii();
-            if (typeof(T) == typeof(char[])) return (T)(object)AsciiChars();
+            if (typeof(T) == typeof(Asciis)) return (T)(object)Ascii();
+            if (typeof(T) == typeof(string)) return (T)(object)String();
+            if (typeof(T) == typeof(char[])) return (T)(object)StringChars();
             return Throw<T>();
         }
         static T Throw<T>() => throw new NotSupportedException(typeof(T).Name);
@@ -286,7 +275,7 @@ namespace Kzrnm.Competitive.IO
             p += bc;
             return v;
 #else
-            return double.Parse(Ascii());
+            return double.Parse(Ascii().ToString());
 #endif
         }
 
@@ -302,7 +291,7 @@ namespace Kzrnm.Competitive.IO
             p += bc;
             return v;
 #else
-            return decimal.Parse(Ascii());
+            return decimal.Parse(Ascii().ToString());
 #endif
         }
 
@@ -339,54 +328,53 @@ namespace Kzrnm.Competitive.IO
 #endif
         }
 
-#if NETSTANDARD2_0
-        /// <summary>
-        /// Read <see cref="T:char[]"/> from stdin as ascii
-        /// </summary>
-        [MethodImpl(256)]
-        public char[] AsciiChars()
-        {
-#else
-        /// <summary>
-        /// Read <see cref="T:char[]"/> from stdin as ascii
-        /// </summary>
-        [MethodImpl(256)]
-        public char[] AsciiChars() => AsciiSpan().ToArray();
 
         /// <summary>
-        /// Read <see cref="T:Span&lt;char&gt;"/> from stdin as ascii
+        /// Read <see cref="Asciis"/> from stdin as ascii
         /// </summary>
         [MethodImpl(256)]
-        public Span<char> AsciiSpan()
-        {
+        public Asciis Ascii() => new
+#if !NET6_0_OR_GREATER
+            Asciis
 #endif
-            int c = 0;
-            byte b;
-            do b = ReadByte();
-            while (b <= ' ');
+            (Bk<AC, byte>());
 
-            var sb = new char[buf.Length];
-            do
-            {
-                sb[c++] = (char)b;
-                if (c >= sb.Length)
-                    Array.Resize(ref sb, sb.Length << 1);
-                b = ReadByte();
-            } while (' ' < b);
-
-#if NETSTANDARD2_0
-            Resize(ref sb, c);
-            return sb;
-        }
-#else
-            return sb.AsSpan(0, c);
-        }
+        /// <summary>
+        /// Read <see cref="string"/> from stdin with encoding
+        /// </summary>
+        [MethodImpl(256)]
+        public string String() => new
+#if !NET6_0_OR_GREATER
+            string
 #endif
+            (Bk<AC, char>());
 
+        /// <summary>
+        /// Read line from stdin
+        /// </summary>
+        [MethodImpl(256)]
+        public string Line() => new
+#if !NET6_0_OR_GREATER
+            string
+#endif
+            (Bk<LB, char>());
+
+        /// <summary>
+        /// Read <see cref="T:char[]"/> from stdin with encoding
+        /// </summary>
+        [MethodImpl(256)]
+        public char[] StringChars() => Bk<AC, char>();
+
+        /// <summary>
+        /// Read line from stdin
+        /// </summary>
+        [MethodImpl(256)]
+        public char[] LineChars() => Bk<LB, char>();
 #if NET8_0_OR_GREATER
         [MethodImpl(256)]
-        char[] Bk<T>() where T : IBk
+        R[] Bk<T, R>() where T : IBk
         {
+            Debug.Assert(typeof(R) == typeof(char) || typeof(R) == typeof(byte));
             int x;
             while ((uint)(x = SP.Next(buf.AsSpan(p))) >= (uint)(e - p))
                 FillNextBuffer();
@@ -396,7 +384,10 @@ namespace Kzrnm.Competitive.IO
             {
                 var q = p;
                 p += x;
-                return Encoding.GetChars(buf, q, x);
+                if (typeof(R) == typeof(byte))
+                    return (R[])(object)buf.AsSpan(q, x).ToArray();
+                else
+                    return (R[])(object)Encoding.GetChars(buf, q, x);
             }
 
             var sb = ArrayPool<byte>.Shared.Rent(buf.Length << 1);
@@ -419,9 +410,17 @@ namespace Kzrnm.Competitive.IO
                 Resize(ref sb, y);
             buf.AsSpan(0, x).CopyTo(sb.AsSpan(sl));
             p += x;
-            var rt = Encoding.GetChars(sb, 0, y);
-            ArrayPool<byte>.Shared.Return(sb);
-            return rt;
+            try
+            {
+                if (typeof(R) == typeof(byte))
+                    return (R[])(object)sb.AsSpan(0, y).ToArray();
+                else
+                    return (R[])(object)Encoding.GetChars(sb, 0, y);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(sb);
+            }
         }
 
         interface IBk
@@ -452,44 +451,20 @@ namespace Kzrnm.Competitive.IO
             /// <inheritdoc cref="LB"/>
             [MethodImpl(256)] public static int Next(Span<byte> b) => b.IndexOfAny<byte>(10, 13); // '\r' == 13, '\n' == 10
         }
-
-
-        /// <summary>
-        /// Read <see cref="string"/> from stdin with encoding
-        /// </summary>
-        [MethodImpl(256)]
-        public string String() => new(Bk<AC>());
-
-        /// <summary>
-        /// Read line from stdin
-        /// </summary>
-        [MethodImpl(256)]
-        public string Line() => new(Bk<LB>());
-
-
-        /// <summary>
-        /// Read <see cref="T:char[]"/> from stdin with encoding
-        /// </summary>
-        [MethodImpl(256)]
-        public char[] StringChars() => Bk<AC>();
-
-
-        /// <summary>
-        /// Read line from stdin
-        /// </summary>
-        [MethodImpl(256)]
-        public char[] LineChars() => Bk<LB>();
-
-
-        /// <summary>
-        /// Read <see cref="string"/> from stdin as ascii
-        /// </summary>
-        [MethodImpl(256)]
-        public string Ascii()
-            => new(AsciiSpan());
 #else
+        /// <summary>
+        /// Move to next piton
+        /// </summary>
         [MethodImpl(256)]
-        char[] Bk<T>() where T : struct, IBk
+        byte ReadByte()
+        {
+            if ((uint)p >= (uint)e)
+                FillNextBuffer();
+            return buf[p++];
+        }
+
+        [MethodImpl(256)]
+        R[] Bk<T, R>() where T : struct, IBk
         {
             int c = 0;
             byte b;
@@ -508,11 +483,25 @@ namespace Kzrnm.Competitive.IO
                 b = ReadByte();
             } while (new T().Ok(b));
 #if NETSTANDARD2_0
-            return Encoding.GetChars(sb, 0, c);
+            if (typeof(R) == typeof(byte))
+            {
+                Array.Resize(ref sb, c);
+                return (R[])(object)sb;
+            }
+            else
+                return (R[])(object)Encoding.GetChars(sb, 0, c);
 #else
-            var r = Encoding.GetChars(sb, 0, c);
-            ArrayPool<byte>.Shared.Return(sb);
-            return r;
+            try
+            {
+                if (typeof(R) == typeof(byte))
+                    return (R[])(object)sb.AsSpan(0, c).ToArray();
+                else
+                    return (R[])(object)Encoding.GetChars(sb, 0, c);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(sb);
+            }
 #endif
         }
 
@@ -526,53 +515,7 @@ namespace Kzrnm.Competitive.IO
         struct LB : IBk { [MethodImpl(256)] public bool Ok(byte b) => b != '\n' && b != '\r'; }
 #pragma warning restore IDE0251
 #pragma warning restore IDE0079
-
-        /// <summary>
-        /// Read <see cref="string"/> from stdin with encoding
-        /// </summary>
-        [MethodImpl(256)]
-        public string String() => new
-#if !NET6_0_OR_GREATER
-            string
 #endif
-            (Bk<AC>());
-
-        /// <summary>
-        /// Read line from stdin
-        /// </summary>
-        [MethodImpl(256)]
-        public string Line() => new
-#if !NET6_0_OR_GREATER
-            string
-#endif
-            (Bk<LB>());
-
-        /// <summary>
-        /// Read <see cref="T:char[]"/> from stdin with encoding
-        /// </summary>
-        [MethodImpl(256)]
-        public char[] StringChars() => Bk<AC>();
-
-        /// <summary>
-        /// Read line from stdin
-        /// </summary>
-        [MethodImpl(256)]
-        public char[] LineChars() => Bk<LB>();
-
-        /// <summary>
-        /// Read <see cref="string"/> from stdin as ascii
-        /// </summary>
-        [MethodImpl(256)]
-        public string Ascii()
-#if NETSTANDARD2_0
-            => new string(AsciiChars());
-#elif !NET6_0_OR_GREATER
-            => new string(AsciiSpan());
-#else
-            => new(AsciiSpan());
-#endif
-#endif
-
         /// <summary>
         /// Parse <see cref="int"/> from stdin and decrement
         /// </summary>
@@ -625,12 +568,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="Ascii()"/>
         /// </summary>
-        [MethodImpl(256)] public static implicit operator string(R cr) => cr.Ascii();
-
-        /// <summary>
-        /// implicit call <see cref="AsciiChars()"/>
-        /// </summary>
-        [MethodImpl(256)] public static implicit operator char[](R cr) => cr.AsciiChars();
+        [MethodImpl(256)] public static implicit operator Asciis(R cr) => cr.Ascii();
 
         /// <summary>
         /// Get array of <typeparamref name="T"/>.

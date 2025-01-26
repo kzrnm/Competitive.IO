@@ -235,18 +235,6 @@ qrstuv wxyz
         }, TestContext.Current.CancellationToken);
 
         [Fact(Timeout = 5000)]
-        public async Task AsciiCharsProp() => await Task.Run(() =>
-        {
-            var cr = GetPropertyConsoleReader(@"
-
-abcdefg hijklmnop 123
-qrstuv wxyz
------
-");
-            cr.Repeat(5).AsciiChars.Select(c => new string(c)).ShouldBe(["abcdefg", "hijklmnop", "123", "qrstuv", "wxyz"]);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
         public async Task StringCharsProp() => await Task.Run(() =>
         {
             var cr = GetPropertyConsoleReader(@"

@@ -182,6 +182,10 @@ namespace Kzrnm.Competitive.IO
 #endif
                 }
             }
+            else if (typeof(T) == typeof(Ascii))
+                EnsureBuf(bw = 1)[0] = (Ascii)(object)v;
+            else if (typeof(T) == typeof(Asciis))
+                return Write(((Asciis)(object)v).AsSpan());
             else if (v is char[] charr)
                 return Write(charr.AsSpan());
             else if (v is IUtf8ConsoleWriterFormatter)

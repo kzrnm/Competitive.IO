@@ -6,6 +6,20 @@ namespace Kzrnm.Competitive.IO
 {
     using C = ConsoleReader;
     using P = RepeatReader;
+
+#if NET8_0_OR_GREATER
+    /// <summary>
+    /// Calls <see cref="IO.ConsoleReader"/> several times
+    /// </summary>
+    public class RepeatReader(C cr, int count)
+    {
+        internal readonly C cr = cr;
+        /// <summary>
+        /// The count of read method invocations.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public int Count => count;
+#else
     /// <summary>
     /// Calls <see cref="IO.ConsoleReader"/> several times
     /// </summary>
@@ -26,12 +40,13 @@ namespace Kzrnm.Competitive.IO
             this.cr = cr;
             Count = count;
         }
+#endif
 
         /// <summary>
         /// Read <see cref="ConsoleReader.Ascii"/> array
         /// </summary>
         [MethodImpl(256)]
-        public string[] Ascii() => Read<string>();
+        public Asciis[] Ascii() => Read<Asciis>();
         /// <summary>
         /// Read <see cref="ConsoleReader.Int"/> array
         /// </summary>
@@ -65,6 +80,11 @@ namespace Kzrnm.Competitive.IO
         public decimal[] Decimal() => Read<decimal>();
 
         /// <summary>
+        /// Read <see cref="ConsoleReader.String"/> array
+        /// </summary>
+        [MethodImpl(256)]
+        public string[] String() => Read<string>();
+        /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
         [MethodImpl(256)]
@@ -73,28 +93,6 @@ namespace Kzrnm.Competitive.IO
             var a = new string[Count];
             for (var i = 0; i < a.Length; i++)
                 a[i] = cr.Line();
-            return a;
-        }
-        /// <summary>
-        /// Read <see cref="ConsoleReader.String"/> array
-        /// </summary>
-        [MethodImpl(256)]
-        public string[] String()
-        {
-            var a = new string[Count];
-            for (var i = 0; i < a.Length; i++)
-                a[i] = cr.String();
-            return a;
-        }
-        /// <summary>
-        /// Read <see cref="ConsoleReader.AsciiChars"/> array
-        /// </summary>
-        [MethodImpl(256)]
-        public char[][] AsciiChars()
-        {
-            var a = new char[Count][];
-            for (var i = 0; i < a.Length; i++)
-                a[i] = cr.AsciiChars();
             return a;
         }
         /// <summary>
@@ -192,11 +190,11 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [MethodImpl(256)] public static implicit operator string[](P rr) => rr.Ascii();
+        [MethodImpl(256)] public static implicit operator Asciis[](P rr) => rr.Ascii();
         /// <summary>
         /// implicit call <see cref="Read"/>
         /// </summary>
-        [MethodImpl(256)] public static implicit operator char[][](P rr) => rr.AsciiChars();
+        [MethodImpl(256)] public static implicit operator char[][](P rr) => rr.StringChars();
 
         /// <summary>
         /// Get array of <typeparamref name="T"/>.
@@ -209,6 +207,19 @@ namespace Kzrnm.Competitive.IO
             return a;
         }
     }
+
+#if NET8_0_OR_GREATER
+    /// <summary>
+    /// Calls <see cref="IO.ConsoleReader"/> several times
+    /// </summary>
+    public class RepeatReader<R>(R r, int count) : P(r, count) where R : C
+    {
+        /// <summary>
+        /// The instance of <typeparamref name="R"/>
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public R ConsoleReader => (R)cr;
+#else
     /// <summary>
     /// Calls <see cref="IO.ConsoleReader"/> several times
     /// </summary>
@@ -224,6 +235,7 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         [MethodImpl(256)]
         public RepeatReader(R cr, int count) : base(cr, count) { }
+#endif
 
 #if NETSTANDARD2_0
         /// <summary>

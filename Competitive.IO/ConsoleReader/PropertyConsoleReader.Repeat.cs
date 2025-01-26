@@ -3,6 +3,14 @@ using System.Runtime.CompilerServices;
 
 namespace Kzrnm.Competitive.IO
 {
+#if NET8_0_OR_GREATER
+    /// <summary>
+    /// Calls <see cref="PropertyConsoleReader"/> several times
+    /// </summary>
+    public class PropertyRepeatReader(PropertyConsoleReader cr, int count) : RepeatReader<PropertyConsoleReader>(cr, count)
+    {
+#else
+
     /// <summary>
     /// Calls <see cref="PropertyConsoleReader"/> several times
     /// </summary>
@@ -12,8 +20,7 @@ namespace Kzrnm.Competitive.IO
         /// Initialize <see cref="PropertyRepeatReader"/>
         /// </summary>
         public PropertyRepeatReader(PropertyConsoleReader cr, int count) : base(cr, count) { }
-
-
+#endif
         /// <summary>
         /// Read <see cref="ConsoleReader.Int"/> array
         /// </summary>
@@ -42,7 +49,7 @@ namespace Kzrnm.Competitive.IO
         /// <summary>
         /// Read <see cref="ConsoleReader.Ascii"/> array
         /// </summary>
-        [DebuggerBrowsable(0)] public new string[] Ascii => Ascii();
+        [DebuggerBrowsable(0)] public new Asciis[] Ascii => Ascii();
         /// <summary>
         /// Read <see cref="ConsoleReader.Line"/> array
         /// </summary>
@@ -51,10 +58,6 @@ namespace Kzrnm.Competitive.IO
         /// Read <see cref="ConsoleReader.String"/> array
         /// </summary>
         [DebuggerBrowsable(0)] public new string[] String => String();
-        /// <summary>
-        /// Read <see cref="ConsoleReader.AsciiChars"/> array
-        /// </summary>
-        [DebuggerBrowsable(0)] public new char[][] AsciiChars => AsciiChars();
         /// <summary>
         /// Read <see cref="ConsoleReader.LineChars"/> array
         /// </summary>
