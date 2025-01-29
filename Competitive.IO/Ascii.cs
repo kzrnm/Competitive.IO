@@ -51,15 +51,6 @@ namespace Kzrnm.Competitive.IO
         public readonly byte[] d;
 #endif
 
-#if NETCOREAPP3_1_OR_GREATER
-        /// <summary>
-        /// Casts <see cref="d"/> as Ascii[].
-        /// </summary>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [MethodImpl(256)] public Ascii[] Cast() => Unsafe.As<Ascii[]>(d);
-#endif
-
         /// <summary>
         /// Get a number of charactors.
         /// </summary>
@@ -137,19 +128,52 @@ namespace Kzrnm.Competitive.IO
 
 
 #if NETCOREAPP3_1_OR_GREATER
-        IEnumerator<Ascii> IEnumerable<Ascii>.GetEnumerator() => ((IEnumerable<Ascii>)Cast()).GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => Cast().GetEnumerator();
+        IEnumerator<Ascii> IEnumerable<Ascii>.GetEnumerator() => new Enumerator(d);
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(d);
         /// <inheritdoc cref="IEnumerable.GetEnumerator"/>
-        public Span<Ascii>.Enumerator GetEnumerator() => Cast().AsSpan().GetEnumerator();
+        public Span<Ascii>.Enumerator GetEnumerator() => MemoryMarshal.Cast<byte, Ascii>(d).GetEnumerator();
 #else
         /// <inheritdoc />
-        public IEnumerator<Ascii> GetEnumerator()
-        {
-            foreach (var e in d)
-                yield return (Ascii)e;
-        }
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public IEnumerator<Ascii> GetEnumerator() => new Enumerator(d);
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(d);
 #endif
+
+
+#if NET8_0_OR_GREATER
+        /// <inheritdoc />
+        /// <summary>
+        /// Creates new enumerator.
+        /// </summary>
+        class Enumerator(byte[] b) : IEnumerator<Ascii>
+        {
+            private int ix = -1;
+#else
+        /// <inheritdoc />
+        class Enumerator : IEnumerator<Ascii>
+        {
+            /// <summary>
+            /// Creates new enumerator.
+            /// </summary>
+            public Enumerator(byte[] d)
+            {
+                b = d;
+                ix = -1;
+            }
+            private byte[] b;
+            private int ix;
+#endif
+            /// <inheritdoc />
+            public Ascii Current => b[ix];
+            /// <inheritdoc />
+            object IEnumerator.Current => Current;
+
+            /// <inheritdoc />
+            public void Dispose() { }
+            /// <inheritdoc />
+            public bool MoveNext() => ++ix < b.Length;
+            /// <inheritdoc />
+            public void Reset() { ix = -1; }
+        }
     }
 
 
