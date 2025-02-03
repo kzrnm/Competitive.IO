@@ -8,8 +8,7 @@
 		<PackageReleaseNotes>https://github.com/kzrnm/Competitive.IO/blob/master/CHANGELOG.md</PackageReleaseNotes>
 		<NoWarn>$(NoWarn);IDE0130</NoWarn>
 
-		<Version>3.0.0-beta7</Version>
-		<AssemblyVersion>3.0.0.7</AssemblyVersion>
+		<Version>3.0.0</Version>
 
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)key.snk</AssemblyOriginatorKeyFile>
