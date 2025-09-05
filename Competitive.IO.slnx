@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="CHANGELOG.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Competitive.IO.Test/Competitive.IO.Test.csproj" />
+  <Project Path="Competitive.IO/Competitive.IO.csproj" />
+  <Project Path="Expand.Test/Expand.Test.csproj" />
+</Solution>

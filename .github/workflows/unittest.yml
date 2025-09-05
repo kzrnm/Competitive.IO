@@ -10,7 +10,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_NOLOGO: true
   NUGET_XMLDOC_MODE: skip
-  WORKFLOW_BUILD_SLN: Competitive.IO.sln
+  WORKFLOW_BUILD_SLN: Competitive.IO.slnx
 
 jobs:
   test:
@@ -19,7 +19,7 @@ jobs:
       matrix:
         os: [windows-latest, ubuntu-latest]
     with:
-      target: Competitive.IO.sln
+      target: Competitive.IO.slnx
       os: ${{matrix.os}}
       dotnet-version: |
         8.0.x
