@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net10.0;net8.0;net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
 		<DotnetVersion>$([System.Version]::Parse($([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)'))).Major)</DotnetVersion>
 		<LangVersion Condition="'$(DotnetVersion)' != ''">$([MSBuild]::Add($(DotnetVersion), 4))</LangVersion>
 		<LangVersion Condition="'$(TargetFramework)' == 'netstandard2.0'">7</LangVersion>

@@ -131,7 +131,12 @@ namespace Kzrnm.Competitive.IO
         IEnumerator<Ascii> IEnumerable<Ascii>.GetEnumerator() => new Enumerator(d);
         IEnumerator IEnumerable.GetEnumerator() => new Enumerator(d);
         /// <inheritdoc cref="IEnumerable.GetEnumerator"/>
-        public Span<Ascii>.Enumerator GetEnumerator() => MemoryMarshal.Cast<byte, Ascii>(d).GetEnumerator();
+        public Span<Ascii>.Enumerator GetEnumerator() => MemoryMarshal.Cast<byte, Ascii>(
+#if NET10_0
+            // .NET 10 lack OverloadResolutionPriority(1)
+            (Span<byte>)
+#endif
+            d).GetEnumerator();
 #else
         /// <inheritdoc />
         public IEnumerator<Ascii> GetEnumerator() => new Enumerator(d);
