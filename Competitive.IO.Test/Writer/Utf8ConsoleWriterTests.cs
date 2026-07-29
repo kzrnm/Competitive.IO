@@ -90,6 +90,15 @@ namespace Kzrnm.Competitive.IO.Writer
         }
 
         [Fact]
+        public void WriteLine2()
+        {
+            cw.WriteLine(Enumerable.Repeat((byte)'A', 4154).ToArray().AsSpan());
+            buffer.ShouldBe(ToBytes(new string('A', 4154)));
+            cw.Flush();
+            buffer.ShouldBe(ToBytes(new string('A', 4154) + newLine));
+        }
+
+        [Fact]
         public void WriteLineJoinEmpty()
         {
             cw.WriteLineJoin();
