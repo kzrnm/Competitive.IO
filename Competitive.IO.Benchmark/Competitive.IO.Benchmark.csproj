@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net6.0;netcoreapp3.1;net472</TargetFrameworks>
+    <TargetFrameworks>net10.0;net6.0</TargetFrameworks>
     <LangVersion>9</LangVersion>
     <NoWarn>$(NoWarn);CA1050</NoWarn>
   </PropertyGroup>

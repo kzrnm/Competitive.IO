@@ -217,7 +217,7 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(256)]
         public W Write(ReadOnlySpan<byte> v)
         {
-            if (v.Length < (buf.Length << 1))
+            if (v.Length < (buf.Length >> 1))
             {
                 v.CopyTo(EnsureBuf(v.Length));
                 len += v.Length;
