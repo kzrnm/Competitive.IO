@@ -24,16 +24,16 @@ jobs:
     runs-on: windows-latest
     needs: [get-version]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
             8.0.x
             7.0.x
             6.0.x
             3.1.x
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ${{ github.workspace }}/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/Directory.Build.props') }}
@@ -45,19 +45,30 @@ jobs:
         run: dotnet format ${{ env.WORKFLOW_BUILD_SLN }} --verify-no-changes --no-restore
       - name: Test
         run: dotnet test ${{ env.WORKFLOW_BUILD_SLN }} --no-build --logger GitHubActions -c Release
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: ${{ needs.get-version.outputs.is-new == 'true' }}
         with:
           name: dist
           path: bin/Packages/Release
 
   publish:
+    runs-on: ubuntu-latest
     needs: [get-version, build]
     if: ${{ needs.get-version.outputs.is-new == 'true' }}
-    uses: kzrnm/dotnet-actions/.github/workflows/publish.yml@v2
-    with:
-      artifact-name: dist
-      version: ${{ needs.get-version.outputs.version }}
-      is-prerelease: ${{ needs.get-version.outputs.is-prerelease == 'true' }}
-    secrets:
-      NUGET_KEY: ${{ secrets.NUGET_KEY }}
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: naminodarie
+      - name: Publish NuGet & Release
+        uses: kzrnm/dotnet-actions/actions/publish@v2
+        id: get-version
+        with:
+          artifact-name: dist
+          version: ${{ needs.get-version.outputs.version }}
+          is-prerelease: ${{ needs.get-version.outputs.is-prerelease == 'true' }}
+          NUGET_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
