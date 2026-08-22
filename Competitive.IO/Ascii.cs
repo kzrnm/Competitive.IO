@@ -22,7 +22,7 @@ namespace Kzrnm.Competitive.IO
     public
 
 #if NET8_0_OR_GREATER
-        class Asciis(byte[] d) : IEquatable<Asciis>, IEnumerable<Ascii>
+        class Asciis(byte[] d) : IEquatable<Asciis>, IEnumerable<Ascii>, IComparable, IComparable<Asciis>
 #pragma warning restore CA2231
 #pragma warning restore IDE0079
     {
@@ -33,7 +33,7 @@ namespace Kzrnm.Competitive.IO
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public readonly byte[] d = d;
 #else
-        class Asciis : IEquatable<Asciis>, IEnumerable<Ascii>
+        class Asciis : IEquatable<Asciis>, IEnumerable<Ascii>, IComparable, IComparable<Asciis>
 #pragma warning restore CA2231
 #pragma warning restore IDE0079
     {
@@ -125,7 +125,21 @@ namespace Kzrnm.Competitive.IO
 #pragma warning restore IDE0051
 
 #endif
+        /// <inheritdoc/>
+        int IComparable.CompareTo(object obj) => CompareTo((Asciis)obj);
+        /// <inheritdoc/>
+        public int CompareTo(Asciis other)
+        {
+            var a = d;
+            var b = other.d;
 
+            for (int i = 0; i < a.Length && i < b.Length; i++)
+            {
+                int c = a[i].CompareTo(b[i]);
+                if (c != 0) return c;
+            }
+            return a.Length.CompareTo(b.Length);
+        }
 
 #if NETCOREAPP3_1_OR_GREATER
         IEnumerator<Ascii> IEnumerable<Ascii>.GetEnumerator() => new Enumerator(d);
@@ -191,7 +205,7 @@ namespace Kzrnm.Competitive.IO
 
     [DebuggerDisplay("{(char)C}")]
     public readonly record struct Ascii(
-        [property: DebuggerBrowsable(DebuggerBrowsableState.Never)] byte C)
+        [property: DebuggerBrowsable(DebuggerBrowsableState.Never)] byte C) : IComparable, IComparable<Ascii>
     {
 #else
     /// <summary>
@@ -203,7 +217,7 @@ namespace Kzrnm.Competitive.IO
 #if !NETSTANDARD2_0
         readonly
 #endif
-        struct Ascii : IEquatable<Ascii>
+        struct Ascii : IEquatable<Ascii>, IComparable, IComparable<Ascii>
     {
         /// <summary>
         /// ascii code
@@ -227,6 +241,11 @@ namespace Kzrnm.Competitive.IO
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => C.GetHashCode();
+
+        /// <inheritdoc/>
+        int IComparable.CompareTo(object obj) => CompareTo((Ascii)obj);
+        /// <inheritdoc/>
+        public int CompareTo(Ascii other) => C.CompareTo(other.C);
 
         /// <summary>
         /// to <see cref="char"/>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Kzrnm.Competitive.IO;
@@ -19,6 +20,31 @@ public class AsciiTests
             list.Add(item - 97);
         }
         list.ShouldBe([0, 1, 2, 3, 4, 5, 6,]);
+    }
+
+    [Fact]
+    public void Sort()
+    {
+        Asciis[] arr = [
+            new("abc"u8.ToArray()),
+            new("ABCde"u8.ToArray()),
+            new("AbcDe"u8.ToArray()),
+            new("abcde"u8.ToArray()),
+            new("ab"u8.ToArray()),
+            new("bac"u8.ToArray()),
+            new("qqqqqq"u8.ToArray()),
+        ];
+
+        Array.Sort(arr);
+        arr.ShouldBe([
+            "ABCde",
+            "AbcDe",
+            "ab",
+            "abc",
+            "abcde",
+            "bac",
+            "qqqqqq",
+        ]);
     }
 
     [Fact]
