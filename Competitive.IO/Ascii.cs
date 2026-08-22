@@ -129,6 +129,7 @@ namespace Kzrnm.Competitive.IO
         int IComparable.CompareTo(object obj) => CompareTo((Asciis)obj);
         /// <inheritdoc/>
         public int CompareTo(Asciis other)
+#if NETSTANDARD2_0
         {
             var a = d;
             var b = other.d;
@@ -140,6 +141,9 @@ namespace Kzrnm.Competitive.IO
             }
             return a.Length.CompareTo(b.Length);
         }
+#else
+            => AsSpan().SequenceCompareTo(other.AsSpan());
+#endif
 
 #if NETCOREAPP3_1_OR_GREATER
         IEnumerator<Ascii> IEnumerable<Ascii>.GetEnumerator() => new Enumerator(d);
