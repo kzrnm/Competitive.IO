@@ -114,7 +114,7 @@ qrstuv wxyz
 1 2 3 4
 ");
             var buf = new int[5];
-            cr.Repeat(5).Select(buf.AsSpan(1), cr => cr.Int());
+            cr.Repeat(4).Select(buf.AsSpan(1), cr => cr.Int());
             buf.ShouldBe([0, 1, 2, 3, 4]);
         }, TestContext.Current.CancellationToken);
 
@@ -125,7 +125,7 @@ qrstuv wxyz
 1 2 3 4
 ");
             var buf = new int[5];
-            cr.Repeat(5).Select(buf.AsSpan(1), (cr, i) => cr.Int() * i);
+            cr.Repeat(4).Select(buf.AsSpan(1), (cr, i) => cr.Int() * i);
             buf.ShouldBe([0, 0, 2, 6, 12]);
         }, TestContext.Current.CancellationToken);
 #endif

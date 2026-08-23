@@ -148,6 +148,9 @@ csharp_style_prefer_top_level_statements = true:silent
 csharp_style_prefer_primary_constructors = true:suggestion
 csharp_indent_labels = one_less_than_current
 
+# IDE0057: 範囲演算子を使用
+dotnet_diagnostic.IDE0057.severity = none
+
 [*.vb]
 #### 命名スタイル ####
 
