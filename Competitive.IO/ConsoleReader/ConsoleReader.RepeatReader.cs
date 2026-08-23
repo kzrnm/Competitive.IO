@@ -278,13 +278,9 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(256)]
         public void Select<T>(Span<T> dst, Func<R, T> factory)
         {
-#if NET6_0_OR_GREATER
-            foreach (ref var b in dst)
-                b = factory((R)cr);
-#else
+            dst = dst.Slice(0, Count);
             for (int i = 0; i < dst.Length; i++)
                 dst[i] = factory((R)cr);
-#endif
         }
 
         /// <summary>
@@ -304,7 +300,8 @@ namespace Kzrnm.Competitive.IO
         [MethodImpl(256)]
         public void Select<T>(Span<T> dst, Func<R, int, T> factory)
         {
-            for (var i = 0; i < dst.Length; i++)
+            dst = dst.Slice(0, Count);
+            for (int i = 0; i < dst.Length; i++)
                 dst[i] = factory((R)cr, i);
         }
 #endif
