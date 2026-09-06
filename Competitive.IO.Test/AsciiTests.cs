@@ -9,6 +9,17 @@ namespace Kzrnm.Competitive.IO;
 public class AsciiTests
 {
     [Fact]
+    public void AsSpan()
+    {
+#if !NETFRAMEWORK
+        var a = new Asciis("abcdefg"u8.ToArray());
+        a.AsSpan().ToArray().ShouldBe("abcdefg"u8.ToArray());
+
+        ((Span<Ascii>)a).ToArray().ShouldBe(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+#endif
+    }
+
+    [Fact]
     public void Enumerable()
     {
         new Asciis("abcdefg"u8.ToArray()).Select(b => b - 97).ToArray()
