@@ -118,10 +118,15 @@ namespace Kzrnm.Competitive.IO
         /// </summary>
         public ReadOnlySpan<byte> AsSpan() => d.AsSpan();
 
+        /// <summary>
+        /// Creates a new span.
+        /// </summary>
+        public static implicit operator Span<Ascii>(Asciis a) => MemoryMarshal.Cast<byte, Ascii>(a.d.AsSpan());
+
 #pragma warning disable IDE0051
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         [SourceExpander.NotEmbeddingSource]
-        private ReadOnlySpan<Ascii> DebugView => MemoryMarshal.Cast<byte, Ascii>(d);
+        private ReadOnlySpan<Ascii> DebugView => (Span<Ascii>)this;
 #pragma warning restore IDE0051
 
 #endif
