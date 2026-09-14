@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+#if NET7_0_OR_GREATER
+using System.Numerics;
+#endif
 
 namespace Kzrnm.Competitive.IO
 {
@@ -122,46 +125,114 @@ namespace Kzrnm.Competitive.IO
         /// Read <see cref="ConsoleReader.Int0"/> array
         /// </summary>
         [MethodImpl(256)]
-        public int[] Int0()
-        {
-            var a = new int[Count];
-            for (var i = 0; i < Count; i++)
-                a[i] = cr.Int0();
-            return a;
-        }
+        public int[] Int0() => this - 1;
         /// <summary>
         /// Read <see cref="ConsoleReader.UInt0"/> array
         /// </summary>
         [MethodImpl(256)]
-        public uint[] UInt0()
-        {
-            var a = new uint[Count];
-            for (var i = 0; i < Count; i++)
-                a[i] = cr.UInt0();
-            return a;
-        }
+        public uint[] UInt0() => this - 1u;
         /// <summary>
         /// Read <see cref="ConsoleReader.Long0"/> array
         /// </summary>
         [MethodImpl(256)]
-        public long[] Long0()
-        {
-            var a = new long[Count];
-            for (var i = 0; i < Count; i++)
-                a[i] = cr.Long0();
-            return a;
-        }
+        public long[] Long0() => this - 1L;
         /// <summary>
         /// Read <see cref="ConsoleReader.ULong0"/> array
         /// </summary>
         [MethodImpl(256)]
-        public ulong[] ULong0()
+        public ulong[] ULong0() => this - 1UL;
+
+#if NET7_0_OR_GREATER
+        T[] AddInteger<T>(T v) where T : IAdditionOperators<T, T, T>
         {
-            var a = new ulong[Count];
-            for (var i = 0; i < Count; i++)
-                a[i] = cr.ULong0();
+            var a = new T[Count];
+            for (int i = 0; i < a.Length; i++)
+                a[i] = cr.Read<T>() + v;
             return a;
         }
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Int"/> and Add <paramref name="v"/>.
+        /// </summary>
+        public static int[] operator +(P rr, int v) => rr.AddInteger(v);
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.UInt"/> and Add <paramref name="v"/>.
+        /// </summary>
+        public static uint[] operator +(P rr, uint v) => rr.AddInteger(v);
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Long"/> and Add <paramref name="v"/>.
+        /// </summary>
+        public static long[] operator +(P rr, long v) => rr.AddInteger(v);
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.ULong"/> and Add <paramref name="v"/>.
+        /// </summary>
+        public static ulong[] operator +(P rr, ulong v) => rr.AddInteger(v);
+#else
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Int"/> and Add <paramref name="v"/>.
+        /// </summary>
+        public static int[] operator +(P rr, int v)
+        {
+            var a = new int[rr.Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = rr.cr + v;
+            return a;
+        }
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.UInt"/> and Add <paramref name="v"/>.
+        /// </summary>
+        public static uint[] operator +(P rr, uint v)
+        {
+            var a = new uint[rr.Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = rr.cr + v;
+            return a;
+        }
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Long"/> and Add <paramref name="v"/>.
+        /// </summary>
+        public static long[] operator +(P rr, long v)
+        {
+            var a = new long[rr.Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = rr.cr + v;
+            return a;
+        }
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.ULong"/> and Add <paramref name="v"/>.
+        /// </summary>
+        public static ulong[] operator +(P rr, ulong v)
+        {
+            var a = new ulong[rr.Count];
+            for (var i = 0; i < a.Length; i++)
+                a[i] = rr.cr + v;
+            return a;
+        }
+#endif
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Int"/> and Subtract <paramref name="v"/>.
+        /// </summary>
+        [MethodImpl(256)] public static int[] operator -(P rr, int v) => rr + (-v);
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.UInt"/> and Subtract <paramref name="v"/>.
+        /// </summary>
+        [MethodImpl(256)] public static uint[] operator -(P rr, uint v) => rr + (0 - v);
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.Long"/> and Subtract <paramref name="v"/>.
+        /// </summary>
+        [MethodImpl(256)] public static long[] operator -(P rr, long v) => rr + (-v);
+
+        /// <summary>
+        /// Read <see cref="ConsoleReader.ULong"/> and Subtract <paramref name="v"/>.
+        /// </summary>
+        [MethodImpl(256)] public static ulong[] operator -(P rr, ulong v) => rr + (0 - v);
 
         /// <summary>
         /// implicit call <see cref="Read"/>

@@ -16,7 +16,9 @@ public sealed class Utf8ConsoleWriterRepeatTests : IDisposable
     private const int BufSize = 1 << 10;
     private readonly byte[] buffer = new byte[BufSize];
     private readonly MemoryStream stream;
+#pragma warning disable TUnit0023 // Member should be disposed within a clean up method
     private readonly Utf8ConsoleWriter cw;
+#pragma warning restore TUnit0023 // Member should be disposed within a clean up method
 
     public void Dispose()
     {
