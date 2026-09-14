@@ -43,7 +43,7 @@ jobs:
       - name: Format
         run: dotnet format ${{ env.WORKFLOW_BUILD_SLN }} --verify-no-changes --no-restore
       - name: Test
-        run: dotnet test ${{ env.WORKFLOW_BUILD_SLN }} --no-build --logger GitHubActions -c Release
+        run: dotnet test --solution ${{ env.WORKFLOW_BUILD_SLN }} --no-build -c Release
       - uses: actions/upload-artifact@v7
         if: ${{ needs.get-version.outputs.is-new == 'true' }}
         with:
