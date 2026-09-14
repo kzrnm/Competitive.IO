@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace Kzrnm.Competitive.IO
 {
     public class SourceExpanderTest
     {
-        [Fact]
+        [Test]
         public async Task Embedded()
         {
 
@@ -25,24 +24,22 @@ namespace Kzrnm.Competitive.IO
                 ;
 
             var embedded = await SourceExpander.EmbeddedData.LoadFromAssembly(typeof(ConsoleReader));
-            embedded.EmbeddedLanguageVersion.ShouldBe(expectedEmbeddedLanguageVersion);
-            embedded.AssemblyMetadatas.ShouldNotContainKey("SourceExpander.EmbeddedAllowUnsafe");
-            embedded.AssemblyMetadatas.ShouldContainKey("SourceExpander.EmbedderVersion");
-            embedded.AssemblyMetadatas.Keys.Where(key => key.StartsWith("SourceExpander.EmbeddedSourceCode")).ShouldHaveSingleItem();
-            embedded.EmbeddedNamespaces.ShouldBe(["Kzrnm.Competitive.IO"]);
-            embedded.SourceFiles.SelectMany(s => s.TypeNames).ShouldSatisfyAllConditions([
-                t => t.ShouldContain("Kzrnm.Competitive.IO.ConsoleReader"),
-                t => t.ShouldContain("Kzrnm.Competitive.IO.RepeatReader"),
-                t => t.ShouldContain("Kzrnm.Competitive.IO.ConsoleWriter"),
-                t => t.ShouldContain("Kzrnm.Competitive.IO.ConsoleWriter"),
-                t => t.ShouldContain("Kzrnm.Competitive.IO.PropertyConsoleReader"),
-                t => t.ShouldContain("Kzrnm.Competitive.IO.PropertyRepeatReader"),
-            ]);
+            await Assert.That(embedded.EmbeddedLanguageVersion).IsEqualTo(expectedEmbeddedLanguageVersion);
+            await Assert.That(embedded.AssemblyMetadatas).DoesNotContainKey("SourceExpander.EmbeddedAllowUnsafe");
+            await Assert.That(embedded.AssemblyMetadatas).ContainsKey("SourceExpander.EmbedderVersion");
+            await Assert.That(embedded.AssemblyMetadatas.Keys.Where(key => key.StartsWith("SourceExpander.EmbeddedSourceCode"))).HasSingleItem();
+            await Assert.That(embedded.EmbeddedNamespaces).IsNotStrictlyEqualTo(["Kzrnm.Competitive.IO"]);
+            await Assert.That(embedded.SourceFiles.SelectMany(s => s.TypeNames))
+                .Contains("Kzrnm.Competitive.IO.ConsoleReader")
+                .And.Contains("Kzrnm.Competitive.IO.RepeatReader")
+                .And.Contains("Kzrnm.Competitive.IO.ConsoleWriter")
+                .And.Contains("Kzrnm.Competitive.IO.ConsoleWriter")
+                .And.Contains("Kzrnm.Competitive.IO.PropertyConsoleReader")
+                .And.Contains("Kzrnm.Competitive.IO.PropertyRepeatReader");
 
-            embedded.SourceFiles.Select(s => s.CodeBody).ShouldSatisfyAllConditions([
-                t => t.ShouldAllBe(s => !s.Contains("SuppressMessage")),
-                t => t.ShouldAllBe(s => !s.Contains("EditorBrowsable")),
-            ]);
+            await Assert.That(embedded.SourceFiles.Select(s => s.CodeBody))
+                .DoesNotContain(b => b.Contains("SuppressMessage"))
+                .And.DoesNotContain(b => b.Contains("EditorBrowsable"));
         }
     }
 }

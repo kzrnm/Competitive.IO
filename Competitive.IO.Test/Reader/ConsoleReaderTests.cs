@@ -1,376 +1,398 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
 
-namespace Kzrnm.Competitive.IO.Reader
+namespace Kzrnm.Competitive.IO.Reader;
+
+public class ConsoleReaderTests
 {
-    public class ConsoleReaderTests
+    protected virtual ConsoleReader GetConsoleReader(string v)
+        => Helpers.GetConsoleReader(v);
+    protected virtual ConsoleReader GetConsoleReader(string v, int bufferSize)
+        => Helpers.GetConsoleReader(v, bufferSize);
+
+    [Test]
+    [Timeout(5000)]
+    public async Task Line(CancellationToken cancellationToken) => await Task.Run(async () =>
     {
-        protected virtual ConsoleReader GetConsoleReader(string v)
-            => Helpers.GetConsoleReader(v);
-        protected virtual ConsoleReader GetConsoleReader(string v, int bufferSize)
-            => Helpers.GetConsoleReader(v, bufferSize);
-
-        [Fact(Timeout = 5000)]
-        public async Task Line() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+        var cr = GetConsoleReader(@"
 
 1 2 3 4 5 6
 | a | b | b |
 ");
-            cr.Line().ShouldBe("1 2 3 4 5 6");
-            cr.Line().ShouldBe("| a | b | b |");
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Line()).IsEqualTo("1 2 3 4 5 6");
+        await Assert.That(cr.Line()).IsEqualTo("| a | b | b |");
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task LineChars() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task LineChars(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 1 2 3 4 5 6
 | a | b | b |
 ");
-            cr.LineChars().ShouldBe("1 2 3 4 5 6".ToCharArray());
-            cr.LineChars().ShouldBe("| a | b | b |".ToCharArray());
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.LineChars()).IsStrictlyEquivalentTo("1 2 3 4 5 6".ToCharArray());
+        await Assert.That(cr.LineChars()).IsStrictlyEquivalentTo("| a | b | b |".ToCharArray());
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task Char() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task Char(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 a b c
 def
 ");
-            cr.Char().ShouldBe('a');
-            cr.Char().ShouldBe('b');
-            cr.Char().ShouldBe('c');
-            cr.Char().ShouldBe('d');
-            cr.Char().ShouldBe('e');
-            cr.Char().ShouldBe('f');
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Char()).IsEqualTo('a');
+        await Assert.That(cr.Char()).IsEqualTo('b');
+        await Assert.That(cr.Char()).IsEqualTo('c');
+        await Assert.That(cr.Char()).IsEqualTo('d');
+        await Assert.That(cr.Char()).IsEqualTo('e');
+        await Assert.That(cr.Char()).IsEqualTo('f');
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task Int() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
-
-123 -14421
--2147483647 2147483647
-");
-            cr.Int().ShouldBe(123);
-            cr.Int().ShouldBe(-14421);
-            cr.Int().ShouldBe(-2147483647);
-            cr.Int().ShouldBe(2147483647);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task IntImplicit() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task Int(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 -14421
 -2147483647 2147483647
 ");
-            int r;
-            r = cr;
-            r.ShouldBe(123);
-            r = cr;
-            r.ShouldBe(-14421);
-            r = cr;
-            r.ShouldBe(-2147483647);
-            r = cr;
-            r.ShouldBe(2147483647);
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Int()).IsEqualTo(123);
+        await Assert.That(cr.Int()).IsEqualTo(-14421);
+        await Assert.That(cr.Int()).IsEqualTo(-2147483647);
+        await Assert.That(cr.Int()).IsEqualTo(2147483647);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task Int0() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task IntImplicit(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 -14421
 -2147483647 2147483647
 ");
-            cr.Int0().ShouldBe(122);
-            cr.Int0().ShouldBe(-14422);
-            cr.Int0().ShouldBe(-2147483648);
-            cr.Int0().ShouldBe(2147483646);
-        }, TestContext.Current.CancellationToken);
+        int r;
+        r = cr;
+        await Assert.That(r).IsEqualTo(123);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-14421);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-2147483647);
+        r = cr;
+        await Assert.That(r).IsEqualTo(2147483647);
+    }, cancellationToken);
+
+    [Test]
+    [Timeout(5000)]
+    public async Task Int0(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
+
+123 -14421
+-2147483647 2147483647
+");
+        await Assert.That(cr.Int0()).IsEqualTo(122);
+        await Assert.That(cr.Int0()).IsEqualTo(-14422);
+        await Assert.That(cr.Int0()).IsEqualTo(-2147483648);
+        await Assert.That(cr.Int0()).IsEqualTo(2147483646);
+    }, cancellationToken);
 
 
-        [Fact(Timeout = 5000)]
-        public async Task UInt() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task UInt(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 14421
 9223372036854775808 18446744073709551615
 ");
-            cr.UInt().ShouldBe(123U);
-            cr.UInt().ShouldBe(14421U);
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.UInt()).IsEqualTo(123U);
+        await Assert.That(cr.UInt()).IsEqualTo(14421U);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task UIntImplicit() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
-
-123 14421
-9223372036854775808 18446744073709551615
-");
-            uint r;
-            r = cr;
-            r.ShouldBe(123U);
-            r = cr;
-            r.ShouldBe(14421U);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task UInt0() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task UIntImplicit(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 14421
 9223372036854775808 18446744073709551615
 ");
-            cr.UInt().ShouldBe(123U);
-            cr.UInt().ShouldBe(14421U);
-        }, TestContext.Current.CancellationToken);
+        uint r;
+        r = cr;
+        await Assert.That(r).IsEqualTo(123U);
+        r = cr;
+        await Assert.That(r).IsEqualTo(14421U);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task Long() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task UInt0(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615
+");
+        await Assert.That(cr.UInt()).IsEqualTo(123U);
+        await Assert.That(cr.UInt()).IsEqualTo(14421U);
+    }, cancellationToken);
+
+    [Test]
+    [Timeout(5000)]
+    public async Task Long(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 -14421
 -9223372036854775808 9223372036854775807
 ");
-            cr.Long().ShouldBe(123);
-            cr.Long().ShouldBe(-14421);
-            cr.Long().ShouldBe(-9223372036854775808);
-            cr.Long().ShouldBe(9223372036854775807);
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Long()).IsEqualTo(123);
+        await Assert.That(cr.Long()).IsEqualTo(-14421);
+        await Assert.That(cr.Long()).IsEqualTo(-9223372036854775808);
+        await Assert.That(cr.Long()).IsEqualTo(9223372036854775807);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task LongImplicit() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
-
-123 -14421
--9223372036854775808 9223372036854775807
-");
-            long r;
-            r = cr;
-            r.ShouldBe(123);
-            r = cr;
-            r.ShouldBe(-14421);
-            r = cr;
-            r.ShouldBe(-9223372036854775808);
-            r = cr;
-            r.ShouldBe(9223372036854775807);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task Long0() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task LongImplicit(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 -14421
 -9223372036854775808 9223372036854775807
 ");
-            cr.Long0().ShouldBe(122);
-            cr.Long0().ShouldBe(-14422);
-            cr.Long0().ShouldBe(9223372036854775807);
-            cr.Long0().ShouldBe(9223372036854775806);
-        }, TestContext.Current.CancellationToken);
+        long r;
+        r = cr;
+        await Assert.That(r).IsEqualTo(123);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-14421);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-9223372036854775808);
+        r = cr;
+        await Assert.That(r).IsEqualTo(9223372036854775807);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task ULong() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task Long0(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
+
+123 -14421
+-9223372036854775808 9223372036854775807
+");
+        await Assert.That(cr.Long0()).IsEqualTo(122);
+        await Assert.That(cr.Long0()).IsEqualTo(-14422);
+        await Assert.That(cr.Long0()).IsEqualTo(9223372036854775807);
+        await Assert.That(cr.Long0()).IsEqualTo(9223372036854775806);
+    }, cancellationToken);
+
+    [Test]
+    [Timeout(5000)]
+    public async Task ULong(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 14421
 9223372036854775808 18446744073709551615
 ");
-            cr.ULong().ShouldBe(123u);
-            cr.ULong().ShouldBe(14421u);
-            cr.ULong().ShouldBe(9223372036854775808u);
-            cr.ULong().ShouldBe(18446744073709551615u);
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.ULong()).IsEqualTo(123u);
+        await Assert.That(cr.ULong()).IsEqualTo(14421u);
+        await Assert.That(cr.ULong()).IsEqualTo(9223372036854775808u);
+        await Assert.That(cr.ULong()).IsEqualTo(18446744073709551615u);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task ULongImplicit() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
-
-123 14421
-9223372036854775808 18446744073709551615
-");
-            ulong r;
-            r = cr;
-            r.ShouldBe(123u);
-            r = cr;
-            r.ShouldBe(14421u);
-            r = cr;
-            r.ShouldBe(9223372036854775808u);
-            r = cr;
-            r.ShouldBe(18446744073709551615u);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task ULong0() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task ULongImplicit(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 14421
 9223372036854775808 18446744073709551615
 ");
-            cr.ULong().ShouldBe(123u);
-            cr.ULong().ShouldBe(14421u);
-            cr.ULong().ShouldBe(9223372036854775808u);
-            cr.ULong().ShouldBe(18446744073709551615u);
-        }, TestContext.Current.CancellationToken);
+        ulong r;
+        r = cr;
+        await Assert.That(r).IsEqualTo(123u);
+        r = cr;
+        await Assert.That(r).IsEqualTo(14421u);
+        r = cr;
+        await Assert.That(r).IsEqualTo(9223372036854775808u);
+        r = cr;
+        await Assert.That(r).IsEqualTo(18446744073709551615u);
+    }, cancellationToken);
+
+    [Test]
+    [Timeout(5000)]
+    public async Task ULong0(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
+
+123 14421
+9223372036854775808 18446744073709551615
+");
+        await Assert.That(cr.ULong()).IsEqualTo(123u);
+        await Assert.That(cr.ULong()).IsEqualTo(14421u);
+        await Assert.That(cr.ULong()).IsEqualTo(9223372036854775808u);
+        await Assert.That(cr.ULong()).IsEqualTo(18446744073709551615u);
+    }, cancellationToken);
 
 
-        [Fact(Timeout = 5000)]
-        public async Task Double() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task Double(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 -14421
 -123456789123456789123456789 123456789123456789123456789
 -0.000123456 -.000123456
 0.000123456 .000123456
 ");
-            cr.Double().ShouldBe(123.0);
-            cr.Double().ShouldBe(-14421.0);
-            cr.Double().ShouldBe(-123456789123456789123456789.0);
-            cr.Double().ShouldBe(123456789123456789123456789.0);
-            cr.Double().ShouldBe(-0.000123456);
-            cr.Double().ShouldBe(-.000123456);
-            cr.Double().ShouldBe(0.000123456);
-            cr.Double().ShouldBe(.000123456);
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Double()).IsEqualTo(123.0);
+        await Assert.That(cr.Double()).IsEqualTo(-14421.0);
+        await Assert.That(cr.Double()).IsEqualTo(-123456789123456789123456789.0);
+        await Assert.That(cr.Double()).IsEqualTo(123456789123456789123456789.0);
+        await Assert.That(cr.Double()).IsEqualTo(-0.000123456);
+        await Assert.That(cr.Double()).IsEqualTo(-.000123456);
+        await Assert.That(cr.Double()).IsEqualTo(0.000123456);
+        await Assert.That(cr.Double()).IsEqualTo(.000123456);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task DoubleImplicit() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
-
-123 -14421
--123456789123456789123456789 123456789123456789123456789
--0.000123456 -.000123456
-0.000123456 .000123456
-");
-            double r;
-            r = cr;
-            r.ShouldBe(123.0);
-            r = cr;
-            r.ShouldBe(-14421.0);
-            r = cr;
-            r.ShouldBe(-123456789123456789123456789.0);
-            r = cr;
-            r.ShouldBe(123456789123456789123456789.0);
-            r = cr;
-            r.ShouldBe(-0.000123456);
-            r = cr;
-            r.ShouldBe(-.000123456);
-            r = cr;
-            r.ShouldBe(0.000123456);
-            r = cr;
-            r.ShouldBe(.000123456);
-        }, TestContext.Current.CancellationToken);
-
-        [Fact(Timeout = 5000)]
-        public async Task Decimal() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task DoubleImplicit(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 -14421
 -123456789123456789123456789 123456789123456789123456789
 -0.000123456 -.000123456
 0.000123456 .000123456
 ");
-            cr.Decimal().ShouldBe(123.0m);
-            cr.Decimal().ShouldBe(-14421.0m);
-            cr.Decimal().ShouldBe(-123456789123456789123456789.0m);
-            cr.Decimal().ShouldBe(123456789123456789123456789.0m);
-            cr.Decimal().ShouldBe(-0.000123456m);
-            cr.Decimal().ShouldBe(-.000123456m);
-            cr.Decimal().ShouldBe(0.000123456m);
-            cr.Decimal().ShouldBe(.000123456m);
-        }, TestContext.Current.CancellationToken);
+        double r;
+        r = cr;
+        await Assert.That(r).IsEqualTo(123.0);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-14421.0);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-123456789123456789123456789.0);
+        r = cr;
+        await Assert.That(r).IsEqualTo(123456789123456789123456789.0);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-0.000123456);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-.000123456);
+        r = cr;
+        await Assert.That(r).IsEqualTo(0.000123456);
+        r = cr;
+        await Assert.That(r).IsEqualTo(.000123456);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task DecimalImplicit() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task Decimal(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 123 -14421
 -123456789123456789123456789 123456789123456789123456789
 -0.000123456 -.000123456
 0.000123456 .000123456
 ");
-            decimal r;
-            r = cr;
-            r.ShouldBe(123.0m);
-            r = cr;
-            r.ShouldBe(-14421.0m);
-            r = cr;
-            r.ShouldBe(-123456789123456789123456789.0m);
-            r = cr;
-            r.ShouldBe(123456789123456789123456789.0m);
-            r = cr;
-            r.ShouldBe(-0.000123456m);
-            r = cr;
-            r.ShouldBe(-.000123456m);
-            r = cr;
-            r.ShouldBe(0.000123456m);
-            r = cr;
-            r.ShouldBe(.000123456m);
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Decimal()).IsEqualTo(123.0m);
+        await Assert.That(cr.Decimal()).IsEqualTo(-14421.0m);
+        await Assert.That(cr.Decimal()).IsEqualTo(-123456789123456789123456789.0m);
+        await Assert.That(cr.Decimal()).IsEqualTo(123456789123456789123456789.0m);
+        await Assert.That(cr.Decimal()).IsEqualTo(-0.000123456m);
+        await Assert.That(cr.Decimal()).IsEqualTo(-.000123456m);
+        await Assert.That(cr.Decimal()).IsEqualTo(0.000123456m);
+        await Assert.That(cr.Decimal()).IsEqualTo(.000123456m);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task Ascii() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task DecimalImplicit(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
+
+123 -14421
+-123456789123456789123456789 123456789123456789123456789
+-0.000123456 -.000123456
+0.000123456 .000123456
+");
+        decimal r;
+        r = cr;
+        await Assert.That(r).IsEqualTo(123.0m);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-14421.0m);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-123456789123456789123456789.0m);
+        r = cr;
+        await Assert.That(r).IsEqualTo(123456789123456789123456789.0m);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-0.000123456m);
+        r = cr;
+        await Assert.That(r).IsEqualTo(-.000123456m);
+        r = cr;
+        await Assert.That(r).IsEqualTo(0.000123456m);
+        r = cr;
+        await Assert.That(r).IsEqualTo(.000123456m);
+    }, cancellationToken);
+
+    [Test]
+    [Timeout(5000)]
+    public async Task Ascii(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 abcdefg hijklmnop 123
 qrstuv wxyz
 ");
-            cr.Ascii().ShouldBe("abcdefg");
-            cr.Ascii().ShouldBe("hijklmnop");
-            cr.Ascii().ShouldBe("123");
-            cr.Ascii().ShouldBe("qrstuv");
-            cr.Ascii().ShouldBe("wxyz");
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Ascii()).IsStrictlyEquivalentTo("abcdefg");
+        await Assert.That(cr.Ascii()).IsStrictlyEquivalentTo("hijklmnop");
+        await Assert.That(cr.Ascii()).IsStrictlyEquivalentTo("123");
+        await Assert.That(cr.Ascii()).IsStrictlyEquivalentTo("qrstuv");
+        await Assert.That(cr.Ascii()).IsStrictlyEquivalentTo("wxyz");
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task AsciiImplicit() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task AsciiImplicit(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 abcdefg hijklmnop 123
 qrstuv wxyz
 ");
-            Asciis r;
-            r = cr;
-            r.ShouldBe("abcdefg");
-            r = cr;
-            r.ShouldBe("hijklmnop");
-            r = cr;
-            r.ShouldBe("123");
-            r = cr;
-            r.ShouldBe("qrstuv");
-            r = cr;
-            r.ShouldBe("wxyz");
-        }, TestContext.Current.CancellationToken);
+        Asciis r;
+        r = cr;
+        await Assert.That(r).IsStrictlyEquivalentTo("abcdefg");
+        r = cr;
+        await Assert.That(r).IsStrictlyEquivalentTo("hijklmnop");
+        r = cr;
+        await Assert.That(r).IsStrictlyEquivalentTo("123");
+        r = cr;
+        await Assert.That(r).IsStrictlyEquivalentTo("qrstuv");
+        r = cr;
+        await Assert.That(r).IsStrictlyEquivalentTo("wxyz");
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task String() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task String(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 abcdefg hijklmnop 123
 qrstuv wxyz
@@ -378,20 +400,21 @@ qrstuv wxyz
 电脑😀
 컴퓨터
 ");
-            cr.String().ShouldBe("abcdefg");
-            cr.String().ShouldBe("hijklmnop");
-            cr.String().ShouldBe("123");
-            cr.String().ShouldBe("qrstuv");
-            cr.String().ShouldBe("wxyz");
-            cr.String().ShouldBe("コンピュータ");
-            cr.String().ShouldBe("电脑😀");
-            cr.String().ShouldBe("컴퓨터");
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.String()).IsEqualTo("abcdefg");
+        await Assert.That(cr.String()).IsEqualTo("hijklmnop");
+        await Assert.That(cr.String()).IsEqualTo("123");
+        await Assert.That(cr.String()).IsEqualTo("qrstuv");
+        await Assert.That(cr.String()).IsEqualTo("wxyz");
+        await Assert.That(cr.String()).IsEqualTo("コンピュータ");
+        await Assert.That(cr.String()).IsEqualTo("电脑😀");
+        await Assert.That(cr.String()).IsEqualTo("컴퓨터");
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task StringChars() => await Task.Run(() =>
-        {
-            var cr = GetConsoleReader(@"
+    [Test]
+    [Timeout(5000)]
+    public async Task StringChars(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var cr = GetConsoleReader(@"
 
 abcdefg hijklmnop 123
 qrstuv wxyz
@@ -399,21 +422,22 @@ qrstuv wxyz
 电脑😀
 컴퓨터
 ");
-            cr.StringChars().ShouldBe("abcdefg".ToCharArray());
-            cr.StringChars().ShouldBe("hijklmnop".ToCharArray());
-            cr.StringChars().ShouldBe("123".ToCharArray());
-            cr.StringChars().ShouldBe("qrstuv".ToCharArray());
-            cr.StringChars().ShouldBe("wxyz".ToCharArray());
-            cr.StringChars().ShouldBe("コンピュータ".ToCharArray());
-            cr.StringChars().ShouldBe("电脑😀".ToCharArray());
-            cr.StringChars().ShouldBe("컴퓨터".ToCharArray());
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.StringChars()).IsStrictlyEquivalentTo("abcdefg".ToCharArray());
+        await Assert.That(cr.StringChars()).IsStrictlyEquivalentTo("hijklmnop".ToCharArray());
+        await Assert.That(cr.StringChars()).IsStrictlyEquivalentTo("123".ToCharArray());
+        await Assert.That(cr.StringChars()).IsStrictlyEquivalentTo("qrstuv".ToCharArray());
+        await Assert.That(cr.StringChars()).IsStrictlyEquivalentTo("wxyz".ToCharArray());
+        await Assert.That(cr.StringChars()).IsStrictlyEquivalentTo("コンピュータ".ToCharArray());
+        await Assert.That(cr.StringChars()).IsStrictlyEquivalentTo("电脑😀".ToCharArray());
+        await Assert.That(cr.StringChars()).IsStrictlyEquivalentTo("컴퓨터".ToCharArray());
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task Mix() => await Task.Run(() =>
-        {
+    [Test]
+    [Timeout(5000)]
+    public async Task Mix(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
 
-            var cr = GetConsoleReader(@"
+        var cr = GetConsoleReader(@"
 
 1 2 3 4 5 6.0 8 9 10.1
 | a | b | b |
@@ -421,75 +445,77 @@ qrstuv wxyz
 -10 -11 -12
 abc def
 ");
-            cr.Int().ShouldBe(1);
-            cr.Long().ShouldBe(2);
-            cr.UInt().ShouldBe(3u);
-            cr.ULong().ShouldBe(4u);
-            cr.Char().ShouldBe('5');
-            cr.Double().ShouldBe(6);
-            cr.Int0().ShouldBe(7);
-            cr.Long0().ShouldBe(8);
-            cr.Decimal().ShouldBe(10.1m);
-            cr.Line().ShouldBe("| a | b | b |");
-            cr.Line().ShouldBe("7 8 9");
-            cr.Repeat(3).Long().ShouldBe([-10, -11, -12]);
-            cr.Ascii().ShouldBe("abc");
-            cr.String().ShouldBe("def");
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Int()).IsEqualTo(1);
+        await Assert.That(cr.Long()).IsEqualTo(2);
+        await Assert.That(cr.UInt()).IsEqualTo(3u);
+        await Assert.That(cr.ULong()).IsEqualTo(4u);
+        await Assert.That(cr.Char()).IsEqualTo('5');
+        await Assert.That(cr.Double()).IsEqualTo(6);
+        await Assert.That(cr.Int0()).IsEqualTo(7);
+        await Assert.That(cr.Long0()).IsEqualTo(8);
+        await Assert.That(cr.Decimal()).IsEqualTo(10.1m);
+        await Assert.That(cr.Line()).IsEqualTo("| a | b | b |");
+        await Assert.That(cr.Line()).IsEqualTo("7 8 9");
+        await Assert.That(cr.Repeat(3).Long()).IsStrictlyEquivalentTo((long[])[-10, -11, -12]);
+        await Assert.That(cr.Ascii()).IsStrictlyEquivalentTo("abc");
+        await Assert.That(cr.String()).IsEqualTo("def");
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task Read() => await Task.Run(() =>
-        {
+    [Test]
+    [Timeout(5000)]
+    public async Task Read(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
 
-            var cr = GetConsoleReader(@"
+        var cr = GetConsoleReader(@"
 
 1 2 3 4 5 6.0
 abc
 def
 ");
-            cr.Read<int>().ShouldBe(1);
-            cr.Read<long>().ShouldBe(2);
-            cr.Read<uint>().ShouldBe(3u);
-            cr.Read<ulong>().ShouldBe(4u);
-            cr.Read<char>().ShouldBe('5');
-            cr.Read<double>().ShouldBe(6);
-            cr.Read<string>().ShouldBe("abc");
-            cr.Read<char[]>().ShouldBe(['d', 'e', 'f']);
-        }, TestContext.Current.CancellationToken);
+        await Assert.That(cr.Read<int>()).IsEqualTo(1);
+        await Assert.That(cr.Read<long>()).IsEqualTo(2);
+        await Assert.That(cr.Read<uint>()).IsEqualTo(3u);
+        await Assert.That(cr.Read<ulong>()).IsEqualTo(4u);
+        await Assert.That(cr.Read<char>()).IsEqualTo('5');
+        await Assert.That(cr.Read<double>()).IsEqualTo(6);
+        await Assert.That(cr.Read<string>()).IsEqualTo("abc");
+        await Assert.That(cr.Read<char[]>()).IsStrictlyEquivalentTo(['d', 'e', 'f']);
+    }, cancellationToken);
 
-        [Theory(Timeout = 5000)]
-        [InlineData(4)]
-        [InlineData(5)]
-        [InlineData(6)]
-        [InlineData(7)]
-        [InlineData(8)]
-        public async Task FillEntireNumber(int remaining) => await Task.Run(() =>
-        {
-            var str = new string('a', (1 << 12) - remaining);
-            var cr = GetConsoleReader(str + " 12345");
-            cr.Ascii().ShouldBe(str);
-            cr.Long().ShouldBe(12345);
-        }, TestContext.Current.CancellationToken);
+    [Test]
+    [Timeout(5000)]
+    [Arguments(4)]
+    [Arguments(5)]
+    [Arguments(6)]
+    [Arguments(7)]
+    [Arguments(8)]
+    public async Task FillEntireNumber(int remaining, CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
+        var str = new string('a', (1 << 12) - remaining);
+        var cr = GetConsoleReader(str + " 12345");
+        await Assert.That(cr.Ascii()).IsStrictlyEquivalentTo(str);
+        await Assert.That(cr.Long()).IsEqualTo(12345);
+    }, cancellationToken);
 
-        [Fact(Timeout = 5000)]
-        public async Task Single() => await Task.Run(() =>
+    [Test]
+    [Timeout(5000)]
+    public async Task Single(CancellationToken cancellationToken) => await Task.Run(async () =>
+    {
         {
-            {
-                var cr = GetConsoleReader("12345");
-                cr.Ascii().ShouldBe("12345");
-            }
-            {
-                var cr = GetConsoleReader("12345");
-                cr.String().ShouldBe("12345");
-            }
-            {
-                var cr = GetConsoleReader("12345");
-                cr.Line().ShouldBe("12345");
-            }
-            {
-                var cr = GetConsoleReader("12345");
-                cr.Long().ShouldBe(12345);
-            }
-        }, TestContext.Current.CancellationToken);
-    }
+            var cr = GetConsoleReader("12345");
+            await Assert.That(cr.Ascii()).IsStrictlyEquivalentTo("12345");
+        }
+        {
+            var cr = GetConsoleReader("12345");
+            await Assert.That(cr.String()).IsEqualTo("12345");
+        }
+        {
+            var cr = GetConsoleReader("12345");
+            await Assert.That(cr.Line()).IsEqualTo("12345");
+        }
+        {
+            var cr = GetConsoleReader("12345");
+            await Assert.That(cr.Long()).IsEqualTo(12345);
+        }
+    }, cancellationToken);
 }

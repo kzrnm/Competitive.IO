@@ -2,39 +2,38 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Kzrnm.Competitive.IO;
-using Xunit;
+using System.Threading.Tasks;
+
 namespace Kzrnm.Competitive.IO;
 
 public class AsciiTests
 {
-    [Fact]
-    public void AsSpan()
+    [Test]
+    public async Task AsSpan()
     {
 #if !NETFRAMEWORK
         var a = new Asciis("abcdefg"u8.ToArray());
-        a.AsSpan().ToArray().ShouldBe("abcdefg"u8.ToArray());
-
-        ((Span<Ascii>)a).ToArray().ShouldBe(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+        await Assert.That(a.AsSpan().ToArray()).IsStrictlyEquivalentTo("abcdefg"u8.ToArray());
+        await Assert.That(((Span<Ascii>)a).ToArray()).IsStrictlyEquivalentTo(new Ascii[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g' });
 #endif
     }
 
-    [Fact]
-    public void Enumerable()
+    [Test]
+    public async Task Enumerable()
     {
-        new Asciis("abcdefg"u8.ToArray()).Select(b => b - 97).ToArray()
-            .ShouldBe([0, 1, 2, 3, 4, 5, 6,]);
+        await Assert.That(new Asciis("abcdefg"u8.ToArray()).Select(b => b - 97).ToArray())
+            .IsStrictlyEquivalentTo([0, 1, 2, 3, 4, 5, 6,]);
 
         var list = new List<int>();
         foreach (var item in new Asciis("abcdefg"u8.ToArray()))
         {
             list.Add(item - 97);
         }
-        list.ShouldBe([0, 1, 2, 3, 4, 5, 6,]);
+        await Assert.That(list).IsStrictlyEquivalentTo([0, 1, 2, 3, 4, 5, 6,]);
     }
 
-    [Fact]
-    public void Sort()
+    [Test]
+    public async Task Sort()
     {
         Asciis[] arr = [
             new("abc"u8.ToArray()),
@@ -47,7 +46,7 @@ public class AsciiTests
         ];
 
         Array.Sort(arr);
-        arr.ShouldBe([
+        await Assert.That(arr).IsStrictlyEquivalentTo([
             "ABCde",
             "AbcDe",
             "ab",
@@ -58,24 +57,24 @@ public class AsciiTests
         ]);
     }
 
-    [Fact]
-    public void Cast()
+    [Test]
+    public async Task Cast()
     {
         var s = new Asciis("abcdefg"u8.ToArray());
-        (s[0] == 'a').ShouldBeTrue();
-        (s[1] == 'b').ShouldBeTrue();
-        (s[2] == 'c').ShouldBeTrue();
-        (s[3] == 'd').ShouldBeTrue();
-        (s[4] == 'e').ShouldBeTrue();
-        (s[5] == 'f').ShouldBeTrue();
-        (s[6] == 'g').ShouldBeTrue();
+        await Assert.That(s[0] == 'a').IsTrue();
+        await Assert.That(s[1] == 'b').IsTrue();
+        await Assert.That(s[2] == 'c').IsTrue();
+        await Assert.That(s[3] == 'd').IsTrue();
+        await Assert.That(s[4] == 'e').IsTrue();
+        await Assert.That(s[5] == 'f').IsTrue();
+        await Assert.That(s[6] == 'g').IsTrue();
 
-        (s[0] == 0x61).ShouldBeTrue();
-        (s[1] == 0x62).ShouldBeTrue();
-        (s[2] == 0x63).ShouldBeTrue();
-        (s[3] == 0x64).ShouldBeTrue();
-        (s[4] == 0x65).ShouldBeTrue();
-        (s[5] == 0x66).ShouldBeTrue();
-        (s[6] == 0x67).ShouldBeTrue();
+        await Assert.That(s[0] == 0x61).IsTrue();
+        await Assert.That(s[1] == 0x62).IsTrue();
+        await Assert.That(s[2] == 0x63).IsTrue();
+        await Assert.That(s[3] == 0x64).IsTrue();
+        await Assert.That(s[4] == 0x65).IsTrue();
+        await Assert.That(s[5] == 0x66).IsTrue();
+        await Assert.That(s[6] == 0x67).IsTrue();
     }
 }

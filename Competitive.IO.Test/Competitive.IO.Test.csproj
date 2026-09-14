@@ -1,39 +1,33 @@
-<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFrameworks>net10.0;net8.0;net6.0</TargetFrameworks>
-		<TargetFrameworks Condition="$([System.OperatingSystem]::IsWindows())">$(TargetFrameworks);net48</TargetFrameworks>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net10.0;net8.0;net6.0</TargetFrameworks>
+        <TargetFrameworks Condition="$([System.OperatingSystem]::IsWindows())">$(TargetFrameworks);net48</TargetFrameworks>
+        <OutputType>Exe</OutputType>
+        <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+        <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+        <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 
-		<OutputType>Exe</OutputType>
-		<UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
-		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
+        <NoWarn>$(NoWarn);IDE0005;IDE0057;CA1859</NoWarn>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <RuntimeIdentifier Condition="$([System.OperatingSystem]::IsWindows())">win-x64</RuntimeIdentifier>
+        <SelfContained>false</SelfContained>
+        <LangVersion>latest</LangVersion>
+        <DefineConstants Condition="'$(CI)' != ''">$(DefineConstants);CI</DefineConstants>
+    </PropertyGroup>
 
-		<IsPackable>false</IsPackable>
-		<RootNamespace>Kzrnm.Competitive.IO</RootNamespace>
-		<NoWarn>$(NoWarn);IDE0005;IDE0057;CA1859</NoWarn>
-		<GenerateDocumentationFile>false</GenerateDocumentationFile>
-		<RuntimeIdentifier Condition="$([System.OperatingSystem]::IsWindows())">win-x64</RuntimeIdentifier>
-		<SelfContained>false</SelfContained>
-		<LangVersion>latest</LangVersion>
-		<DefineConstants Condition="'$(CI)' != ''">$(DefineConstants);CI</DefineConstants>
-	</PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="PolySharp" Version="1.16.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="TUnit" Version="1.67.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+        <PackageReference Include="SourceExpander.Embedder.Testing" Version="8.0.0" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<Using Include="Shouldly" />
-		<PackageReference Include="GitHubActionsTestLogger" Version="2.4.1">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Nullable" Version="1.3.1">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Shouldly" Version="4.2.1" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-		<PackageReference Include="xunit.v3" Version="1.1.0" />
-		<PackageReference Include="SourceExpander.Embedder.Testing" Version="8.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Competitive.IO\Competitive.IO.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Competitive.IO\Competitive.IO.csproj" />
+    </ItemGroup>
 </Project>
